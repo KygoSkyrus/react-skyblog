@@ -1,0 +1,32 @@
+.App {
+  text-align: center;
+}
+
+/*apploaded.js*/
+.mainlogo{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mainlogo img{
+  width: 120px;
+}
+.logo-bg{
+  width:200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(95, 58, 197);
+  border-radius: 50%;
+  box-shadow: 0px 8px 20px rgb(88, 88, 88),0px -8px 20px rgb(201, 201, 201);
+}
+.by{
+  position: absolute;
+  bottom: 0px;
+}
+
+/**app.js*/
+
