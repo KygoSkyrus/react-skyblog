@@ -4,7 +4,7 @@ const Navbar = (props) => {
 
     const {arrAllCatForNva}=props
 
-
+//have to in corporate serach thing in navbar
     console.log('arrAllCatForNva',arrAllCatForNva)
 
 
