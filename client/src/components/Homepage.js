@@ -2,41 +2,69 @@ import React, { useEffect, useState } from 'react'
 import CategoryList from './CategoryList';
 import Navbar from './Navbar';
 
-const Homepage = () => {
+const Homepage = (props) => {
 
-    const [allBlog, setAllBlog] = useState();
-    const [allCategory,setAllCategory]=useState();
+    const { allBlog, allCategory } = props
 
-    useEffect(() => {
-        getAllBlogs()
-        getAllCategory()
-    }, [])
+    let catAndCount = new Object;//object with category with their count
+    let arrAllCatForNva = [];//categot to show in  navbar
 
-    async function getAllBlogs() {
-        const res = await fetch("/show", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({}),
-        });
 
-        const data = await res.json();
-        console.log(data);
-        setAllBlog(data)
+    //looping over the array of blogs [only loop here]
+    allBlog.forEach(blog => {
+
+
+        //calculating all category and their count
+        if (catAndCount[blog.category]) {
+            catAndCount[blog.category] = ++catAndCount[blog.category]
+        } else {
+            catAndCount[blog.category] = 1
+        }
+
+        //category to show in  navbar
+        arrAllCatForNva.push(blog.category);
+
+        //fotter categories are same as navbar's
+    });
+
+
+    function setDateOnNav() {
+        var months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+
+        let mm = months[month - 1];
+        let newdate = mm + " " + day + ", " + year;
+        document.getElementById("date").innerText = newdate;
     }
 
-    async function getAllCategory(x) {
-        const res = await fetch("/showCategory", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({}),
-        });
-        const data = await res.json();
-        setAllCategory(data)
-    }
+
+
+
+
+
+
+
 
     return (
         <>
-         {allBlog?<Navbar allBlog={allBlog}/>:""}
+            {arrAllCatForNva ? <Navbar arrAllCatForNva={arrAllCatForNva} /> : ""}
+
             <div>
                 {allBlog?.map(x => {
                     return (
@@ -52,11 +80,14 @@ const Homepage = () => {
                         </div>
                     )
                 })}
-
-
-
             </div>
-            {allBlog && allCategory?<CategoryList allBlog={allBlog} allCategory={allCategory} />:""}
+
+            {allBlog && allCategory ? <CategoryList catAndCount={catAndCount} allCategory={allCategory} /> : ""}
+
+            <div>
+                <p>Composite</p>
+                <div></div>
+            </div>
 
         </>
     )

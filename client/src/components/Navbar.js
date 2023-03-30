@@ -1,35 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Navbar = (props) => {
 
-    const {allBlog}=props
-const [catListForNav,setCatListForNav]=useState([])
+    const {arrAllCatForNva}=props
 
-      //for setting category
-			let options = "";
-			let ulCategory = "";
-			let footerCat = "";
-        let catinnav = ["tech", "lifestyle", "business", "travel"]; //categories that are in navbar
 
-        let arrAllCat = [];
-        for (var i = 0; i < allBlog.length; i++) {
-            arrAllCat.push(allBlog[i].category);
-        }
+    console.log('arrAllCatForNva',arrAllCatForNva)
 
-        let final = arrAllCat.filter(function (item) {
-            return !catinnav.includes(item);
-        });
-        setCatListForNav(final)
+
+   
+
+         let catinnav = ["tech", "lifestyle", "business", "travel"]; //categories that are in navbar
+  
+          let finalArr = arrAllCatForNva.filter(function (item) {
+              return !catinnav.includes(item);
+          });
     
+   
     return (
         <div>
             <p>name</p>
             <div class="dropdown-content" id="ulCategory">
-            {catListForNav?.map(x=>{
+            {finalArr?.map(x=>{
                 return(<li class="sub-menu__item">
                 <a target="blank" href="/category/${final[i]}"
                     class="t-link sub-menu__link text-uppercase">
-                    ${x[i]}
+                    {x}
                 </a>
             </li>)
             })}
