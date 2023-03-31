@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route,Routes } from "react-router-dom";
 // import { Toast, ToastContainer } from 'react-bootstrap'
 
 import './App.css';
@@ -7,7 +7,7 @@ import './App.css';
 
 
 import Homepage from './components/Homepage';
-
+import SingleBlog from "./components/SingleBlog"
 function App() {
 
 
@@ -51,15 +51,28 @@ function App() {
       <div className="App">
       
   
-     <Homepage allBlog={allBlog} allCategory={allCategory} />
-        
+    
+{/* <Homepage allBlog={allBlog} allCategory={allCategory} />  */}
+       
 
 
-        {/* <Route path="/success" component={Success}>
-          <Success />
-        </Route>
 
-        <Route path="/failed" component={Failed}>
+
+{/* {heroes.map(hero => (<Link to={'heroes/' + hero.id} />))} */}
+
+<Route path="/:id" component={SingleBlog} />
+
+
+<Route path="/" component={Homepage} allBlog={allBlog} allCategory={allCategory} />
+
+
+        {/* // <Route path="/contact" component={SingleBlog}>
+        //   <SingleBlog />
+        // </Route> */}
+
+       
+
+        {/* <Route path="/failed" component={}>
           <Failed />
         </Route> */}
 
