@@ -164,8 +164,8 @@ const Footer = () => {
 				<div class="row">
 					<div class="col-12 text-center">
 						<p class="mb-0 t-text-light sm-text">
-							&copy; 2018, blog Mag. Design by
-							<a href="#" class="t-link t-link--primary">whyshy</a>
+							&copy; 2023, blog Mag. Design by
+							<a href="#" class="t-link t-link--primary">kygoskyrus</a>
 							. All Rights Reserved.
 						</p>
 					</div>

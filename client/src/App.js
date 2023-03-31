@@ -52,29 +52,17 @@ function App() {
       
   
     
-{/* <Homepage allBlog={allBlog} allCategory={allCategory} />  */}
-       
 
 
 
 
-{/* {heroes.map(hero => (<Link to={'heroes/' + hero.id} />))} */}
+<Route path="/" exact children={<Homepage allBlog={allBlog} allCategory={allCategory} />} />
 
 <Route path="/:id" component={SingleBlog} />
 
 
-<Route path="/" component={Homepage} allBlog={allBlog} allCategory={allCategory} />
 
-
-        {/* // <Route path="/contact" component={SingleBlog}>
-        //   <SingleBlog />
-        // </Route> */}
-
-       
-
-        {/* <Route path="/failed" component={}>
-          <Failed />
-        </Route> */}
+     
 
       </div>
     </Router>

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
+
 import CategoryList from './CategoryList';
-import Footer from './Footer';
 import Navbar from './Navbar';
+import Footer from './Footer';
+import BlogWrapperInside from './BlogWrapperInside';
+import BlogWrapperRight from './BlogWrapperRight';
+import BlogWrapperBottom from './BlogWrapperBottom';
 
 const Homepage = (props) => {
 
@@ -106,6 +110,28 @@ console.log('allBlofgs in homepge porops',allBlog)
         <>
             {arrAllCatForNva ? <Navbar arrAllCatForNva={arrAllCatForNva} /> : ""}
 
+        {/* <!-- Hero  --> */}
+		<div class="hero t-mt-30">
+			<div class="container">
+				<div class="row" id="hero">
+                    <div class="col-md-6 t-mb-30 mb-md-0">
+						<div class="row">
+                            <BlogWrapperInside data={featuredArray[featuredArray.length-1]} />
+                            <BlogWrapperInside data={featuredArray[featuredArray.length-1]} />							
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="row">
+                        <BlogWrapperInside data={featuredArray[featuredArray.length-1]} />	
+                        <BlogWrapperInside data={featuredArray[featuredArray.length-1]} />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{/* <!-- Hero End --> */}
+
+
             <div>
                 {allBlog?.map(x => {
                     return (
@@ -122,6 +148,79 @@ console.log('allBlofgs in homepge porops',allBlog)
                     )
                 })}
             </div>
+
+
+
+            {/* <!-- News Today  --> */}
+	<section class="t-pb-70 t-pt-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 t-mb-30 mb-lg-0">
+					<div class="row">
+						<div class="col-12">
+							<div class="section-title t-mb-30">
+								<div class="tag tag--skew tag-delta d-inline-block">
+									<h5 class="tag__skew-reverse t-text-light text-capitalize mt-0 mb-0">
+										today's news
+									</h5>
+								</div>
+							</div>
+						</div>
+						<div id="todays" class="row">
+
+
+
+                        <div class="col-lg-8 t-mb-30 mb-lg-0">
+								<BlogWrapperBottom data={todaysArray[todaysArray.length-1]} />
+							</div>
+
+							<div class="col-lg-4">
+								<div class="row">
+									<div class="col-12 t-mb-30">
+                                     {todaysArray[todaysArray.length-2]?<BlogWrapperBottom data={todaysArray[todaysArray.length-2]} displayRead='d-none' displayDesc='d-none' />:<BlogWrapperBottom data={todaysArray[todaysArray.length-1]} displayRead='d-none' displayDesc='d-none' />}  
+									</div>
+									<div class="col-12">
+                                    {todaysArray[todaysArray.length-3]?<BlogWrapperBottom data={todaysArray[todaysArray.length-3]} displayRead='d-none' displayDesc='d-none' />:<BlogWrapperBottom data={todaysArray[todaysArray.length-1]} displayRead='d-none' displayDesc='d-none' />}  	
+    								</div>
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="row">
+						<div class="col-12">
+							<div class="section-title">
+								<div class="tag tag--skew tag-delta d-inline-block">
+									<h5 class="tag__skew-reverse t-text-light text-capitalize mt-0 mb-0">
+										other news
+									</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 t-mt-30">
+							
+                            {allBlog?.slice(allBlog.length-4, allBlog.length).map(x => {
+                                                return (
+                                                    <BlogWrapperRight data={x} key={x._id} displayCategory='d-none' displayRead='d-none' />
+                                                )
+                                            })}
+						</div>
+						<div class="col-12 t-mt-30">
+							<a href="/" class="t-link">
+								<img src="https://picsum.photos/300/300" alt="blog" class="img-fluid w-100" />
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{/* <!-- News Today End --> */}
+
 
             {allBlog && allCategory ? <CategoryList catAndCount={catAndCount} allCategory={allCategory} /> : ""}
 
@@ -147,49 +246,9 @@ console.log('allBlofgs in homepge porops',allBlog)
                                             </div>
                                         </div>
                                         <div id="tech">
-                                            {techArray?.map(x => {
+                                            {techArray?.slice(techArray.length-3, techArray.length).map(x => {
                                                 return (
-                                                    <div class="col-12 t-mt-30 t-mb-30" key={x._id}>
-                                                        <div class="post post--right">
-                                                            <div class="post--right-img t-flex-100 t-mr-16">
-                                                                <img src={x.image} alt="blog" class="img-fluid w-100" />
-                                                            </div>
-                                                            <div class="post--right-content t-flex-100">
-                                                                <ul class="list d-flex align-items-center">
-                                                                    <li class="t-mr-16">
-                                                                        <a target="blank" href="/${catArray[i].url}"
-                                                                            class="t-link t-link--light tag tag--skew ${catClr} text-uppercase">
-                                                                            <span class="tag__skew-reverse">
-                                                                                {x.category}
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="d-none d-md-flex">
-                                                                        <a target="blank" href="/${catArray[i].url}"
-                                                                            class="t-link t-link--secondary ex-sm-text text-capitalize">
-                                                                            <span class="las la-calendar-alt m-text"></span>
-                                                                            {x.date}
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-
-                                                                <h5 class="post__title post__title-xmin t-mt-10 t-mb-10">
-                                                                    <a target="blank" href="/${catArray[i].url}" class="t-link t-link--secondary">
-                                                                        {x.title}
-                                                                    </a>
-                                                                </h5>
-                                                                <ul class="list d-none d-md-flex align-items-center">
-                                                                    <li>
-                                                                        <a target="blank" href="/${catArray[i].url}"
-                                                                            class="t-link t-link--secondary ex-sm-text text-capitalize">
-                                                                            <span class="las la-clock sm-text"></span>
-                                                                            10 min read
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <BlogWrapperRight data={x} key={x._id} />
                                                 )
                                             })}
                                         </div>
@@ -207,49 +266,9 @@ console.log('allBlofgs in homepge porops',allBlog)
                                             </div>
                                         </div>
                                         <div id="politics">
-                                            {politicsArray?.map(x => {
+                                            {politicsArray?.slice(politicsArray.length-3, politicsArray.length).map(x => {
                                                 return (
-                                                    <div class="col-12 t-mt-30 t-mb-30" key={x._id}>
-                                                        <div class="post post--right">
-                                                            <div class="post--right-img t-flex-100 t-mr-16">
-                                                                <img src={x.image} alt="blog" class="img-fluid w-100" />
-                                                            </div>
-                                                            <div class="post--right-content t-flex-100">
-                                                                <ul class="list d-flex align-items-center">
-                                                                    <li class="t-mr-16">
-                                                                        <a target="blank" href="/${catArray[i].url}"
-                                                                            class="t-link t-link--light tag tag--skew ${catClr} text-uppercase">
-                                                                            <span class="tag__skew-reverse">
-                                                                                {x.category}
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="d-none d-md-flex">
-                                                                        <a target="blank" href="/${catArray[i].url}"
-                                                                            class="t-link t-link--secondary ex-sm-text text-capitalize">
-                                                                            <span class="las la-calendar-alt m-text"></span>
-                                                                            {x.date}
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-
-                                                                <h5 class="post__title post__title-xmin t-mt-10 t-mb-10">
-                                                                    <a target="blank" href="/${catArray[i].url}" class="t-link t-link--secondary">
-                                                                        {x.title}
-                                                                    </a>
-                                                                </h5>
-                                                                <ul class="list d-none d-md-flex align-items-center">
-                                                                    <li>
-                                                                        <a target="blank" href="/${catArray[i].url}"
-                                                                            class="t-link t-link--secondary ex-sm-text text-capitalize">
-                                                                            <span class="las la-clock sm-text"></span>
-                                                                            10 min read
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <BlogWrapperRight data={x} key={x._id} />
                                                 )
                                             })}
                                         </div>
@@ -268,49 +287,9 @@ console.log('allBlofgs in homepge porops',allBlog)
                                             </div>
                                         </div>
                                         <div id="sports">
-                                            {sportsArray?.map(x => {
+                                            {sportsArray?.slice(sportsArray.length-3, sportsArray.length).map(x => {
                                                 return (
-                                                    <div class="col-12 t-mt-30 t-mb-30" key={x._id}>
-                                                        <div class="post post--right">
-                                                            <div class="post--right-img t-flex-100 t-mr-16">
-                                                                <img src={x.image} alt="blog" class="img-fluid w-100" />
-                                                            </div>
-                                                            <div class="post--right-content t-flex-100">
-                                                                <ul class="list d-flex align-items-center">
-                                                                    <li class="t-mr-16">
-                                                                        <a target="blank" href="/${catArray[i].url}"
-                                                                            class="t-link t-link--light tag tag--skew ${catClr} text-uppercase">
-                                                                            <span class="tag__skew-reverse">
-                                                                                {x.category}
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="d-none d-md-flex">
-                                                                        <a target="blank" href="/${catArray[i].url}"
-                                                                            class="t-link t-link--secondary ex-sm-text text-capitalize">
-                                                                            <span class="las la-calendar-alt m-text"></span>
-                                                                            {x.date}
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-
-                                                                <h5 class="post__title post__title-xmin t-mt-10 t-mb-10">
-                                                                    <a target="blank" href="/${catArray[i].url}" class="t-link t-link--secondary">
-                                                                        {x.title}
-                                                                    </a>
-                                                                </h5>
-                                                                <ul class="list d-none d-md-flex align-items-center">
-                                                                    <li>
-                                                                        <a target="blank" href="/${catArray[i].url}"
-                                                                            class="t-link t-link--secondary ex-sm-text text-capitalize">
-                                                                            <span class="las la-clock sm-text"></span>
-                                                                            10 min read
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <BlogWrapperRight data={x} key={x._id} />
                                                 )
                                             })}
                                         </div>

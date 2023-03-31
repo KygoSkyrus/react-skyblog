@@ -131,3 +131,69 @@
 }
 
 /********************* FOOTER ***************/
+
+
+
+
+
+
+/********** Hero ELement **********************/
+.hero{
+  background-color: rgb(53, 15, 192);
+}
+
+.t-mt-30 {
+  margin-top: 30px;
+}
+
+.post{
+ position: relative;
+}
+.post--in {
+  overflow: hidden;
+}
+.post--in > img {
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.post__overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(black));
+  background: -webkit-linear-gradient(transparent, black);
+  background: -o-linear-gradient(transparent, black);
+  background: linear-gradient(transparent, black);
+  opacity: 0.9;
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.post--in-content-gap {
+  left: 15px;
+  right: 15px;
+  bottom: 30px;
+}
+
+@media screen and (min-width: 768px){
+.post--in-content {
+    bottom: 30px;
+    left: 30px;
+    right: 30px;
+}
+}
+.post--in-content {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.post__title {
+  font-family: "Bebas Neue", cursive;
+  color:aliceblue;
+}
