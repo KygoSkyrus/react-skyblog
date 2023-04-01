@@ -8,6 +8,7 @@ import './App.css';
 
 import Homepage from './components/Homepage';
 import SingleBlog from "./components/SingleBlog"
+import Admin from './Admin';
 function App() {
 
 
@@ -52,13 +53,14 @@ function App() {
       
   
     
-
+<div className='bg-dark text-light' style={{height:"100px"}}>something</div>
 
 
 
 <Route path="/" exact children={<Homepage allBlog={allBlog} allCategory={allCategory} />} />
 
-<Route path="/:id" component={SingleBlog} />
+<Route path="/:id" exact component={SingleBlog} />
+
 
 
 
