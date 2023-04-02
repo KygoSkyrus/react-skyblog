@@ -1,73 +1,70 @@
-import React, { useState,useEffect } from 'react';
-import { BrowserRouter as Router, Route,Routes } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import { Toast, ToastContainer } from 'react-bootstrap'
 
 import './App.css';
 
 
-
-import Homepage from './components/Homepage';
-import SingleBlog from "./components/SingleBlog"
 import Admin from './Admin';
+import NotAdmin from './NotAdmin';
 function App() {
 
 
   const [allBlog, setAllBlog] = useState([]);
-  const [allCategory,setAllCategory]=useState();
+  const [allCategory, setAllCategory] = useState();
 
   useEffect(() => {
-       getAllBlogs()
-       getAllCategory()
+    //move these two function to notadmin if none of these are called in admin secetion
+    getAllBlogs()
+    getAllCategory()
   }, [])
 
 
   async function getAllBlogs() {
 
-      const res = await fetch("/show", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({}),
-      });
+    const res = await fetch("/show", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
 
-      const data = await res.json();
-      console.log('getALLblogs',data);
-      setAllBlog(data)
+    const data = await res.json();
+    console.log('getALLblogs', data);
+    setAllBlog(data)
   }
 
   async function getAllCategory() {
-      const res = await fetch("/showCategory", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({}),
-      });
-      const data = await res.json();
-      console.log('getALLcategory',data);
-      setAllCategory(data)
+    const res = await fetch("/showCategory", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
+    const data = await res.json();
+    console.log('getALLcategory', data);
+    setAllCategory(data)
   }
 
-  
+
 
   return (
-    <Router>
-      <div className="App">
+    <BrowserRouter>
+
+
+
+      <Routes>
+        <Route path="/*" exact element={<NotAdmin allBlog={allBlog} allCategory={allCategory} />} />
+        <Route path="/admin" exact element={<Admin allBlog={allBlog} allCategory={allCategory} />} />
+      </Routes>
       
-  
-    
-<div className='bg-dark text-light' style={{height:"100px"}}>something</div>
-
-
-
-<Route path="/" exact children={<Homepage allBlog={allBlog} allCategory={allCategory} />} />
-
-<Route path="/:id" exact component={SingleBlog} />
+      {/* <Route path="/" exact children={<Homepage allBlog={allBlog} allCategory={allCategory} />} /> */}
+      {/* <Route path="/:id" exact component={SingleBlog} /> */}
 
 
 
 
-     
 
-      </div>
-    </Router>
+
+    </BrowserRouter>
   );
 }
 

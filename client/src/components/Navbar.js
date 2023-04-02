@@ -4,16 +4,10 @@ import "./css/navbar.css"
 
 const Navbar = (props) => {
 
-    const { arrAllCatForNva } = props
+    const { finalArr } = props
 
     //have to in corporate serach thing in navbar
-    console.log('arrAllCatForNva', arrAllCatForNva)
-
-    //categories that are in navbar
-    let catinnav = ["tech", "lifestyle", "business", "travel"];
-    let finalArr = arrAllCatForNva.filter(function (item) {
-        return !catinnav.includes(item);
-    });
+   
 
     function handleSearchIcon(e) {
         document.querySelectorAll('.nav')[0]?.classList.toggle('search')
@@ -26,10 +20,6 @@ const Navbar = (props) => {
         document.querySelectorAll('.menu-toggle')[0]?.classList.toggle("is-active");
     }
 
-    // $('.menu-toggle').click(function(){
-    //    $(".nav").toggleClass("mobile-nav");
-    //    $(this).toggleClass("is-active");
-    // });
 
 
 
@@ -54,11 +44,11 @@ const Navbar = (props) => {
 
                                     <div class="dropdown-content" id="ulCategory">
                                         {finalArr?.map(x => {
-                                            return (<span class="sub-menu__item">
-                                                <a target="blank" href="/category/${final[i]}"
+                                            return (<span class="sub-menu__item" key={x._id}>
+                                                <span target="blank" href="/category/${final[i]}"
                                                     class="t-link sub-menu__link text-uppercase">
                                                     {x}
-                                                </a>
+                                                </span>
                                             </span>)
                                         })}
                                     </div></a>

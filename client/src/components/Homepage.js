@@ -6,109 +6,15 @@ import Footer from './Footer';
 import BlogWrapperInside from './BlogWrapperInside';
 import BlogWrapperRight from './BlogWrapperRight';
 import BlogWrapperBottom from './BlogWrapperBottom';
+import OtherBlogsComp from './OtherBlogsComp';
 
 const Homepage = (props) => {
 
-    const { allBlog, allCategory } = props
-console.log('allBlofgs in homepge porops',allBlog)
-    let catAndCount = new Object;//object with category with their count
-    let arrAllCatForNva = [];//categot to show in  navbar
-
-    //blogs sorted by their type
-    let featuredArray = [];
-    let popularArray = [];
-    let trendingArray = [];
-    let todaysArray = [];
-    //blogs sorted by their categories
-    var techArray = [];
-    var politicsArray = [];
-    var sportsArray = [];
-
-
-
-    //looping over the array of blogs [only loop here]
-    allBlog?.forEach(blog => {
-
-        //calculating all category and their count
-        if (catAndCount[blog.category]) {
-            catAndCount[blog.category] = ++catAndCount[blog.category]
-        } else {
-            catAndCount[blog.category] = 1
-        }
-
-        //category to show in  navbar
-        if (!arrAllCatForNva.includes(blog.category)) arrAllCatForNva.push(blog.category);
-
-        //footer categories are same as navbar's
-
-        //for setting blogs by their type
-        switch (blog.type) {
-            case "featured blogs": featuredArray.push(blog)
-                break;
-            case "popular blogs": popularArray.push(blog)
-                break;
-            case "trending blogs": trendingArray.push(blog)
-                break;
-            case "todays blogs": todaysArray.push(blog)
-                break;
-            default:
-                break;
-        }
-
-        //for setting blogs by categiry
-        switch (blog.category) {
-            case "tech": techArray.push(blog)
-                break;
-            case "sports": sportsArray.push(blog)
-                break;
-            case "politics": politicsArray.push(blog)
-                break;
-            default:
-                break;
-        }
-    });
-
-
-    function setDateOnNav() {
-        var months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-        ];
-        var dateObj = new Date();
-        var month = dateObj.getUTCMonth() + 1; //months from 1-12
-        var day = dateObj.getUTCDate();
-        var year = dateObj.getUTCFullYear();
-
-        let mm = months[month - 1];
-        let newdate = mm + " " + day + ", " + year;
-        document.getElementById("date").innerText = newdate;
-    }
-
-    //remeber to reverse the arrays to show latest blog first
-
-    //for setting blogs in different categories and show on homepage
-    var hero = ""; //(banner)//hero element will have one of each categories [rememner not tp repeat blogs on homepage];;try picking every blogs by type arry and its be like poplararr[populararr.length-1]
-
-    console.log(featuredArray);
-    console.log(popularArray);
-    console.log(trendingArray);
-    console.log(todaysArray);
-    console.log(techArray, politicsArray, sportsArray);
-
+const {featuredArray, techArray,sportsArray,allBlog,allCategory,todaysArray,catAndCount,politicsArray}=props
 
     return (
         <>
-            {arrAllCatForNva ? <Navbar arrAllCatForNva={arrAllCatForNva} /> : ""}
+            {/* {arrAllCatForNva ? <Navbar arrAllCatForNva={arrAllCatForNva} /> : ""} */}
 
         {/* <!-- Hero  --> */}
 		<div class="hero t-mt-30">
@@ -190,39 +96,20 @@ console.log('allBlofgs in homepge porops',allBlog)
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3">
+                <div class="col-lg-3">
 					<div class="row">
-						<div class="col-12">
-							<div class="section-title">
-								<div class="tag tag--skew tag-delta d-inline-block">
-									<h5 class="tag__skew-reverse t-text-light text-capitalize mt-0 mb-0">
-										other news
-									</h5>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 t-mt-30">
-							
-                            {allBlog?.slice(allBlog.length-4, allBlog.length).map(x => {
-                                                return (
-                                                    <BlogWrapperRight data={x} key={x._id} displayCategory='d-none' displayRead='d-none' />
-                                                )
-                                            })}
-						</div>
-						<div class="col-12 t-mt-30">
-							<a href="/" class="t-link">
-								<img src="https://picsum.photos/300/300" alt="blog" class="img-fluid w-100" />
-							</a>
-						</div>
-					</div>
-				</div>
+				<OtherBlogsComp allBlog={allBlog} />
+                </div>
+                </div>
 			</div>
 		</div>
 	</section>
 	{/* <!-- News Today End --> */}
 
 
-            {allBlog && allCategory ? <CategoryList catAndCount={catAndCount} allCategory={allCategory} /> : ""}
+<div className='col-lg-3'>
+    <div className='row'>{allBlog && allCategory ? <CategoryList catAndCount={catAndCount} allCategory={allCategory} /> : ""}</div></div>
+            
 
             <div>
                 <p>Composite</p>
@@ -302,7 +189,7 @@ console.log('allBlofgs in homepge porops',allBlog)
                 </div>
             </section>
 
-            <Footer />
+            
 
         </>
     )

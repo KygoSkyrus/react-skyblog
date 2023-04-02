@@ -1,6 +1,9 @@
 import React from 'react'
 
-const Footer = () => {
+const Footer = (props) => {
+
+	const {finalArr}=props;
+
   return (
     <>
     <footer class="t-bg-secondary footer">
@@ -79,10 +82,20 @@ const Footer = () => {
 					<div class="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
 						<h5 class="t-text-light mt-0 text-capitalize">categories</h5>
 						<ul class="list" id="footerCat">
-							<li class="t-mb-10">
+							{/* <li class="t-mb-10">
 								<a href="#" class="t-link text-capitalize t-link--light sm-text">
 								</a>
-							</li>
+							</li> */}
+							{finalArr?.map(x=>{
+								return(
+                                <li class="t-mb-10">
+								<a href="/category/${final[i]}" class="t-link text-capitalize t-link--light sm-text">
+									{x}
+								</a>
+							    </li>
+								)
+							})
+							}
 						</ul>
 					</div>
 					<div class="col-md-6 col-lg-3 t-mb-30 mb-lg-0">
