@@ -7,6 +7,8 @@ import './App.css';
 
 import Admin from './components/Admin';
 import NotAdmin from './components/NotAdmin';
+
+
 function App() {
 
 
@@ -50,18 +52,13 @@ function App() {
     <BrowserRouter>
 
 
-
       <Routes>
         <Route path="/*" exact element={<NotAdmin allBlog={allBlog} allCategory={allCategory} />} />
-        <Route path="/admin" exact element={<Admin allBlog={allBlog} allCategory={allCategory} />} />
+        <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} />} />
       </Routes>
       
       {/* <Route path="/" exact children={<Homepage allBlog={allBlog} allCategory={allCategory} />} /> */}
       {/* <Route path="/:id" exact component={SingleBlog} /> */}
-
-
-
-
 
 
     </BrowserRouter>

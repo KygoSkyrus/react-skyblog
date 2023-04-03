@@ -1,0 +1,162 @@
+/*   ------------------------     LOGIN     -----------------------------   */
+.form-container .panel {
+  padding: 4px;
+  padding-top: 0;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #ecf0ee;
+}
+
+.form-control {
+  font-size: 14px;
+  /* border: 1px solid #e4e5e7; */
+  /* height: calc(1.8em + 0.75rem + 2px); */
+}
+
+.panel .btn {
+  box-shadow: 0 2px 6px 0 rgb(24 194 156);
+  color: #fff;
+  background-color: #18c29c;
+  border-color: #18c29c;
+  width: 100%;
+}
+/*   ------------------------     LOGIN     -----------------------------   */
+
+/*   ------------------------     DASHBOARD     -----------------------------   */
+/* for categories in modal */
+.catinmodal {
+  width: 48%;
+  padding: 10px;
+  background: #e1e1e1;
+  margin: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: capitalize;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.catinmodal:hover {
+  color: white;
+  background: #070c17;
+  transition: all 0.8s;
+}
+
+.catinmodal:hover #ii {
+  color: rgb(255, 0, 0);
+  transition: all 0.8s;
+}
+
+/* for super categories */
+
+.wrapper11 {
+  display: flex;
+  background: #fff;
+  height: auto;
+  width: 100%;
+  align-items: center;
+  /* justify-content: space-evenly; */
+  border-radius: 5px;
+  padding: 9px 11px;
+  border: 1px solid #e4e5e7;
+  /* height: calc(1.8em + .75rem + 2px); */
+}
+
+.wrapper11 .option {
+  background: #fff;
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 4px 10px;
+  border: 2px solid lightgrey;
+  transition: all 0.3s ease;
+}
+
+.wrapper11 .option .dot {
+  height: 14px;
+  width: 14px;
+  background: #d9d9d9;
+  border-radius: 50%;
+  position: relative;
+}
+
+.wrapper11 .option .dot::before {
+  position: absolute;
+  content: "";
+  top: 3px;
+  left: 3px;
+  width: 8px;
+  height: 8px;
+  background: #0069d9;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+#option-1:checked:checked ~ .option-1,
+#option-2:checked:checked ~ .option-2,
+#option-3:checked:checked ~ .option-3,
+#option-4:checked:checked ~ .option-4,
+#option-5:checked:checked ~ .option-5 {
+  border-color: #0069d9;
+  background: #0069d9;
+}
+
+#option-1:checked:checked ~ .option-1 .dot,
+#option-2:checked:checked ~ .option-2 .dot,
+#option-3:checked:checked ~ .option-3 .dot,
+#option-4:checked:checked ~ .option-4 .dot,
+#option-5:checked:checked ~ .option-5 .dot {
+  background: #fff;
+}
+
+#option-1:checked:checked ~ .option-1 .dot::before,
+#option-2:checked:checked ~ .option-2 .dot::before,
+#option-3:checked:checked ~ .option-3 .dot::before,
+#option-4:checked:checked ~ .option-4 .dot::before,
+#option-5:checked:checked ~ .option-5 .dot::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.wrapper .option span {
+  /* font-size: 20px; */
+  color: #808080;
+}
+
+#option-1:checked:checked ~ .option-1 span,
+#option-2:checked:checked ~ .option-2 span,
+#option-3:checked:checked ~ .option-3 span,
+#option-4:checked:checked ~ .option-4 span,
+#option-5:checked:checked ~ .option-5 span {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .wrapper11 {
+    flex-direction: column;
+    justify-content: unset;
+  }
+
+  .wrapper11 .option {
+    width: 100%;
+    justify-content: unset;
+  }
+
+  .catinmodal {
+    margin: 2px;
+  }
+}
+/*   ------------------------     DASHBOARD     -----------------------------   */
