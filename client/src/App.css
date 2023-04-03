@@ -270,6 +270,10 @@ label {
   margin-bottom: 0.5rem;
 }
 
+label i{
+  margin-right: 10px;
+}
+
 .wrapper11 {
     display: flex;
     background: #fff;
@@ -396,4 +400,16 @@ input[type="radio"] {
     width: 100%;
     /* box-shadow: 0 0 10px #9d9d9d; */
     z-index: 999;
+}
+
+
+
+
+/********************************* SUMMERNOTE ****************************************/
+.panel-heading{
+  background-color: #f0f0f0;
+}
+.note-editing-area{
+  height: 300px;
+    resize: none;
 }

@@ -2,14 +2,14 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
-import Homepage from './components/Homepage';
-import Navbar from './components/Navbar';
-import SingleBlog from './components/SingleBlog';
-import Footer from './components/Footer';
-import SingleCategory from './components/SingleCategory';
-import Contact from './components/Contact';
-import Error from './components/Error';
-import PostBlog from './PostBlog';
+import Homepage from './notAdmin/Homepage';
+import Navbar from './notAdmin/Navbar';
+import SingleBlog from './notAdmin/SingleBlog';
+import Footer from './notAdmin/Footer';
+import SingleCategory from './notAdmin/SingleCategory';
+import Contact from './notAdmin/Contact';
+import Error from './notAdmin/Error';
+import PostBlog from './notAdmin/PostBlog';
 
 const NotAdmin = (props) => {
 

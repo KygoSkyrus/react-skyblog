@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import "./css/navbar.css"
+import "../../assets/css/navbar.css"
 
 const Navbar = (props) => {
 

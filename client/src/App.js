@@ -5,8 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 
 
-import Admin from './Admin';
-import NotAdmin from './NotAdmin';
+import Admin from './components/Admin';
+import NotAdmin from './components/NotAdmin';
 function App() {
 
 
