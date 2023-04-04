@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 import CategoryModal from './CategoryModal'
@@ -10,11 +10,30 @@ import "../../assets/css/sidebar.css"
 
 const Sidebar = (props) => {
 
-    const {allCategory}=props
+    const { allCategory } = props
+    const [adminName,setAdminName]=useState()
 
     useEffect(() => {
         getSidebarWorking()
+        getAdminName()
     }, [])
+
+
+    //this will set the admin name in sidebar
+    async function getAdminName() {
+
+        const res = await fetch("/getAdminName", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({}),
+        });
+
+        const data = await res.json();
+        setAdminName(data.admin)
+        console.log('get admin name', data,data.admin)
+
+    }
+
 
 
 
@@ -66,7 +85,7 @@ const Sidebar = (props) => {
 
 
     //have to fix this when an optin is slected from sidebar,,highlight that
-    function handleSelectedOption(e){
+    function handleSelectedOption(e) {
         console.log(e.target)
 
     }
@@ -95,7 +114,7 @@ const Sidebar = (props) => {
 
                     <i id='icon-search' class="fas fa-regular fa-magnifying-glass"></i>
 
-                    <ul class="menu-list" onClick={e=>handleSelectedOption(e)}>
+                    <ul class="menu-list" onClick={e => handleSelectedOption(e)}>
                         <li class="menu-item">
                             <a class="menu-link" href="">
                                 <i class="fas fa-solid fa-table"></i>
@@ -104,14 +123,20 @@ const Sidebar = (props) => {
                         </li>
                         <li class="menu-item">
                             <a class="menu-link" href="">
+                                <i class="fas fa-solid fa-user"></i>
+                                <span class="menu-link-text">Blogs</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="">
                                 <i class="fas fa-solid fa-paw"></i>
-                                <span class="menu-link-text">Pets</span>
+                                <span class="menu-link-text">Message</span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a class="menu-link" href="">
                                 <i class="fas fa-solid fa-user"></i>
-                                <span class="menu-link-text">Customers</span>
+                                <span class="menu-link-text">Submitted Blogs</span>
                             </a>
                         </li>
                         <li class="menu-item" data-bs-toggle="modal" data-bs-target="#manageCat">
@@ -132,28 +157,28 @@ const Sidebar = (props) => {
                 <div class="user-container">
                     <div class="user-info">
                         <i class="fas fa-solid fa-user-secret"></i>
-                        <div class="user-details">
-                            <h3 class="user-name">DG</h3>
+                        <div class="user-details">      
+                            <h3 class="user-name">{adminName}</h3>
                             <p class="user-occupation">Admin</p>
                         </div>
                     </div>
-                    <span class="logout-btn" href="" onClick={e=>logout(e)}>
+                    <span class="logout-btn" href="" onClick={e => logout(e)}>
                         <i class="fas fa-sharp fa-regular fa-arrow-right-from-bracket"></i>
                     </span>
                 </div>
             </nav>
 
-{/*            
+            {/*            
             <main className="dashboard">
         <h1 className="title">Dashboard</h1>
     </main> */}
 
 
-     {/* <!--change password Modal --> */}
-     <ChangePasswordModal/>
+            {/* <!--change password Modal --> */}
+            <ChangePasswordModal />
 
-{/* <!--  manage category Modal --> */}
-<CategoryModal allCategory={allCategory} />
+            {/* <!--  manage category Modal --> */}
+            <CategoryModal allCategory={allCategory} />
 
 
 

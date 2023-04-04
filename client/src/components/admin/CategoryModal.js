@@ -5,7 +5,7 @@ const CategoryModal = (props) => {
     const {allCategory}=props
 
 
-    async function addCat() {
+    async function addCategory() {
         var cat = document.getElementById("cat").value;
         console.log(cat);
 
@@ -72,7 +72,7 @@ const CategoryModal = (props) => {
                                                     <input type="text" className="form-control" id="cat"
                                                         placeholder="add category" />
                                                 </div>
-                                                <section className="btn btn-success btn-block" onClick={e=>addCat(e)}>
+                                                <section className="btn btn-success btn-block" onClick={e=>addCategory(e)}>
                                                     Add category
                                                 </section>
                                             </form>

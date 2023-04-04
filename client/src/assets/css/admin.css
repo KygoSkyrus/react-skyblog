@@ -170,3 +170,56 @@ input[type="radio"] {
   }
 }
 /*   ------------------------     DASHBOARD     -----------------------------   */
+
+
+
+
+/*   ------------------------     MESSAGES     -----------------------------   */
+.body-content{
+  padding: 26px 24px;
+}
+
+#tbody button {
+  border: none;
+  outline: none;
+  padding: 0px;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  margin: 0 4px;
+  color: white;
+  cursor: pointer;
+}
+/*   ------------------------     MESSAGES     -----------------------------   */
+
+
+
+
+
+/*   ------------------------     BLOGS_MANAGEMENT     -----------------------------   */
+ /* for required image file input */
+ .abcc {
+  border: 1px solid #dd0f0f !important;
+}
+
+#starRed {
+  display: none;
+}
+
+.abc1 {
+  display: inline !important;
+  color: red;
+}
+
+#go{
+  background-color: #28a745;
+                          border: none;
+                          outline: none;
+                          padding: 5px 20px;
+                          font-size: 14px;
+                          color: white;
+                          border-radius: 4px;
+                          box-shadow: 0 2px 6px 0 rgb(40 167 69 / 50%);
+                          cursor: pointer;
+}
+/*   ------------------------     BLOGS_MANAGEMENT     -----------------------------   */

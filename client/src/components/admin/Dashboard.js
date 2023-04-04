@@ -1,6 +1,4 @@
 import React from 'react'
-import CategoryModal from './CategoryModal'
-import ChangePasswordModal from './ChangePasswordModal'
 
 const Dashboard = (props) => {
 

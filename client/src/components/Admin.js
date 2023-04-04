@@ -7,6 +7,8 @@ import Login from './admin/Login';
 import Error from './notAdmin/Error';
 import Sidebar from './admin/Sidebar';
 import Dashboard from './admin/Dashboard';
+import Messages from './admin/Messages';
+import BlogsManagement from './admin/BlogsManagement';
 
 
 const Admin = (props) => {
@@ -28,7 +30,12 @@ const Admin = (props) => {
 
           <Routes>
             <Route path="/login" exact element={<Login />} />
+
             <Route path="/dashboard" exact element={<Dashboard allCategory={allCategory} catAndCount={catAndCount} />} />
+
+            <Route path="/messages" exact element={<Messages />} />
+
+            <Route path="/blogs-management" exact element={<BlogsManagement />} />
 
             <Route path="*" element={<Error />} />
           </Routes>
