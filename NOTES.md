@@ -6,6 +6,8 @@
 - IMPORTANT:::: have to add redirect things in server,,,bcz eralier the routes were macd in sevrer but now on client they are,,so we know the route,,,so now we need pt redirect ...for example to error page and login
 
 
+- IMPORTNAT ::::THERE IS prop drilling ,,very deep...use redux and fix
+
 
 
 ### things could be better

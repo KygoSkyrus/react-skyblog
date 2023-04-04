@@ -1,11 +1,40 @@
 import React, { useEffect } from 'react'
-import "../../assets/css/sidebar.css"
-const Sidebar = () => {
 
+
+import CategoryModal from './CategoryModal'
+import ChangePasswordModal from './ChangePasswordModal'
+
+
+import "../../assets/css/sidebar.css"
+
+
+const Sidebar = (props) => {
+
+    const {allCategory}=props
 
     useEffect(() => {
         getSidebarWorking()
     }, [])
+
+
+
+    async function logout() {
+        console.log("logout function ran");
+        const res = await fetch("/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({}),
+        });
+
+        const data = await res.json();
+        console.log(data);
+        if (data.message == "loggedOut") {
+            window.location.reload();
+        }
+    }
+
 
 
     function getSidebarWorking() {
@@ -33,6 +62,9 @@ const Sidebar = () => {
         });
     }
 
+
+
+
     //have to fix this when an optin is slected from sidebar,,highlight that
     function handleSelectedOption(e){
         console.log(e.target)
@@ -44,6 +76,8 @@ const Sidebar = () => {
 
     return (
         <>
+
+
 
             <nav class="sidebar">
                 <div class="navbar-container">
@@ -80,17 +114,17 @@ const Sidebar = () => {
                                 <span class="menu-link-text">Customers</span>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a class="menu-link" href="">
+                        <li class="menu-item" data-bs-toggle="modal" data-bs-target="#manageCat">
+                            <span class="menu-link" href="">
                                 <i class="fas fa-regular fa-stethoscope"></i>
-                                <span class="menu-link-text">Vets</span>
-                            </a>
+                                <span class="menu-link-text">Category</span>
+                            </span>
                         </li>
-                        <li class="menu-item">
-                            <a class="menu-link" href="">
+                        <li class="menu-item" data-bs-toggle="modal" data-bs-target="#change">
+                            <span class="menu-link" href="">
                                 <i class="fas fa-duotone fa-gear"></i>
-                                <span class="menu-link-text">Settings</span>
-                            </a>
+                                <span class="menu-link-text">Change Password</span>
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -103,13 +137,25 @@ const Sidebar = () => {
                             <p class="user-occupation">Admin</p>
                         </div>
                     </div>
-                    <a class="logout-btn" href="">
+                    <span class="logout-btn" href="" onClick={e=>logout(e)}>
                         <i class="fas fa-sharp fa-regular fa-arrow-right-from-bracket"></i>
-                    </a>
+                    </span>
                 </div>
             </nav>
 
-           
+{/*            
+            <main className="dashboard">
+        <h1 className="title">Dashboard</h1>
+    </main> */}
+
+
+     {/* <!--change password Modal --> */}
+     <ChangePasswordModal/>
+
+{/* <!--  manage category Modal --> */}
+<CategoryModal allCategory={allCategory} />
+
+
 
         </>
     )

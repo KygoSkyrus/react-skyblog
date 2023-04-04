@@ -7,6 +7,24 @@
     --text-color: #084236;
 }
 
+/*body*/
+/* body {
+    background-color: var(--body-bg-color);
+    color: var(--text-color); 
+    width: 100vw; 
+    height: auto; 
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+} */
+#adminView{
+        background-color: var(--body-bg-color);
+        color: var(--text-color); 
+        width: 100vw; 
+        height: 100vh; 
+        font-family: 'Poppins', sans-serif;
+        position: relative;
+    display: flex;
+}
 
 button {
     border: none;
@@ -30,16 +48,6 @@ li {
     list-style: none;
 }
 
-/*body*/
-body {
-    background-color: var(--body-bg-color);
-    color: var(--text-color); 
-    width: 100vw; 
-    height: auto; 
-    font-family: 'Poppins', sans-serif;
-    position: relative;
-}
-
 
 /*navbar*/
 .sidebar {
@@ -48,7 +56,7 @@ body {
     max-width: 4rem;
     background-color: var(--green);
     height: 100vh; 
-    position: fixed;
+    /* position: fixed; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -244,8 +252,9 @@ body {
 /*dashboard*/
 .dashboard { 
     width: auto;
-    height: auto; 
-    margin-left: 5rem;
+    height: auto;
+    /* margin-left: 4rem; */
+    background: white;
 }
 
 .sidebar.active + .dashboard {

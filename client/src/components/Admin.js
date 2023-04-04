@@ -1,5 +1,5 @@
 import React from 'react'
-import {  Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import "../assets/css/admin.css"
 
@@ -9,21 +9,31 @@ import Sidebar from './admin/Sidebar';
 import Dashboard from './admin/Dashboard';
 
 
-const Admin = () => {
+const Admin = (props) => {
 
-
+  const { allBlog, allCategory, catAndCount } = props
   return (
     <>
 
-<Sidebar/>
+      <div id='adminView'>
+        
+        <Sidebar allCategory={allCategory} />
 
-    <Routes>
-      <Route path="/login" exact element={<Login />} />
-      <Route path="/dashboard" exact element={<Dashboard />} />
+        <div className='dynamicAdminContent'>
 
-      <Route path="*"  element={<Error />} />
-    </Routes>
-    
+          <main className="dashboard">
+            <h1 className="title">Dashboard</h1>
+          </main>
+
+
+          <Routes>
+            <Route path="/login" exact element={<Login />} />
+            <Route path="/dashboard" exact element={<Dashboard allCategory={allCategory} catAndCount={catAndCount} />} />
+
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </div>
+      </div>
     </>
   )
 }
