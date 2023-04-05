@@ -12,6 +12,13 @@
     //add the deleted and add api to backend and think about edit,,,not a good idea to edit the blog,,,leave it
 
 
+## defects
+- visibility [button] is not workinnh
+- summernote is not working ...unanle to get the inner html i think..
+- routes are fucked up
+- homepage is not looking good
+- on admin side,,,a olots of components are repeting for instance the inputs for blogs,,,afe used in blog eidit ,post blog 
+
 ### things could be better
 - in single blog...in react the single blog api is not used,,as i hlready have lsit of all blogs,,so avoilding calling this api and looping pver the already fetched all blogs to find the single blog and alos the previous and next blog,,,[avoiding calling the next prev api too ]---------but later if the number of blogs are too much to afford a loop over them then api should be called...
 

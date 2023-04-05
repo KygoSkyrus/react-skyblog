@@ -10,6 +10,7 @@ const BlogsManagement = (props) => {
       getAllBlogs()
     },[])
 
+    //this is same as show api but not filtered
     async function getAllBlogs(){
         const res = await fetch("/show2", {
             method: "POST",
@@ -47,7 +48,6 @@ const BlogsManagement = (props) => {
         // let image = document.getElementById("image")[0].files[0];
         let image = document.getElementById("image").files[0];
 
-        let email = document.getElementById("email").value;
         let title = document.getElementById("title").value;
         let url = document.getElementById("url").value;
 
@@ -84,7 +84,6 @@ const BlogsManagement = (props) => {
 
         console.log(
             image,
-            email,
             title,
             url,
             category,
@@ -101,7 +100,6 @@ const BlogsManagement = (props) => {
 
         let formdata = new FormData();
         formdata.append("image", image);
-        formdata.append("email", email);
         formdata.append("title", title);
         formdata.append("url", url);
         formdata.append("category", category);
@@ -117,7 +115,6 @@ const BlogsManagement = (props) => {
         let formdata1 = new FormData();
         formdata1.append("summernote", hvalue);
 
-        formdata1.append("email", email);
         formdata1.append("title", title);
         formdata1.append("url", url);
         formdata1.append("category", category);
@@ -182,6 +179,45 @@ const BlogsManagement = (props) => {
         console.log(data);
     }
 
+
+    async function blogVisibility(id,e) {
+         console.log(id);
+
+        //checked attribute means its on and 1 or data="false" means its off
+         let checkbox = document.getElementById('checkbox');
+
+         let val;
+
+         if(e.target.hasAttribute('checked')){
+         
+             console.log('it has checked')
+             document.getElementById(`checkbox`+id).removeAttribute('checked')
+             document.getElementById(`checkbox`+id).setAttribute('data','false')
+             val='1';//final value of the checkbox
+         }else if(e.target.hasAttribute('1') || e.target.hasAttribute('data')){
+            console.log('it has 1')
+            document.getElementById(`checkbox`+id).removeAttribute('1')
+            document.getElementById(`checkbox`+id).removeAttribute('data')
+            document.getElementById(`checkbox`+id).setAttribute('checked','checked')
+             val='checked';//final value of the checkbox
+         }
+
+     
+         
+       
+        console.log( val)
+
+        const res = await fetch("/blogVisibility", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                id,val
+            }),
+        });
+
+        const data = await res.json();
+        console.log(data);
+    }
 
   return (
     <>
@@ -280,7 +316,6 @@ const BlogsManagement = (props) => {
                                                                 left: "0px",
                                                                 background: "#ffffff",
                                                                 borderRadius: "4px",
-                                                                width: "calc(100% - 30px)",
                                                                 padding: " 5px",
                                                                 paddingLeft: "14px",
                                                                 border: "1px solid rgb(229 229 229)",
@@ -366,10 +401,9 @@ const BlogsManagement = (props) => {
                                                 <td>{x.category}</td>
                                                 <td>{x.type}</td>
                                                 <td>{x.image}</td>
-                                                <td><label class="switch"><input onclick="blogVisibility('${data[i]._id}',event)" id="checkbox${data[i]._id}" type="checkbox" checked={x.status} /><span class="slider round"></span></label>
+                                                <td><label class="switch"><input onClick={e=>blogVisibility(x._id,e)} id={"checkbox"+x._id} type="checkbox" checked={x.status} /><span class="slider round"></span></label>
                                                 </td>
-                                                <td style={{display: "flex",border: "none",justifyContent: "center"}}><a href="/admin/blog-edit/${data[i].url
-                    }" target="blank" ><button style={{background: "#09660c"}}><i class="fa fa-pen"></i></button></a><button onclick='deleteBlog("${data[i]._id}")' style={{background: "#d50606"}}><i class="fa fa-trash" ></i></button></td>
+                                                <td style={{display: "flex",border: "none",justifyContent: "center"}}><a href={"/admin/blog-edit/"+x.url} target="blank" ><button style={{background: "#09660c"}}><i class="fa fa-pen"></i></button></a><button onClick={e=>deleteBlog(x._id,e)} style={{background: "#d50606"}}><i class="fa fa-trash" ></i></button></td>
                                             </tr>
                                         )
                                     })}
@@ -379,7 +413,6 @@ const BlogsManagement = (props) => {
                             </div>
                         </div>
                     </div>
-                    {/* <!--Page length options--> */}
                 </div>
     </>
   )

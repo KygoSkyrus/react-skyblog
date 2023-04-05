@@ -10,6 +10,7 @@ import Dashboard from './admin/Dashboard';
 import Messages from './admin/Messages';
 import BlogsManagement from './admin/BlogsManagement';
 import UserSubmittedBlogs from './admin/UserSubmittedBlogs';
+import EditBlog from './admin/EditBlog';
 
 
 const Admin = (props) => {
@@ -41,6 +42,8 @@ const Admin = (props) => {
             <Route path="/blogs-management" exact element={<BlogsManagement allBlog={allBlog} allCategory={allCategory} />} />
 
             <Route path="/user-submitted-blogs" exact element={<UserSubmittedBlogs />} />
+
+            <Route path="/edit-blog/:id" exact element={<EditBlog />} />
 
             <Route path="*" element={<Error />} />
           </Routes>

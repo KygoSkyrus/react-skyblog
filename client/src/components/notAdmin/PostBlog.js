@@ -276,7 +276,6 @@ const PostBlog = () => {
                                                                 left: "0px",
                                                                 background: "#ffffff",
                                                                 borderRadius: "4px",
-                                                                width: "calc(100% - 30px)",
                                                                 padding: " 5px",
                                                                 paddingLeft: "14px",
                                                                 border: "1px solid #ced4da",

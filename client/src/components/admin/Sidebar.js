@@ -11,7 +11,7 @@ import "../../assets/css/sidebar.css"
 const Sidebar = (props) => {
 
     const { allCategory } = props
-    const [adminName,setAdminName]=useState()
+    const [adminName, setAdminName] = useState()
 
     useEffect(() => {
         getSidebarWorking()
@@ -30,7 +30,7 @@ const Sidebar = (props) => {
 
         const data = await res.json();
         setAdminName(data.admin)
-        console.log('get admin name', data,data.admin)
+        console.log('get admin name', data, data.admin)
 
     }
 
@@ -59,34 +59,63 @@ const Sidebar = (props) => {
     function getSidebarWorking() {
         //elements 
         const btnToggler = document.querySelector(".navbar-togglerr");
-        const inputSearch = document.querySelector(".navbar-search");
-        const iconSearch = document.querySelector("#icon-search");
+        // const inputSearch = document.querySelector(".navbar-search");
+        // const iconSearch = document.querySelector("#icon-search");
         const navbar = document.querySelector(".sidebar");
+        const menuItem = document.querySelectorAll(".menu-item");
 
         //events
         btnToggler.addEventListener('click', () => {
             navbar.classList.toggle('active');
+            menuItem?.forEach(x => {x.classList.toggle('pl');x.classList.toggle('w')})
+
         });
 
-        inputSearch.addEventListener('click', () => {
-            if (!navbar.classList.contains("active")) {
-                navbar.classList.add('active');
-            }
-        });
+        // inputSearch.addEventListener('click', () => {
+        //     if (!navbar.classList.contains("active")) {
+        //         navbar.classList.add('active');
+        //     }
+        // });
 
-        iconSearch.addEventListener('click', () => {
-            if (!navbar.classList.contains("active")) {
-                navbar.classList.add('active');
-            }
-        });
+        // iconSearch.addEventListener('click', () => {
+        //     if (!navbar.classList.contains("active")) {
+        //         navbar.classList.add('active');
+        //     }
+        // });
     }
 
 
-
+    useEffect(() => {
+        handleSelectedOption()
+    }, [])
 
     //have to fix this when an optin is slected from sidebar,,highlight that
-    function handleSelectedOption(e) {
-        console.log(e.target)
+    function handleSelectedOption() {
+        console.log('hrefffs', window.location.origin, window.location.href)
+
+        // if(window.location.href===window.location.origin+"/admin/messages"){
+        //     let anchor=document.querySelector('[href="/admin/messages"]')
+        //     console.log('-----',anchor)
+        //     anchor.parentElement.classList.add('selected')
+
+        // }
+        switch (window.location.href) {
+
+            case window.location.origin + "/admin/dashboard": document.querySelector('[href="/admin/dashboard"]').parentElement.classList.toggle('selected')
+                break;
+
+            case window.location.origin + "/admin/blogs-management": document.querySelector('[href="/admin/blogs-management"]').parentElement.classList.toggle('selected')
+                break;
+
+            case window.location.origin + "/admin/messages": document.querySelector('[href="/admin/messages"]').parentElement.classList.toggle('selected')
+                break;
+
+            case window.location.origin + "/admin/user-submitted-blogs": document.querySelector('[href="/admin/user-submitted-blogs"]').parentElement.classList.toggle('selected')
+                break;
+
+            default:
+                break;
+        }
 
     }
 
@@ -109,12 +138,11 @@ const Sidebar = (props) => {
                     </div>
 
 
-                    <input type="search" name="search" placeholder="Search..."
+                    {/* <input type="search" name="search" placeholder="Search..."
                         class="navbar-search" id="search" />
+                    <i id='icon-search' class="fas fa-regular fa-magnifying-glass"></i> */}
 
-                    <i id='icon-search' class="fas fa-regular fa-magnifying-glass"></i>
-
-                    <ul class="menu-list" onClick={e => handleSelectedOption(e)}>
+                    <ul class="menu-list" >
                         <li class="menu-item">
                             <a class="menu-link" href="/admin/dashboard">
                                 <i class="fas fa-solid fa-table"></i>
@@ -157,9 +185,9 @@ const Sidebar = (props) => {
                 <div class="user-container">
                     <div class="user-info">
                         <i class="fas fa-solid fa-user-secret"></i>
-                        <div class="user-details">      
-                            <h3 class="user-name">{adminName}</h3>
-                            <p class="user-occupation">Admin</p>
+                        <div class="user-details">
+                            <section class="user-name">{adminName}</section>
+                            {/* <span class="user-occupation">Admin</span> */}
                         </div>
                     </div>
                     <span class="logout-btn" href="" onClick={e => logout(e)}>

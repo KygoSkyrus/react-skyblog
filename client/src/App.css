@@ -113,6 +113,22 @@
 
 
 
+
+/********************* ERROR PAGE ***************/
+.h-100vh {
+  height: 100vh;
+}
+.four_zero_four_bg {
+  background-image: url(./assets/images/404.gif);
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/********************* ERROR PAGE ***************/
+
+
+
+
 /********************* FOOTER ***************/
 
 .t-bg-secondary {

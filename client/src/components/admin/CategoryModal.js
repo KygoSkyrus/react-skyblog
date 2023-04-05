@@ -82,7 +82,7 @@ const CategoryModal = (props) => {
                                     <div id="catInModal" className="mb-4 d-flex flex-wrap">
                                         {allCategory?.map(x=>{
                                             return(
-                                                <section class="catinmodal" onClick={e=>deleteCategory(x._id,e)}>{x.category}&nbsp;&nbsp;<i class="fa fa-trash" id="ii" ></i></section>
+                                                <section class="catinmodal" key={x._id} onClick={e=>deleteCategory(x._id,e)}>{x.category}&nbsp;&nbsp;<i class="fa fa-trash" id="ii" ></i></section>
                                             )
                                         })}
                                     </div>

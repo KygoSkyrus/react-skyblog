@@ -134,9 +134,14 @@ li {
 }
 
 .sidebar .menu-list .menu-item {    
+    /* width: 100%; */
+}
+.w{
     width: 100%;
 }
-
+.pl{
+    padding-left: 1rem;
+}
 
 .sidebar .menu-list .menu-item  .menu-link{    
     display: flex;
@@ -227,7 +232,7 @@ li {
 
 /*navbar.active menu*/
 .sidebar.active .menu-list { 
-    padding-left: 1rem;
+    /* padding-left: 1rem; */
 }
 
 .sidebar.active .menu-list .menu-item  .menu-link {
@@ -271,7 +276,7 @@ li {
     background: #8ed7c6;
     padding: 1rem;
     border-radius: 10px;
-    width: 40px;
+    /* width: 40px; */
 }
 
 /*media queries*/
