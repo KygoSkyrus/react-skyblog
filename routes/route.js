@@ -91,7 +91,7 @@ router.post("/showMessage", async (req, res) => {
 
 
 
-
+//the below two api's can be merged send a confirmation if u want filtered or not and write an if else here
 
 //for showing database blogs records
 router.post("/show", async (req, res) => {

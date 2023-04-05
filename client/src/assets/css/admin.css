@@ -1,6 +1,7 @@
 /*   ------------------------     ADMIN Component     -----------------------------   */
 .dynamicAdminContent{
   width: 100%;
+  overflow: auto;
 }
 /*   ------------------------     ADMIN Component     -----------------------------   */
 

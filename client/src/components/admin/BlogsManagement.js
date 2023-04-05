@@ -1,6 +1,188 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const BlogsManagement = () => {
+const BlogsManagement = (props) => {
+
+    const { allCategory}=props
+
+    const [everyBlog,setEveryBlog]=useState()
+
+    useEffect(()=>{
+      getAllBlogs()
+    },[])
+
+    async function getAllBlogs(){
+        const res = await fetch("/show2", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({}),
+        });
+
+        const data = await res.json();
+        setEveryBlog(data)
+        console.log("data", data);
+    }
+
+
+    function settingUrl(e) {
+        let title = e.target.value;
+        let str = title.replace(/\s+/g, "-").toLowerCase();
+        document.getElementById("url").value = str;
+    }
+
+    function setDynamicLabel(e) {
+        // document.getElementById("image").files[0].size
+        if (document.getElementById("image")?.files[0]?.name) {
+            document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
+        } else {
+            document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
+        }
+    }
+
+
+    async function sendData(e) {
+
+
+        //console.log("go");
+
+        // let image = document.getElementById("image")[0].files[0];
+        let image = document.getElementById("image").files[0];
+
+        let email = document.getElementById("email").value;
+        let title = document.getElementById("title").value;
+        let url = document.getElementById("url").value;
+
+        let category = document.getElementById("category").value;
+        let select = document.querySelector("input[type=radio][name=select]:checked").value;
+
+        let shortdesc = document.getElementById("shortdesc").value;
+        let author = document.getElementById("author").value;
+
+        let metatitle = document.getElementById("metatitle").value;
+        let metakeyword = document.getElementById("metakeyword").value;
+        let metadesc = document.getElementById("metadesc").value;
+
+        // let hvalue = document.querySelectorAll(".note-editable")[0].html(); //summernote
+        let hvalue = document.querySelectorAll(".note-editable")[0].innerHTML; //summernote
+
+
+
+        let allimg = document.querySelectorAll(".note-editable")[0].getElementsByTagName('img');
+        //   console.log('allimng', allimg)
+
+        let totalsize = 0;
+
+        for (let i = 0; i < allimg.length; i++) {
+            let base64String = allimg[i].getAttribute("src");//base64 data
+
+            let stringLength = base64String.length - 'data:image/png;base64,'.length;
+            let sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
+            let sizeInKb = sizeInBytes / 1000000;
+            totalsize += sizeInKb;
+        }
+
+
+
+        console.log(
+            image,
+            email,
+            title,
+            url,
+            category,
+            select,
+            shortdesc,
+            author,
+            metatitle,
+            metakeyword,
+            metadesc
+        );
+        console.log(hvalue);
+
+
+
+        let formdata = new FormData();
+        formdata.append("image", image);
+        formdata.append("email", email);
+        formdata.append("title", title);
+        formdata.append("url", url);
+        formdata.append("category", category);
+        formdata.append("select", select);
+        formdata.append("shortdesc", shortdesc);
+        formdata.append("author", author);
+        formdata.append("metatitle", metatitle);
+        formdata.append("metakeyword", metakeyword);
+        formdata.append("metadesc", metadesc);
+
+
+
+        let formdata1 = new FormData();
+        formdata1.append("summernote", hvalue);
+
+        formdata1.append("email", email);
+        formdata1.append("title", title);
+        formdata1.append("url", url);
+        formdata1.append("category", category);
+        formdata1.append("select", select);
+        formdata1.append("shortdesc", shortdesc);
+        formdata1.append("author", author);
+        formdata1.append("metatitle", metatitle);
+        formdata1.append("metakeyword", metakeyword);
+        formdata1.append("metadesc", metadesc);
+
+        //  console.log(formdata1);
+
+
+
+        if (totalsize > 2) {
+            alert("Image size is too big!");
+            //document.querySelector('.note-editor').style.border = "2px solid #db0000";
+        } else {
+
+            //   $.ajax({
+            //           url: "/usersblogdata",
+            //           data: formdata,
+            //           contentType: false,
+            //           processData: false,
+            //           type: "POST",
+            //           success: function (data) {
+            //               location.reload();
+            //           },
+            //       });
+
+            //   setTimeout(function () {
+
+            //       $.ajax({
+            //           url: "/usersblogdataEditor",
+            //           data: formdata1,
+            //           contentType: false,
+            //           processData: false,
+            //           type: "POST",
+            //           success: function (data) {
+            //               location.reload();
+            //           },
+            //       });
+            //   }, 4000);
+        }
+
+
+
+    }
+
+
+    async function deleteBlog(id) {
+        console.log(id);
+        const res = await fetch("/deleteblog", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                id,
+            }),
+        });
+
+        const data = await res.json();
+        console.log(data);
+    }
+
+
   return (
     <>
     <div class="body-content">
@@ -25,7 +207,7 @@ const BlogsManagement = () => {
                                         <div class="form-group">
                                             <label for="title" class="font-weight-600">Title</label>
                                             <input type="text" class="form-control" name="title" id="title"
-                                                autocomplete="off" placeholder="Enter Title" onchange="settingUrl()" />
+                                                autocomplete="off" placeholder="Enter Title"  onChange={e => settingUrl(e)} />
                                         </div>
                                         <div class="form-group">
                                             <label for="url" class="font-weight-600">Project Url</label>
@@ -37,7 +219,11 @@ const BlogsManagement = () => {
                                             <label for="category" class="font-weight-600">Category</label>
                                             <div class="">
                                                 <select class="form-control basic-single" name="category" id="category">
-                                                    <optgroup label="Select Category" id="optgroup"></optgroup>
+                                                    <optgroup label="Select Category" id="optgroup">
+                                                        {allCategory?.map(x=>{
+                                                            return(<option value={x.category} >{x.category}</option>)
+                                                        })}
+                                                    </optgroup>
                                                 </select>
                                             </div>
                                         </div>
@@ -83,15 +269,27 @@ const BlogsManagement = () => {
                                                 id="shortdesc" rows="3"></textarea>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group d-flex flex-column">
                                             <label for="image" class="font-weight-600" id="colorRed">File<span
                                                     id="starRed">*</span></label>
-                                            <input type="file" name="image" id="image" class="custom-input-file"
+                                            <input type="file" name="image" id="image" class="custom-input-file border-0"
                                                 data-multiple-caption="{count} files selected" accept="image/*" multiple
-                                                required />
-                                            <label for="image" id="borderRed">
+                                                required onChange={e => setDynamicLabel(e)} />
+                                            <label for="image" id="borderRed" style={{
+                                                                position: "absolute",
+                                                                left: "0px",
+                                                                background: "#ffffff",
+                                                                borderRadius: "4px",
+                                                                width: "calc(100% - 30px)",
+                                                                padding: " 5px",
+                                                                paddingLeft: "14px",
+                                                                border: "1px solid rgb(229 229 229)",
+                                                                color: "#6c6c6c",
+                                                                width: "100%",
+                                                                top: "33px"
+                                                            }}>
                                                 <i class="fa fa-upload"></i>
-                                                <span>Choose a file…</span>
+                                                <span id='dynamicLabel'>Choose a file…</span>
                                             </label>
                                         </div>
 
@@ -158,7 +356,25 @@ const BlogsManagement = () => {
                                             <th>Edit/Delete</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody"></tbody>
+                                    <tbody id="tbody">
+
+                                    {everyBlog?.map((x, index) => {
+                                        return (
+                                            <tr key={x._id}>
+                                                <td>{index + 1}</td>
+                                                <td>{x.title}</td>
+                                                <td>{x.category}</td>
+                                                <td>{x.type}</td>
+                                                <td>{x.image}</td>
+                                                <td><label class="switch"><input onclick="blogVisibility('${data[i]._id}',event)" id="checkbox${data[i]._id}" type="checkbox" checked={x.status} /><span class="slider round"></span></label>
+                                                </td>
+                                                <td style={{display: "flex",border: "none",justifyContent: "center"}}><a href="/admin/blog-edit/${data[i].url
+                    }" target="blank" ><button style={{background: "#09660c"}}><i class="fa fa-pen"></i></button></a><button onclick='deleteBlog("${data[i]._id}")' style={{background: "#d50606"}}><i class="fa fa-trash" ></i></button></td>
+                                            </tr>
+                                        )
+                                    })}
+
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

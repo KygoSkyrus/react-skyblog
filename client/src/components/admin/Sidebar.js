@@ -116,25 +116,25 @@ const Sidebar = (props) => {
 
                     <ul class="menu-list" onClick={e => handleSelectedOption(e)}>
                         <li class="menu-item">
-                            <a class="menu-link" href="">
+                            <a class="menu-link" href="/admin/dashboard">
                                 <i class="fas fa-solid fa-table"></i>
                                 <span class="menu-link-text">Dashboard</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="">
+                            <a class="menu-link" href="/admin/blogs-management">
                                 <i class="fas fa-solid fa-user"></i>
                                 <span class="menu-link-text">Blogs</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="">
+                            <a class="menu-link" href="/admin/messages">
                                 <i class="fas fa-solid fa-paw"></i>
                                 <span class="menu-link-text">Message</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="">
+                            <a class="menu-link" href="/admin/user-submitted-blogs">
                                 <i class="fas fa-solid fa-user"></i>
                                 <span class="menu-link-text">Submitted Blogs</span>
                             </a>

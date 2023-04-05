@@ -616,6 +616,22 @@ app.post("/usersblogdata", upload.single("image"), async (req, res) => {
     }
   }
 });
+
+
+app.post("/usersubmittedblogs",  async (req, res) => {
+  const details = req.body;
+
+    try {
+      let ret = await USERBLOG.find({})
+       
+      console.log("userbloggggggs-",ret)
+
+      res.send(ret);
+      
+    } catch (err) {
+      console.log(err);
+    }
+  })
 //------------------------USERBLOG-----------------------------
 
 

@@ -8,7 +8,33 @@
 
 - IMPORTNAT ::::THERE IS prop drilling ,,very deep...use redux and fix
 
+    //in this add a add button for blogs,,it will be like visiblity switch,,,when ne it means it will be added to the adminb blogs
+    //add the deleted and add api to backend and think about edit,,,not a good idea to edit the blog,,,leave it
 
 
 ### things could be better
 - in single blog...in react the single blog api is not used,,as i hlready have lsit of all blogs,,so avoilding calling this api and looping pver the already fetched all blogs to find the single blog and alos the previous and next blog,,,[avoiding calling the next prev api too ]---------but later if the number of blogs are too much to afford a loop over them then api should be called...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### magento 
+Consumer Key: oss8zd78nlg78i4w1k2s0sknv26hnoyd
+Consumer Secret: r1mul7xs4bj3kn80diin9l5epaax1f0n
+Access Token: fy1plwmgrw4tg03mbdmd6qrowiylfxio
+Access Token Secret: g58w2qwvdvzvn9j22ld2hv00hszn09ft
+https://mcstaging.charbroil.com/
