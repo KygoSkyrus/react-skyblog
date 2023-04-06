@@ -5,6 +5,7 @@ const BlogsManagement = (props) => {
     const { allCategory}=props
 
     const [everyBlog,setEveryBlog]=useState()
+    const [checkedOrNot,setCheckedOrNot]=useState()
 
     useEffect(()=>{
       getAllBlogs()
@@ -257,7 +258,7 @@ const BlogsManagement = (props) => {
                                                 <select class="form-control basic-single" name="category" id="category">
                                                     <optgroup label="Select Category" id="optgroup">
                                                         {allCategory?.map(x=>{
-                                                            return(<option value={x.category} >{x.category}</option>)
+                                                            return(<option value={x.category} key={x._id} >{x.category}</option>)
                                                         })}
                                                     </optgroup>
                                                 </select>
@@ -394,6 +395,7 @@ const BlogsManagement = (props) => {
                                     <tbody id="tbody">
 
                                     {everyBlog?.map((x, index) => {
+                                       
                                         return (
                                             <tr key={x._id}>
                                                 <td>{index + 1}</td>
@@ -401,7 +403,7 @@ const BlogsManagement = (props) => {
                                                 <td>{x.category}</td>
                                                 <td>{x.type}</td>
                                                 <td>{x.image}</td>
-                                                <td><label class="switch"><input onClick={e=>blogVisibility(x._id,e)} id={"checkbox"+x._id} type="checkbox" checked={x.status} /><span class="slider round"></span></label>
+                                                <td><label class="switch"><input onClick={e=>blogVisibility(x._id,e)}  id={"checkbox"+x._id} type="checkbox" defaultChecked={x.status==="checked"?"defaultChecked":false} /><span class="slider round"></span></label>
                                                 </td>
                                                 <td style={{display: "flex",border: "none",justifyContent: "center"}}><a href={"/admin/blog-edit/"+x.url} target="blank" ><button style={{background: "#09660c"}}><i class="fa fa-pen"></i></button></a><button onClick={e=>deleteBlog(x._id,e)} style={{background: "#d50606"}}><i class="fa fa-trash" ></i></button></td>
                                             </tr>

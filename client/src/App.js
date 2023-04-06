@@ -49,7 +49,7 @@ function App() {
 
   //---------------------moving from notadmin so that both admin and notadmin has access to this---------------------------------------
   console.log('allBlofgs in homepge porops', allBlog)
-    let catAndCount = new Object;//object with category with their count
+    let catAndCount =  Object;//object with category with their count
     let arrAllCatForNva = [];//categot to show in  navbar
 
     //blogs sorted by their type

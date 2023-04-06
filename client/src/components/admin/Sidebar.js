@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import {Link} from 'react-router-dom'
 
 import CategoryModal from './CategoryModal'
 import ChangePasswordModal from './ChangePasswordModal'
@@ -144,28 +144,28 @@ const Sidebar = (props) => {
 
                     <ul class="menu-list" >
                         <li class="menu-item">
-                            <a class="menu-link" href="/admin/dashboard">
+                            <Link class="menu-link" to="/admin/dashboard">
                                 <i class="fas fa-solid fa-table"></i>
                                 <span class="menu-link-text">Dashboard</span>
-                            </a>
+                            </Link>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="/admin/blogs-management">
+                            <Link class="menu-link" to="/admin/blogs-management">
                                 <i class="fas fa-solid fa-user"></i>
                                 <span class="menu-link-text">Blogs</span>
-                            </a>
+                            </Link>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="/admin/messages">
+                            <Link class="menu-link" to="/admin/messages">
                                 <i class="fas fa-solid fa-paw"></i>
                                 <span class="menu-link-text">Message</span>
-                            </a>
+                            </Link>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="/admin/user-submitted-blogs">
+                            <Link class="menu-link" to="/admin/user-submitted-blogs">
                                 <i class="fas fa-solid fa-user"></i>
                                 <span class="menu-link-text">Submitted Blogs</span>
-                            </a>
+                            </Link>
                         </li>
                         <li class="menu-item" data-bs-toggle="modal" data-bs-target="#manageCat">
                             <span class="menu-link" href="">

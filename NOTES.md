@@ -18,6 +18,10 @@
 - routes are fucked up
 - homepage is not looking good
 - on admin side,,,a olots of components are repeting for instance the inputs for blogs,,,afe used in blog eidit ,post blog 
+- change every anchor tag to Link to avoid page reload
+- search in navbar is not working 
+- what is someone delets the 4 category that ypou have hardcoded in navbar
+- navbar is not looking good
 
 ### things could be better
 - in single blog...in react the single blog api is not used,,as i hlready have lsit of all blogs,,so avoilding calling this api and looping pver the already fetched all blogs to find the single blog and alos the previous and next blog,,,[avoiding calling the next prev api too ]---------but later if the number of blogs are too much to afford a loop over them then api should be called...

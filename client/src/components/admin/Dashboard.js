@@ -7,56 +7,6 @@ const Dashboard = (props) => {
     return (
         <>
 
-    
-            <div className="content-wrapper ">
-                <div className="main-content">
-                    <nav className="navbar-custom-menu navbar navbar-expand-lg m-0">
-           
-                        {/* <!--/.sidebar toggle icon--> */}
-                        <div className="d-flex flex-grow-1">
-                            <ul className="navbar-nav flex-row align-items-center ml-auto">
-                                <li className="nav-item dropdown user-menu">
-                                    <a className="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {/* <!--<img src="/assets/dist/img/user2-160x160.png" alt="">--> */}
-                                        <i className="typcn typcn-user-add-outline"></i>
-                                    </a>
-                                    <div className="dropdown-menu dropdown-menu-right">
-                                        <div className="dropdown-header d-sm-none">
-                                            <a href="#" className="header-arrow"><i className="icon ion-md-arrow-back"></i></a>
-                                        </div>
-                                        <div className="user-header">
-                                            <div className="img-user">
-                                                <img src="/assets/dist/img/avatar5.png" alt="" />
-                                            </div>
-                                            {/* <!-- img-user --> */}
-                                            <h6>Admin</h6>
-                                            <section className="adminName" style={{ color: "#28a745 !important" }}></section>
-                                            
-                                        </div>
-                                        {/* <!-- user-header --> */}
-                                        <span className="dropdown-item" data-bs-toggle="modal" data-bs-target="#change"
-                                            style={{ cursor: "pointer" }}><i className="typcn typcn-edit"></i> Change Password</span>
-                                        <span onClick="logout()" className="dropdown-item" style={{ cursor: "pointer" }}><i
-                                            className="typcn typcn-key-outline"></i> Sign Out</span>
-                                    </div>
-                                    {/* <!--/.dropdown-menu --> */}
-                                </li>
-                            </ul>
-                            {/* <!--/.navbar nav--> */}
-                            <div className="nav-clock">
-                                <div className="time">
-                                    <span className="time-hours"></span>
-                                    <span className="time-min"></span>
-                                    <span className="time-sec"></span>
-                                </div>
-                            </div>
-                            {/* <!-- nav-clock --> */}
-                        </div>
-                    </nav>
-
-                </div>
-            </div>
-
 
             <div className="body-content">
                     <div className="card-header mb-3">

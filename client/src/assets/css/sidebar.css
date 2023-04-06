@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&display=swap');
+
 /*css variables*/
 :root {
     --body-bg-color: #dce4e3;
@@ -135,6 +137,8 @@ li {
 
 .sidebar .menu-list .menu-item {    
     /* width: 100%; */
+    cursor: pointer;
+
 }
 .w{
     width: 100%;
@@ -269,6 +273,15 @@ li {
 .sidebar.active + .dashboard {
     margin-left: 22%; 
 }
+.clock {  
+    font-family: Orbitron;
+    letter-spacing: 6px;
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    background-color: #18c29c;
+    padding: 10px 15px;
+    border-radius: 9px;
+}
 
 
 
@@ -309,6 +322,7 @@ li {
     .sidebar .menu-item {
         position: relative;
         top: 4rem;
+        cursor: pointer;
     }
 }
 
