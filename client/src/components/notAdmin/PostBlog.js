@@ -155,19 +155,19 @@ const PostBlog = () => {
         <>
 
             {/* <!-- google login  --> */}
-            <div id="google" class="">
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <div id="google" className="">
+                <div className="g-signin2" data-onsuccess="onSignIn"></div>
             </div>
 
 
 
 
             {/* <!-- Banner  --> */}
-            <div class="container dnone" id="head">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="t-pt-70 t-pb-70 t-bg-secondary">
-                            <h4 class="mt-0 t-text-light text-capitalize text-center" >Post a Blog</h4>
+            <div className="container dnone" id="head">
+                <div className="row">
+                    <div className="col-12">
+                        <div className="t-pt-70 t-pb-70 t-bg-secondary">
+                            <h4 className="mt-0 t-text-light text-capitalize text-center" >Post a Blog</h4>
                         </div>
                     </div>
                 </div>
@@ -176,52 +176,52 @@ const PostBlog = () => {
 
 
 
-            <div class="t-pt-70 t-pb-70 dnone" id="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 t-mb-30 mb-lg-0">
-                            <div class="row">
+            <div className="t-pt-70 t-pb-70 dnone" id="content">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12 t-mb-30 mb-lg-0">
+                            <div className="row">
 
-                                <div class="col-12">
-                                    <div class="row d-flex justify-content-center" id="data">
+                                <div className="col-12">
+                                    <div className="row d-flex justify-content-center" id="data">
 
-                                        <div class="col-9  c12">
-                                            <h4 class="mt-0 text-capitalize text-center">
+                                        <div className="col-9  c12">
+                                            <h4 className="mt-0 text-capitalize text-center">
                                                 write a blog
                                             </h4>
 
 
-                                            <div class="row mt-4">
-                                                <div class="col-xs-12 col-sm-12 col-md-12 p-l-30 p-r-30">
+                                            <div className="row mt-4">
+                                                <div className="col-xs-12 col-sm-12 col-md-12 p-l-30 p-r-30">
                                                     <span id="frm">
-                                                        <div class="form-group">
-                                                            <label for="Email" class="font-weight-600">Email</label>
-                                                            <input type="email" class="form-control" name="email" id="email"
+                                                        <div className="form-group">
+                                                            <label htmlFor="Email" className="font-weight-600">Email</label>
+                                                            <input type="email" className="form-control" name="email" id="email"
                                                                 autocomplete="off" placeholder="Enter your email"
                                                             />
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="title" class="font-weight-600">Title</label>
-                                                            <input type="text" class="form-control" name="title" id="title"
+                                                        <div className="form-group">
+                                                            <label htmlFor="title" className="font-weight-600">Title</label>
+                                                            <input type="text" className="form-control" name="title" id="title"
                                                                 autocomplete="off" placeholder="Enter Title"
                                                                 onChange={e => settingUrl(e)} />
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="url" class="font-weight-600">Project Url</label>
-                                                            <input type="text" class="form-control" name="url" id="url"
+                                                        <div className="form-group">
+                                                            <label htmlFor="url" className="font-weight-600">Project Url</label>
+                                                            <input type="text" className="form-control" name="url" id="url"
                                                                 autocomplete="off" placeholder="Project URL" />
                                                         </div>
 
 
 
-                                                        <div class="form-group">
-                                                            <label for="category" class="font-weight-600">Category</label>
-                                                            <input type="text" class="form-control" name="category"
+                                                        <div className="form-group">
+                                                            <label htmlFor="category" className="font-weight-600">Category</label>
+                                                            <input type="text" className="form-control" name="category"
                                                                 id="category" autocomplete="off" placeholder="Category" />
                                                         </div>
 
-                                                        <label for="select" class="font-weight-600">Select</label>
-                                                        <div class="form-group wrapper11">
+                                                        <label htmlFor="select" className="font-weight-600">Select</label>
+                                                        <div className="form-group wrapper11">
                                                             <input type="radio" name="select" id="option-1"
                                                                 value="featured blogs" />
                                                             <input type="radio" name="select" id="option-2"
@@ -232,46 +232,46 @@ const PostBlog = () => {
                                                                 value="todays blogs" />
                                                             <input type="radio" name="select" id="option-5" value="none" />
 
-                                                            <label for="option-1" class="option option-1">
-                                                                <div class="dot"></div>
+                                                            <label htmlFor="option-1" className="option option-1">
+                                                                <div className="dot"></div>
                                                                 <span>&nbsp;Featured Blogs</span>
                                                             </label>
-                                                            <label for="option-2" class="option option-2">
-                                                                <div class="dot"></div>
+                                                            <label htmlFor="option-2" className="option option-2">
+                                                                <div className="dot"></div>
                                                                 <span>&nbsp;Trending Blogs</span>
                                                             </label>
-                                                            <label for="option-3" class="option option-3">
-                                                                <div class="dot"></div>
+                                                            <label htmlFor="option-3" className="option option-3">
+                                                                <div className="dot"></div>
                                                                 <span>&nbsp;Popular Blogs</span>
                                                             </label>
-                                                            <label for="option-4" class="option option-4">
-                                                                <div class="dot"></div>
+                                                            <label htmlFor="option-4" className="option option-4">
+                                                                <div className="dot"></div>
                                                                 <span>&nbsp;Todays Blogs</span>
                                                             </label>
-                                                            <label for="option-5" class="option option-5">
-                                                                <div class="dot"></div>
+                                                            <label htmlFor="option-5" className="option option-5">
+                                                                <div className="dot"></div>
                                                                 <span>&nbsp;None</span>
                                                             </label>
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label for="summernote" class="font-weight-600">Blog Content</label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="summernote" className="font-weight-600">Blog Content</label>
                                                             <textarea id="summernote" name="summernote"></textarea>
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label for="shortdesc" class="font-weight-600">Short
+                                                        <div className="form-group">
+                                                            <label htmlFor="shortdesc" className="font-weight-600">Short
                                                                 Description</label>
-                                                            <textarea name="shortdesc" placeholder="" class="form-control"
+                                                            <textarea name="shortdesc" placeholder="" className="form-control"
                                                                 id="shortdesc" rows="3"></textarea>
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label for="image" class="font-weight-600 d-block">File</label>
-                                                            <input type="file" name="image" id="image" class="custom-input-file"
+                                                        <div className="form-group">
+                                                            <label htmlFor="image" className="font-weight-600 d-block">File</label>
+                                                            <input type="file" name="image" id="image" className="custom-input-file"
                                                                 data-multiple-caption="{count} files selected" accept="image/*"
                                                                 multiple required="required" style={{ border: "none" }} onChange={e => setDynamicLabel(e)} />
-                                                            <label for="image" class="form-group" style={{
+                                                            <label htmlFor="image" className="form-group" style={{
                                                                 position: "absolute",
                                                                 left: "0px",
                                                                 background: "#ffffff",
@@ -282,52 +282,52 @@ const PostBlog = () => {
                                                                 color: "#6c6c6c",
                                                                 width: "100%",
                                                             }}>
-                                                                <i class="fa fa-upload"></i>
+                                                                <i className="fa fa-upload"></i>
                                                                 <span id='dynamicLabel'>Choose a file…</span>
                                                             </label>
 
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label for="author" class="font-weight-600">Author Name</label>
-                                                            <input type="text" class="form-control" name="author" id="author"
+                                                        <div className="form-group">
+                                                            <label htmlFor="author" className="font-weight-600">Author Name</label>
+                                                            <input type="text" className="form-control" name="author" id="author"
                                                                 autocomplete="off" placeholder="Author Name" />
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label for="metatitle" class="font-weight-600">Meta Title</label>
-                                                            <input type="text" class="form-control" name="metatitle"
+                                                        <div className="form-group">
+                                                            <label htmlFor="metatitle" className="font-weight-600">Meta Title</label>
+                                                            <input type="text" className="form-control" name="metatitle"
                                                                 id="metatitle" autocomplete="off" placeholder="Meta Title" />
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label for="metakeyword" class="font-weight-600">Meta
+                                                        <div className="form-group">
+                                                            <label htmlFor="metakeyword" className="font-weight-600">Meta
                                                                 Keyword</label>
-                                                            <input type="text" class="form-control" name="metakeyword"
+                                                            <input type="text" className="form-control" name="metakeyword"
                                                                 id="metakeyword" autocomplete="off"
                                                                 placeholder="Meta Keyword" />
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label for="metadesc" class="font-weight-600">Meta
+                                                        <div className="form-group">
+                                                            <label htmlFor="metadesc" className="font-weight-600">Meta
                                                                 Description</label>
-                                                            <input type="text" class="form-control" name="metadesc"
+                                                            <input type="text" className="form-control" name="metadesc"
                                                                 id="metadesc" autocomplete="off"
                                                                 placeholder="Meta Description" />
                                                         </div>
-                                                        <div class="d-flex justify-content-center">
-                                                            <button id="go" class="newsletter__button " type="submit"
+                                                        <div className="d-flex justify-content-center">
+                                                            <button id="go" className="newsletter__button " type="submit"
                                                                 style={{ paddingLeft: "30px", paddingRight: "30px" }} onClick={(e) => sendData(e)}>
                                                                 send blog
-                                                                <span class="st-btn-icon">
-                                                                    <span class="las la-arrow-right"></span>
+                                                                <span className="st-btn-icon">
+                                                                    <span className="las la-arrow-right"></span>
                                                                 </span>
                                                             </button>
                                                         </div>
 
                                                     </span>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-6 p-l-30 p-r-30"></div>
+                                                <div className="col-xs-12 col-sm-12 col-md-6 p-l-30 p-r-30"></div>
                                             </div>
 
 

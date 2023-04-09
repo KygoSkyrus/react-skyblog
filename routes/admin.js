@@ -5,11 +5,11 @@ const router = express("router");
 router.get("/:admin", (req, res) => {
 
   const adminCookie = req.cookies["admin"];
-  console.log(adminCookie);
+  console.log('in admin route-------------------------',adminCookie);
 
   const link = req.url;
   var lastPart = link.substring(link.lastIndexOf("/") + 1, link.length);
-  console.log(lastPart);
+  console.log("lastPart",lastPart);
 
   // switch (lastPart) {
   //   case "login":
@@ -47,7 +47,8 @@ router.get("/:admin", (req, res) => {
   //           res.redirect("/admin/dashboard");
   //         }
   //         break;
-  //   default:res.redirect("/admin");
+  //   default:"";
+  //   //res.redirect("/admin")
   //     // res.render("../views/error.ejs", { text: "..." });
   // }
 

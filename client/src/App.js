@@ -32,6 +32,7 @@ function App() {
 
     const data = await res.json();
     console.log('getALLblogs', data);
+    console.table(data)
     setAllBlog(data)
   }
 
@@ -48,9 +49,9 @@ function App() {
 
 
   //---------------------moving from notadmin so that both admin and notadmin has access to this---------------------------------------
-  console.log('allBlofgs in homepge porops', allBlog)
-    let catAndCount =  Object;//object with category with their count
-    let arrAllCatForNva = [];//categot to show in  navbar
+    console.log('allBlofgs in homepge porops', allBlog)
+    let catAndCount = Object();//object with category with their count
+    let arrAllCatForNav = [];//categot to show in  navbar
 
     //blogs sorted by their type
     let featuredArray = [];
@@ -74,9 +75,7 @@ function App() {
         }
 
         //category to show in  navbar
-        if (!arrAllCatForNva.includes(blog.category)) arrAllCatForNva.push(blog.category);
-
-        //footer categories are same as navbar's
+        if (!arrAllCatForNav.includes(blog.category)) arrAllCatForNav.push(blog.category);
 
         //for setting blogs by their type
         switch (blog.type) {
@@ -92,7 +91,7 @@ function App() {
                 break;
         }
 
-        //for setting blogs by categiry
+        //for setting blogs by category
         switch (blog.category) {
             case "tech": techArray.push(blog)
                 break;
@@ -105,18 +104,16 @@ function App() {
         }
     });
 
-    console.log('arrAllCatForNva', arrAllCatForNva)
+    console.log('arrAllCatForNav', arrAllCatForNav)
     //categories that are in navbar
     let catinnav = ["tech", "lifestyle", "business", "travel"];
-    let finalArr = arrAllCatForNva.filter(function (item) {
+    let finalArr = arrAllCatForNav.filter(function (item) {
         return !catinnav.includes(item);
     });
 
 
-    //remeber to reverse the arrays to show latest blog first
+    //NOTE :: Remeber to reverse the arrays to show latest blog first
 
-    //for setting blogs in different categories and show on homepage
-    var hero = ""; //(banner)//hero element will have one of each categories [rememner not tp repeat blogs on homepage];;try picking every blogs by type arry and its be like poplararr[populararr.length-1]
 
   //----------------------moving from notadmin so that both admin and notadmin has access to this---------------------------------------
 
@@ -128,16 +125,12 @@ function App() {
   return (
     <BrowserRouter>
 
-
       <Routes>
-        <Route path="/*" exact element={<NotAdmin allBlog={allBlog} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} />} />
+        <Route path="/*" exact element={<NotAdmin allBlog={allBlog} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} />} />
+
         <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} />} />
       </Routes>
       
-      {/* <Route path="/" exact children={<Homepage allBlog={allBlog} allCategory={allCategory} />} /> */}
-      {/* <Route path="/:id" exact component={SingleBlog} /> */}
-
-
     </BrowserRouter>
   );
 }

@@ -24,7 +24,7 @@ var smtpTransport = nodemailer.createTransport({
  //users messages related routes
 router.post("/message", urlencodedParser, (req, res) => {
   const details=req.body;
-  console.log(details)
+  //console.log(details)
 
   
   try { 
@@ -75,7 +75,7 @@ router.post("/showMessage", async (req, res) => {
   try {
    
     let ret =await CONTACT.find({})
-    console.log("contact message",ret)
+    //console.log("contact message",ret)
     res.send(ret)
   } catch (err) {
     console.log(err);
@@ -111,6 +111,7 @@ router.post("/show", async (req, res) => {
 
 //for showing database blogs records in blogs-management (admin panel)
 router.post("/show2", async (req, res) => {
+  console.log("show2 api called-----------")
   try {
     
     let ret =await BLOG.find({})

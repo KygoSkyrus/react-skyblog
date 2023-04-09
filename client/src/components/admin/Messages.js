@@ -38,26 +38,26 @@ const Messages = () => {
 
   return (
     <>
-     <div class="body-content">
+     <div className="body-content">
 
-<div class="card mb-4">
-    <div class="card-header">
-        <div class="d-flex justify-content-between align-items-center">
+<div className="card mb-4">
+    <div className="card-header">
+        <div className="d-flex justify-content-between align-items-center">
             <div>
-                <h6 class="fs-17 font-weight-600 mb-0">Messages</h6>
+                <h6 className="fs-17 font-weight-600 mb-0">Messages</h6>
             </div>
-            <div class="text-right">
-                <div class="actions">
-                    <a href="" class="action-item"><i class="ti-reload"></i></a>
+            <div className="text-right">
+                <div className="actions">
+                    <a href="" className="action-item"><i className="fas fa-refresh"></i></a>
                 </div>
             </div>
         </div>
     </div>
 
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table display table-bordered table-striped table-hover column-rendering">
+    <div className="card-body">
+        <div className="table-responsive">
+            <table className="table display table-bordered table-striped table-hover column-rendering">
                 <thead>
                     <tr>
                         <th>S. No.</th>
@@ -78,7 +78,7 @@ const Messages = () => {
                                 <td>{x.email}</td>
                                 <td>{x.phone}</td>
                                 <td>{x.note}</td>
-                                <td style={{display: "flex",border: "none",justifyContent: "center"}}><button onClick={e=>deleteMessage(x._id,e)} style={{background: "#d50606"}}><i class="fa fa-trash" ></i></button></td>
+                                <td style={{display: "flex",border: "none",justifyContent: "center"}}><button onClick={e=>deleteMessage(x._id,e)} style={{background: "#d50606"}}><i className="fa fa-trash" ></i></button></td>
                             </tr>
                         )
                     })}

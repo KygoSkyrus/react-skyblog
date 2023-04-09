@@ -42,14 +42,7 @@ const ChangePasswordModal = () => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLabel">Change Password</h5>
-                            {/* <button type="button" id="close" className="btn-close" data-bs-dismiss="modal" aria-label="Close" style={{
-                                backgroundColor: "inherit",
-                                border: "none",
-                                outline: "none",
-                                cursor: "pointer"
-                            }}> */}
-                                <i className="fa fa-window-close fa-2x" type="button" id="close"  data-bs-dismiss="modal" aria-label="Close"></i>
-                            {/* </button> */}
+                                <i className="fa fa-window-close fa-2x" type="button" id="close"  data-dismiss="modal" aria-label="Close"></i>
                         </div>
                         <div className="modal-body">
                             <div className="d-flex align-items-center justify-content-center text-center">

@@ -13,11 +13,18 @@ const Sidebar = (props) => {
     const { allCategory } = props
     const [adminName, setAdminName] = useState()
 
+
+    //const [currentUrl,setCurrentUrl]=useState()
+
     useEffect(() => {
         getSidebarWorking()
         getAdminName()
     }, [])
 
+    useEffect(()=>{
+        handleSelectedOption()
+        //setCurrentUrl(window.location.href)
+    },[])
 
     //this will set the admin name in sidebar
     async function getAdminName() {
@@ -57,66 +64,53 @@ const Sidebar = (props) => {
 
 
     function getSidebarWorking() {
-        //elements 
         const btnToggler = document.querySelector(".navbar-togglerr");
-        // const inputSearch = document.querySelector(".navbar-search");
-        // const iconSearch = document.querySelector("#icon-search");
         const navbar = document.querySelector(".sidebar");
         const menuItem = document.querySelectorAll(".menu-item");
 
-        //events
         btnToggler.addEventListener('click', () => {
             navbar.classList.toggle('active');
             menuItem?.forEach(x => {x.classList.toggle('pl');x.classList.toggle('w')})
-
         });
 
-        // inputSearch.addEventListener('click', () => {
-        //     if (!navbar.classList.contains("active")) {
-        //         navbar.classList.add('active');
-        //     }
-        // });
-
-        // iconSearch.addEventListener('click', () => {
-        //     if (!navbar.classList.contains("active")) {
-        //         navbar.classList.add('active');
-        //     }
-        // });
     }
 
 
-    useEffect(() => {
-        handleSelectedOption()
-    }, [])
 
-    //have to fix this when an optin is slected from sidebar,,highlight that
-    function handleSelectedOption() {
-        console.log('hrefffs', window.location.origin, window.location.href)
-
-        // if(window.location.href===window.location.origin+"/admin/messages"){
-        //     let anchor=document.querySelector('[href="/admin/messages"]')
-        //     console.log('-----',anchor)
-        //     anchor.parentElement.classList.add('selected')
-
-        // }
+    function handleSelectedOption(e) {
+        let currentOption;
+     
         switch (window.location.href) {
 
-            case window.location.origin + "/admin/dashboard": document.querySelector('[href="/admin/dashboard"]').parentElement.classList.toggle('selected')
+            case window.location.origin + "/admin/dashboard": common("dashboard")
                 break;
 
-            case window.location.origin + "/admin/blogs-management": document.querySelector('[href="/admin/blogs-management"]').parentElement.classList.toggle('selected')
+            case window.location.origin + "/admin/blogs-management": common("management")
                 break;
 
-            case window.location.origin + "/admin/messages": document.querySelector('[href="/admin/messages"]').parentElement.classList.toggle('selected')
+            case window.location.origin + "/admin/messages": common("messages")
                 break;
 
-            case window.location.origin + "/admin/user-submitted-blogs": document.querySelector('[href="/admin/user-submitted-blogs"]').parentElement.classList.toggle('selected')
+            case window.location.origin + "/admin/user-submitted-blogs": common("submitted")
                 break;
 
             default:
                 break;
         }
 
+        function common(data){
+            document.querySelector(`[data-link="${data}"]`)?.classList.add('selected')
+            currentOption=data
+        }
+
+        //removing selected class from other options
+        document.getElementById('handleSelected')?.childNodes.forEach(x=>{
+            if(x.classList.contains('selected') ){
+                if(x.dataset.link!==currentOption){
+                    x.classList.remove('selected')
+                }
+            }
+        })
     }
 
 
@@ -125,73 +119,71 @@ const Sidebar = (props) => {
     return (
         <>
 
+            <nav className="sidebar">
+                <div className="navbar-container">
 
-
-            <nav class="sidebar">
-                <div class="navbar-container">
-
-                    <div class="navbar-logo-div">
-                        <a class="navbar-logo-link" href="">
-                            <i class="fas fa-shield-dog"></i>
+                    <div className="navbar-logo-div">
+                        <a className="navbar-logo-link" href="!#">
+                            <i className="fas fa-shield-dog"></i>
                         </a>
-                        <button class="navbar-togglerr"><i class='fas fa-solid fa-bars'></i></button>
+                        <span className="navbar-togglerr"><i className='fas fa-solid fa-bars'></i></span>
                     </div>
 
 
                     {/* <input type="search" name="search" placeholder="Search..."
-                        class="navbar-search" id="search" />
-                    <i id='icon-search' class="fas fa-regular fa-magnifying-glass"></i> */}
+                        className="navbar-search" id="search" />
+                    <i id='icon-search' className="fas fa-regular fa-magnifying-glass"></i> */}
 
-                    <ul class="menu-list" >
-                        <li class="menu-item">
-                            <Link class="menu-link" to="/admin/dashboard">
-                                <i class="fas fa-solid fa-table"></i>
-                                <span class="menu-link-text">Dashboard</span>
+                    <ul className="menu-list" id='handleSelected' onClick={e=>handleSelectedOption(e)}>
+                        <li className="menu-item" data-link="dashboard" >
+                            <Link className="menu-link" to="/admin/dashboard">
+                                <i className="fas fa-solid fa-table"></i>
+                                <span className="menu-link-text">Dashboard</span>
                             </Link>
                         </li>
-                        <li class="menu-item">
-                            <Link class="menu-link" to="/admin/blogs-management">
-                                <i class="fas fa-solid fa-user"></i>
-                                <span class="menu-link-text">Blogs</span>
+                        <li className="menu-item" data-link="management" >
+                            <a className="menu-link" href="/admin/blogs-management">
+                                <i className="fas fa-solid fa-blog"></i>
+                                <span className="menu-link-text">Blogs</span>
+                            </a>
+                        </li>
+                        <li className="menu-item" data-link="messages">
+                            <Link className="menu-link" to="/admin/messages">
+                                <i className="fas fa-solid fa-comments"></i>
+                                <span className="menu-link-text">Message</span>
                             </Link>
                         </li>
-                        <li class="menu-item">
-                            <Link class="menu-link" to="/admin/messages">
-                                <i class="fas fa-solid fa-paw"></i>
-                                <span class="menu-link-text">Message</span>
+                        <li className="menu-item" data-link="submitted">
+                            <Link className="menu-link" to="/admin/user-submitted-blogs">
+                                <i className="fas fa-inbox"></i>
+                                <span className="menu-link-text">Submitted Blogs</span>
                             </Link>
                         </li>
-                        <li class="menu-item">
-                            <Link class="menu-link" to="/admin/user-submitted-blogs">
-                                <i class="fas fa-solid fa-user"></i>
-                                <span class="menu-link-text">Submitted Blogs</span>
-                            </Link>
-                        </li>
-                        <li class="menu-item" data-bs-toggle="modal" data-bs-target="#manageCat">
-                            <span class="menu-link" href="">
-                                <i class="fas fa-regular fa-stethoscope"></i>
-                                <span class="menu-link-text">Category</span>
+                        <li className="menu-item" data-toggle="modal" data-target="#manageCat">
+                            <span className="menu-link" href="">
+                            <i className="fas fa-th-list"></i>
+                            <span className="menu-link-text">Category</span>
                             </span>
                         </li>
-                        <li class="menu-item" data-bs-toggle="modal" data-bs-target="#change">
-                            <span class="menu-link" href="">
-                                <i class="fas fa-duotone fa-gear"></i>
-                                <span class="menu-link-text">Change Password</span>
+                        <li className="menu-item" data-toggle="modal" data-target="#change">
+                            <span className="menu-link" href="">
+                                <i className="fas fa-duotone fa-key"></i>
+                                <span className="menu-link-text">Change Password</span>
                             </span>
                         </li>
                     </ul>
                 </div>
 
-                <div class="user-container">
-                    <div class="user-info">
-                        <i class="fas fa-solid fa-user-secret"></i>
-                        <div class="user-details">
-                            <section class="user-name">{adminName}</section>
-                            {/* <span class="user-occupation">Admin</span> */}
+                <div className="user-container">
+                    <div className="user-info">
+                        <i className="fas fa-solid fa-user-secret"></i>
+                        <div className="user-details">
+                            <section className="user-name">{adminName}</section>
+                            {/* <span className="user-occupation">Admin</span> */}
                         </div>
                     </div>
-                    <span class="logout-btn" href="" onClick={e => logout(e)}>
-                        <i class="fas fa-sharp fa-regular fa-arrow-right-from-bracket"></i>
+                    <span className="logout-btn" href="" onClick={e => logout(e)}>
+                        <i className="fas fa-sharp fa-regular fa-arrow-right-from-bracket"></i>
                     </span>
                 </div>
             </nav>

@@ -35,6 +35,23 @@
 /*   ------------------------     LOGIN     -----------------------------   */
 
 /*   ------------------------     DASHBOARD     -----------------------------   */
+
+/*modal*/
+.modal{
+ background: #000000bd;
+}
+.modal-backdrop {
+  position: relative;
+  z-index: -1;
+}
+/*modal*/
+
+.card-header{
+padding: 20px 24px;
+    padding: 1.25rem 1.5rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eff2f7;
+}
 /* for categories in modal */
 .catinmodal {
   width: 48%;

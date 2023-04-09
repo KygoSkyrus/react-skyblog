@@ -32,15 +32,15 @@ const UserSubmittedBlogs = () => {
 
             <div className='body-content'>
 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
+                <div className="card mb-4">
+                    <div className="card-header">
+                        <div className="d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="fs-17 font-weight-600 mb-0">Posted Blogs</h6>
+                                <h6 className="fs-17 font-weight-600 mb-0">Posted Blogs</h6>
                             </div>
-                            <div class="text-right">
-                                <div class="actions">
-                                    <a href="" class="action-item"><i class="ti-reload"></i></a>
+                            <div className="text-right">
+                                <div className="actions">
+                                    <a href="" className="action-item"><i className="fas fa-refresh"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -48,9 +48,9 @@ const UserSubmittedBlogs = () => {
 
 
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table display table-bordered table-striped table-hover column-rendering">
+                    <div className="card-body">
+                        <div className="table-responsive">
+                            <table className="table display table-bordered table-striped table-hover column-rendering">
                                 <thead>
                                     <tr>
                                         <th>S. No.</th>
@@ -71,10 +71,10 @@ const UserSubmittedBlogs = () => {
                                                 <td>{x.category}</td>
                                                 <td>{x.type}</td>
                                                 <td>{x.image}</td>
-                                                <td><label class="switch"><input onclick="blogVisibility('${data[i]._id}',event)" id="checkbox${data[i]._id}" type="checkbox" checked={x.status} /><span class="slider round"></span></label>
+                                                <td><label className="switch"><input onClick="blogVisibility('${data[i]._id}',event)" id="checkbox${data[i]._id}" type="checkbox" checked={x.status} /><span className="slider round"></span></label>
                                                 </td>
                                                 <td style={{display: "flex",border: "none",justifyContent: "center"}}><a href="/admin/blog-edit/${data[i].url
-                    }" target="blank" ><button style={{background: "#09660c"}}><i class="fa fa-pen"></i></button></a><button onclick='deleteBlog("${data[i]._id}")' style={{background: "#d50606"}}><i class="fa fa-trash" ></i></button></td>
+                    }" target="blank" ><button style={{background: "#09660c"}}><i className="fa fa-pen"></i></button></a><button onClick='deleteBlog("${data[i]._id}")' style={{background: "#d50606"}}><i className="fa fa-trash" ></i></button></td>
                                             </tr>
                                         )
                                     })}

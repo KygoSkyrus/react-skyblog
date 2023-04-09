@@ -16,7 +16,7 @@ router.get("/:id", (req, res) => {
    // }else{
    //      res.render("../views/blog-details.ejs",{text:"..."});
    // }
-   console.log('im workin')
+   console.log('article - im workin')
 });
 
 

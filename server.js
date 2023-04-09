@@ -35,8 +35,11 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(require("./routes/route"));
 app.use(express.static(__dirname + "/views"));
 app.use(express.static(__dirname + "/views/panel"));
-app.use(express.json());
+// app.use(express.json());
 //app.use(cors());
+
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 
 const handleError = (err, res) => {
   res.status(500).contentType("text/plain").end("Oops! Something went wrong!");
@@ -124,12 +127,12 @@ let result =await BLOG.findOneAndUpdate( { title: details.title,url:details.url,
 
 
 //blog form data[creates a new blog from admin side]
-app.post("/blogdata", upload.single("image"),async (req, res) => {
+app.post("/blogdata", async (req, res) => {
   const details = req.body;
-  console.log("DD", details);
+  //console.log("DD", details);
 
-  const tempPath = req.file.path;
-  console.log('temppath',tempPath);
+  //const tempPath = req.file.path;
+  //console.log('temppath',tempPath);
 
 
 
@@ -193,7 +196,8 @@ app.post("/blogdata", upload.single("image"),async (req, res) => {
       metakeywords:details.metakeyword,
       metadescription: details.metadesc,
       date:date,
-    status:"checked"})
+    status:"checked",
+    detail: details.detail})
     blog.save().then(res=>console.log('res',res))
 
 
@@ -264,7 +268,7 @@ app.post("/blogVisibility", async (req, res) => {
     // con.query(sql, function (err, result) {
     //   if (err) throw err;
       //console.log(result);
-      //findByIdAndUpdate: is the alternatice to directly use id 
+      //findByIdAndUpdate: is the alternatice to directly use id
       let result = await BLOG.findOneAndUpdate({_id:details.id},{status:details.val},{new:true})
       console.log("result in visibility", result);
       //res.redirect("/blogs-management");
@@ -281,7 +285,7 @@ app.post("/blogVisibility", async (req, res) => {
 //for showing single detailed blog records
 app.post("/singleblog", async (req, res) => {
   const details = req.body;
-  console.log("single blog", details);
+  //console.log("single blog", details);
 
   try {
     // con.query(
@@ -289,7 +293,7 @@ app.post("/singleblog", async (req, res) => {
     //   function (err, result, fields) {
     //     if (err) throw err;
     let result = await BLOG.find({url:details.blogurl})
-    console.log('sb res',result)
+    //console.log('sb res',result)
         res.send(result);
     //   }
     // );
@@ -325,7 +329,7 @@ app.post("/singleblog", async (req, res) => {
 //for showing next blog records
 app.post("/next", async (req, res) => {
   const details = req.body;
-  console.log("next id", details);
+  //console.log("next id", details);
 
   try {
     // con.query(`SELECT * FROM blog `, function (err, result, fields) {
@@ -333,8 +337,8 @@ app.post("/next", async (req, res) => {
 
     let result= await BLOG.find({})
 
-      console.log(result);
-      console.log('erttrer',result.length )
+      //console.log(result);
+      //console.log('erttrer',result.length )
       res.send(result);
       // for (var i = 0; i < result.length; i++) {
       //   console.log('bcc',result[i] )
@@ -363,7 +367,7 @@ app.post("/blogedit", async (req, res) => {
      // function (err, result, fields) {
       //  if (err) throw err;
       let result = await BLOG.find({url:details.blogurl})
-        console.log('url',result);
+        //console.log('url',result);
         res.send(result);
      // }
     //);
@@ -496,7 +500,7 @@ app.post("/usersblogdataEditor", upload.single("image"), async(req, res) => {
 //usersblog form data[this adds the new blog from user]
 app.post("/usersblogdata", upload.single("image"), async (req, res) => {
   const details = req.body;
-  console.log("DD", details);
+  //console.log("DD", details);
 
   if (req.file === undefined) {
     console.log("req.file is undefined / no image");
@@ -514,7 +518,8 @@ app.post("/usersblogdata", upload.single("image"), async (req, res) => {
         metatitle:details.metatitle,
         metakeywords:details.metakeyword,
         metadescription: details.metadesc,
-        date:date,})
+        date:date,
+        detail: details.summernote})
       userblog.save()
 
       //var sql = `INSERT INTO usersblog (email, title, url, category, type, shortdescription, authorname, metatitle, metakeywords, metadescription,date) VALUES ?`;
@@ -542,7 +547,7 @@ app.post("/usersblogdata", upload.single("image"), async (req, res) => {
     }
   } else {
     const tempPath = req.file.path;
-    console.log(tempPath);
+    //console.log(tempPath);
 
     const targetPath = path.join(
       __dirname,
@@ -624,7 +629,7 @@ app.post("/usersubmittedblogs",  async (req, res) => {
     try {
       let ret = await USERBLOG.find({})
        
-      console.log("userbloggggggs-",ret)
+      //console.log("userbloggggggs-",ret)
 
       res.send(ret);
       
@@ -639,11 +644,11 @@ app.post("/usersubmittedblogs",  async (req, res) => {
 
 //for showing category records
 app.post("/showCategory", async (req, res) => {
-  console.log("sc");
+  //console.log("sc");
 
   try {
     let ret =await CATEGORY.find({})
-    console.log("RET",ret)
+    //console.log("RET",ret)
 
     res.send(ret);
     /*
@@ -761,32 +766,33 @@ app.post("/searchblog", upload.single("image"), async (req, res) => {
 //ADMIN LOGIN
 app.post("/admin/login", urlencodedParser, async (req, res) => {
   const credentials = req.body;
-  console.log(credentials);
+  console.log('cred',credentials);
 
   try {
-    // var sql = `SELECT * FROM admin WHERE username = '${credentials.userName}' AND password = '${credentials.password}'`;
 
-    const result = await ADMIN.find({ username: credentials.userName,password:credentials.password })
-    //console.log('res for admin',result)
-   // con.query(sql, function (err, result) {
-   //   if (err) throw err;
 
-      if (result.length >= 1) {
+    const result = await ADMIN.findOne({ username: credentials.username,password:credentials.password })
+
+      if (result) {
         if (
-          credentials.userName === result[0].username &&
-          credentials.password === result[0].password
+          credentials.username === result.username &&
+          credentials.password === result.password
         ) {
           console.log("admin logged in!!!");
-          var value = `${credentials.userName}`;
-          res.cookie("admin", value, { maxAge: 6000000, httpOnly: true });
-          return res.redirect("/admin/dashboard");
+          // var value = `${credentials.userName}`;
+          // res.cookie("admin", value, { maxAge: 6000000, httpOnly: true });
+          // return res.redirect("/admin/dashboard");
+          res.send({ matched: true });
         }
       } else {
         //res.send({ message: "wrong credentials" });
         console.log("wrong credentials");
-        res.render("../views/panel/login.ejs", {
-          text: "Credentials mismatched!! Try again",
-        });
+        // return res.redirect("/admin/login");
+        // res.render("../views/panel/login.ejs", {
+        //   text: "Credentials mismatched!! Try again",
+        // });
+        res.send({ matched: false });
+
       }
    // });
   } catch (err) {

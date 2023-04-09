@@ -48,19 +48,12 @@ const CategoryModal = (props) => {
 
   return (
     <>
-    <div className="modal fade" id="manageCat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal fade" id="manageCat" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered mt-0">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLabel">Categories</h5>
-                            {/* <button type="button" id="close" className="btn-close" data-bs-dismiss="modal" aria-label="Close" style={{
-                                backgroundColor: "inherit",
-                                border: "none",
-                                outline: "none",
-                                cursor: "pointer"
-                            }}> */}
-                                <i className="fa fa-window-close fa-2x" type="button" id="close"  data-bs-dismiss="modal" aria-label="Close"></i>
-                            {/* </button> */}
+                                <i className="fa fa-window-close fa-2x" type="button" id="close"  data-dismiss="modal" aria-label="Close"></i>
                         </div>
                         <div className="modal-body">
                             <div className="d-flex align-items-center justify-content-center text-center">
@@ -82,7 +75,7 @@ const CategoryModal = (props) => {
                                     <div id="catInModal" className="mb-4 d-flex flex-wrap">
                                         {allCategory?.map(x=>{
                                             return(
-                                                <section class="catinmodal" key={x._id} onClick={e=>deleteCategory(x._id,e)}>{x.category}&nbsp;&nbsp;<i class="fa fa-trash" id="ii" ></i></section>
+                                                <section className="catinmodal" key={x._id} onClick={e=>deleteCategory(x._id,e)}>{x.category}&nbsp;&nbsp;<i className="fa fa-trash" id="ii" ></i></section>
                                             )
                                         })}
                                     </div>

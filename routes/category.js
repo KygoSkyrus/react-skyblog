@@ -6,7 +6,7 @@ const CATEGORY = require("../schema/category")
 
 router.get("/:category", async (req, res) => {
    
-  console.log("im workin");
+  console.log("category - im workin");
 
   const link = req.url;
   var lastPart = link.substring(link.lastIndexOf("/") + 1, link.length);
@@ -17,21 +17,7 @@ router.get("/:category", async (req, res) => {
     let result =await CATEGORY.find({})
     console.log("RET",result)
 
-    for (var i = 0; i < result.length; i++){
-         if(result[i].category==lastPart){
-            res.render("../views/category-single.ejs", {text:"..."} );
-            break;
-         }
-         else{
-            if(i===result.length-1){
-               res.render("../views/error.ejs", {text:"..."} );
-            }
-         }
-      }
-    // con.query("SELECT * FROM category", function (err, result, fields) {
-    //   if (err) throw err;
-
-    //   for (var i = 0; i < result.length; i++){
+    // for (var i = 0; i < result.length; i++){
     //      if(result[i].category==lastPart){
     //         res.render("../views/category-single.ejs", {text:"..."} );
     //         break;
@@ -42,8 +28,7 @@ router.get("/:category", async (req, res) => {
     //         }
     //      }
     //   }
-    //   console.log(result);
-    // });
+
   } catch (err) {
     console.log(err);
   }
