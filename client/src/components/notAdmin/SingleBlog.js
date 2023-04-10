@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom"
+
+
 import OtherBlogsComp from './OtherBlogsComp'
 import BlogWrapperBottom from './BlogWrapperBottom'
 import CategoryList from './CategoryList'
+
+
 const SingleBlog = (props) => {
 
     const { allBlog, allCategory, catAndCount } = props
@@ -19,10 +23,10 @@ const SingleBlog = (props) => {
     let theNext;
     let thePrev;
 
- 
+
 
     for (let i = 0; i < allBlog.length; i++) {
-console.log('loop')
+        console.log('loop')
         //setting the prev blog
         thePrev = allBlog[i - 1];
 
@@ -35,10 +39,10 @@ console.log('loop')
             break;
         }
 
-        
+
     }
 
-console.log('end')
+    console.log('end')
 
     //to navigate to erro page
     // if(!theBlog){

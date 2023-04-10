@@ -94,7 +94,7 @@ const Admin = (props) => {
 
             <Route path="/user-submitted-blogs" exact element={<UserSubmittedBlogs />} />
 
-            <Route path="/edit-blog/:id" exact element={<EditBlog />} />
+            <Route path="/edit-blog/:id" exact element={<EditBlog allBlog={allBlog} />} />
 
             <Route path="*" element={<Error />} />
           </Routes>

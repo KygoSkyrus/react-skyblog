@@ -1,7 +1,17 @@
 import React from 'react'
 
-const EditBlog = () => {
+const EditBlog = (props) => {
 
+const {allBlog}=props
+
+console.log('edit allBlog',allBlog)
+
+
+const link = document.baseURI;
+var blogurl = link.substring(
+    link.lastIndexOf("/") + 1,
+    link.length
+);
 
   function settingUrl(e) {
     let title = e.target.value;

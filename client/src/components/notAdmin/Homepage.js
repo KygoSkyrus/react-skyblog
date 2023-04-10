@@ -55,15 +55,15 @@ const Homepage = (props) => {
                                 </div>
                                 <div id="todays" className="row">
                                     <div className="col-lg-8 t-mb-30 mb-lg-0">
-                                        <BlogWrapperBottom data={todaysArray[todaysArray.length - 1]} />
+                                        <BlogWrapperBottom data={todaysArray[todaysArray.length - 1]} displayDetail='d-none' />
                                     </div>
                                     <div className="col-lg-4">
                                         <div className="row">
                                             <div className="col-12 t-mb-30">
-                                                {todaysArray[todaysArray.length - 2] ? <BlogWrapperBottom data={todaysArray[todaysArray.length - 2]} displayRead='d-none' displayDesc='d-none' /> : <BlogWrapperBottom data={todaysArray[todaysArray.length - 1]} displayRead='d-none' displayDesc='d-none' />}
+                                                {todaysArray[todaysArray.length - 2] ? <BlogWrapperBottom data={todaysArray[todaysArray.length - 2]} displayRead='d-none' displayDesc='d-none' displayDetail='d-none' /> : <BlogWrapperBottom data={todaysArray[todaysArray.length - 1]} displayRead='d-none' displayDesc='d-none' displayDetail='d-none' />}
                                             </div>
                                             <div className="col-12">
-                                                {todaysArray[todaysArray.length - 3] ? <BlogWrapperBottom data={todaysArray[todaysArray.length - 3]} displayRead='d-none' displayDesc='d-none' /> : <BlogWrapperBottom data={todaysArray[todaysArray.length - 1]} displayRead='d-none' displayDesc='d-none' />}
+                                                {todaysArray[todaysArray.length - 3] ? <BlogWrapperBottom data={todaysArray[todaysArray.length - 3]} displayRead='d-none' displayDesc='d-none' displayDetail='d-none' /> : <BlogWrapperBottom data={todaysArray[todaysArray.length - 1]} displayRead='d-none' displayDesc='d-none' displayDetail='d-none' />}
                                             </div>
                                         </div>
                                     </div>

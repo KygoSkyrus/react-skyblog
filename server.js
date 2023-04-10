@@ -6,24 +6,18 @@ const path = require("path");
 const fs = require("fs");
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-//const cors =require('cors')
-//node needed npm
-// const uuid = require('uuid-v4');
-// const cloudinary = require('cloudinary').v2;
-// const {initializeApp,cert}= require('firebase-admin/app');
-// const { getStorage } = require('firebase-admin/storage');
-// const serviceAccount = require('./shopp-itt-firebase-adminsdk-jlq2q-3afe33d836.json');
+
 
 const articles = require("./routes/articles");
 const blogEdit = require("./routes/edit");
 const categorySingle = require("./routes/category");
 const admin = require("./routes/admin");
 
-const ADMIN=require("./schema/admin")
-const BLOG=require("./schema/blog")
-const CONTACT =require("./schema/contact")
+const ADMIN = require("./schema/admin")
+const BLOG = require("./schema/blog")
+const CONTACT = require("./schema/contact")
 const CATEGORY = require("./schema/category")
-const USERBLOG=require("./schema/userblog")
+const USERBLOG = require("./schema/userblog")
 
 dotenv.config({ path: './env/config.env' });
 app.set("view engine", "ejs");
@@ -35,28 +29,14 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(require("./routes/route"));
 app.use(express.static(__dirname + "/views"));
 app.use(express.static(__dirname + "/views/panel"));
-// app.use(express.json());
-//app.use(cors());
 
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
 
 const handleError = (err, res) => {
   res.status(500).contentType("text/plain").end("Oops! Something went wrong!");
 };
 
-// Configuration 
-// cloudinary.config({
-//   cloud_name: "dbxybtpmk",
-//   api_key: "592295652843153",
-//   api_secret: "nFU-aijI0cNa3FOQ8JafSWh2cZY"
-// });
-// //firebase config
-// initializeApp({
-//   credential: cert(serviceAccount),
-//   storageBucket: 'shopp-itt.appspot.com'
-// });
-// const bucket = getStorage().bucket();
 
 
 const db = process.env.dbURI;
@@ -70,12 +50,11 @@ mongoose.connect(db, {
 }).catch((err) => console.log(err));
 
 
-//uncomment this in case you stop using cloud upload
 // const upload = multer({
 //   dest: "./views/upload",
 // });
 //setting it to empty bcz with destination defined it will upload the files at that destination and also set the path of the file to that
-const upload = multer({});
+//const upload = multer({});
 
 
 app.use("/category", categorySingle); //for all category routes
@@ -89,19 +68,9 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-//for contact page
-// app.get("/contact", (req, res) => {
-//   res.sendFile(__dirname + "/views/contact.html");
-// });
-
-//for contact page
-// app.get("/blog-post", (req, res) => {
-//   res.sendFile(__dirname + "/views/blog-post.html");
-// });
-
 //this is the admin blog edit,,[it is just to update the summernote]
 //this recive the note editor content 4sec after the rest of the form data submits
-app.post("/blogdataEditor", upload.single("image"),async (req, res) => {
+app.post("/blogdataEditor", async (req, res) => {
   const details = req.body;
   console.log("editor", details);
 
@@ -109,13 +78,11 @@ app.post("/blogdataEditor", upload.single("image"),async (req, res) => {
     console.log("yes", details.summernote.length);
 
     try {
-let result =await BLOG.findOneAndUpdate( { title: details.title,url:details.url,shortdescription:details.shortdesc,authorname:details.author,metatitle:details.metatitle,metakeywords:details.metakeyword,metadescription: details.metadesc,},{detail: details.summernote },{ new: true })
+      let result = await BLOG.findOneAndUpdate({ title: details.title, url: details.url, shortdescription: details.shortdesc, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc, }, { detail: details.summernote }, { new: true })
 
-      // var sql = `UPDATE blog SET detail = '${details.summernote}' WHERE title = '${details.title}' AND url = '${details.url}' AND shortdescription = '${details.shortdesc}' AND authorname = '${details.author}' AND metatitle = '${details.metatitle}' AND metakeywords = '${details.metakeyword}' AND metadescription = '${details.metadesc}' `;
-      //con.query(sql, function (err, result) {
-      //  if (err) throw err;
-        console.log("summernote added", result);
-        res.redirect("/admin/blogs-management");
+
+      console.log("summernote added", result);
+      res.redirect("/admin/blogs-management");
       //});
     } catch (err) {
       console.log(err);
@@ -126,132 +93,68 @@ let result =await BLOG.findOneAndUpdate( { title: details.title,url:details.url,
 
 
 
-//blog form data[creates a new blog from admin side]
+//blog data[creates a new blog from admin side]
 app.post("/blogdata", async (req, res) => {
   const details = req.body;
-  //console.log("DD", details);
+  console.log("DD", details);
 
-  //const tempPath = req.file.path;
-  //console.log('temppath',tempPath);
+  var date = new Date().toLocaleDateString();
 
+  try {
 
-
-//firebase storage
-// const file = getStorage().bucket().file(req.file.originalname);
-// await file.save(req.file.buffer, { contentType: 'image/png'});
-//first way::WORKING
-// let x=await bucket.file(fileName).createWriteStream().end(req.file.buffer)
-// console.log('piblicurl', file.publicUrl());
-// console.log('piblicurl', file);
-// console.log('piblicurl', file);
-
-
-
-  // for uploading image  file in the folder(only the .png etc files will be saved)
-  // if (    
-  //   path.extname(req.file.originalname).toLowerCase() === ".png" ||
-  //   path.extname(req.file.originalname).toLowerCase() === ".jpg" ||
-  //   path.extname(req.file.originalname).toLowerCase() === ".jpeg" ||
-  //   path.extname(req.file.originalname).toUpperCase() === ".PNG" ||
-  //   path.extname(req.file.originalname).toUpperCase() === ".JPG" ||
-  //   path.extname(req.file.originalname).toUpperCase() === ".JPEG"
-  // ) {
-  //   fs.rename(tempPath, targetPath, (err) => {
-  //     if (err) return handleError(err, res);
-  //     console.log("image uploaded");
-  //     //res.redirect("/admin/blogs-management");
-  //   });
-  // } else {
-  //   fs.unlink(tempPath, (err) => {
-  //     if (err) return handleError(err, res);
-  //     res
-  //       .status(403)
-  //       .contentType("text/plain")
-  //       .end("Only .png .jpg .jpeg files are allowed!");
-  //   });
-  // }
-
-   var date = new Date().toLocaleDateString();
-
-   try {
-
-
-    //this takes the path of the imgae from local machine(ie temppath) and the name by which it will be stored on cloud
-// const res1 =await cloudinary.uploader.upload( req.file.buffer , {public_id: req.file.originalname})
-// console.log('res1',res1)
-// let imgUrl=res1.secure_url;
-
-
-
-
-    let blog= await new BLOG({ 
+    let blog = await new BLOG({
       title: details.title,
-      url:details.url,
-      category:details.category,
-      type:details.select,
-      shortdescription:details.shortdesc,
-      authorname:details.author,
-      image:"",
-      metatitle:details.metatitle,
-      metakeywords:details.metakeyword,
+      url: details.url,
+      category: details.category,
+      type: details.select,
+      shortdescription: details.shortdesc,
+      authorname: details.author,
+      image: details.imageUrl,
+      metatitle: details.metatitle,
+      metakeywords: details.metakeyword,
       metadescription: details.metadesc,
-      date:date,
-    status:"checked",
-    detail: details.detail})
-    blog.save().then(res=>console.log('res',res))
+      detail: details.detail,
+      date: date,
+      status: "checked"
+    })
+    blog.save().then(response => {
+      console.log('res', response)
+      res.send({ blog_added: true });
+    })
+      .catch(err => {
+        console.log(err)
+        res.send({ blog_added: false });
+      })
 
-
-    //var sql = `INSERT INTO blog (title, url, category, type, shortdescription, image, authorname, metatitle, metakeywords, metadescription,date, status) VALUES ?`;
-    //var values = [
-    //   [
-    //     details.title,
-    //     details.url,
-    //     details.category,
-    //     details.select,
-    //     details.shortdesc,
-    //     req.file.originalname,
-    //     details.author,
-    //     details.metatitle,
-    //     details.metakeyword,
-    //     details.metadesc,
-    //     date,
-    //     "checked"
-    //   ],
-    // ];
-    //con.query(sql, [values], function (err, result) {
-      //if (err) throw err;
-      //console.log("user registered!!!", result);
-   // });
   } catch (err) {
     console.log(err);
   }
 });
+
 //https://picsum.photos/400/300
-//deleting blog records q
+
+//deleting blog record
 app.post("/deleteblog", async (req, res) => {
   const details = req.body;
   console.log(details);
 
   try {
-    // var sql = `DELETE FROM blog WHERE id = ${details.id}`;
-    // con.query(sql, function (err, result) {
-    //   if (err) throw err;
-
-    //mongodb
-    let resp=await BLOG.deleteOne({_id:details.id})
-   console.log(resp)
-       console.log("Number of records deleted: " + resp.deletedCount);
 
 
-       //for deleting image from cloud
-      //  let resp1=await cloudinary.uploader.destroy("WhatsApp Image 2023-03-09 at 12.43.24 PM", function(error,result) {
-      //   console.log(result, error) 
-      // }) 
-     //console.log('del resp1',resp1)
+    let resp = await BLOG.deleteOne({ _id: details.id })
+    console.log(resp)
+    console.log("Number of records deleted: " + resp.deletedCount);
 
 
-      //res.redirect("/blogs-management");
-       //res.redirect(req.originalUrl)
+    //for deleting image from cloud
+    //  let resp1=await cloudinary.uploader.destroy("WhatsApp Image 2023-03-09 at 12.43.24 PM", function(error,result) {
+    //   console.log(result, error) 
+    // }) 
+
+
+
+    //res.redirect("/blogs-management");
+    //res.redirect(req.originalUrl)
     //});
   } catch (err) {
     console.log(err);
@@ -261,19 +164,19 @@ app.post("/deleteblog", async (req, res) => {
 //seeting blogs visibility
 app.post("/blogVisibility", async (req, res) => {
   const details = req.body;
-  console.log('visibilityyyyy',details);
+  console.log('visibilityyyyy', details);
 
   try {
     // var sql = `UPDATE blog SET status = '${details.val}' WHERE id = '${details.id}'`;
     // con.query(sql, function (err, result) {
     //   if (err) throw err;
-      //console.log(result);
-      //findByIdAndUpdate: is the alternatice to directly use id
-      let result = await BLOG.findOneAndUpdate({_id:details.id},{status:details.val},{new:true})
-      console.log("result in visibility", result);
-      //res.redirect("/blogs-management");
-      // res.redirect(req.originalUrl)
-   // });
+    //console.log(result);
+    //findByIdAndUpdate: is the alternatice to directly use id
+    let result = await BLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
+    console.log("result in visibility", result);
+    //res.redirect("/blogs-management");
+    // res.redirect(req.originalUrl)
+    // });
   } catch (err) {
     console.log(err);
   }
@@ -288,13 +191,9 @@ app.post("/singleblog", async (req, res) => {
   //console.log("single blog", details);
 
   try {
-    // con.query(
-    //   `SELECT * FROM blog  WHERE url = '${details.blogurl}' `,
-    //   function (err, result, fields) {
-    //     if (err) throw err;
-    let result = await BLOG.find({url:details.blogurl})
+    let result = await BLOG.find({ url: details.blogurl })
     //console.log('sb res',result)
-        res.send(result);
+    res.send(result);
     //   }
     // );
   } catch (err) {
@@ -302,59 +201,9 @@ app.post("/singleblog", async (req, res) => {
   }
 });
 
-//not in use,,,using only one api,,,send all the blogs and then filter it out at the frontend..also dlete other common apis whihc are doing same thing,,
-//for showing previous blog records
-// app.post("/prev", async (req, res) => {
-//   const details = req.body;
-//   console.log("prev id", details);
- 
-//   try {
-//     con.query(`SELECT * FROM blog `, function (err, result, fields) {
-//       if (err) throw err;
-//       console.log(result);
 
-//       for (var i = result.length - 1; i >= 0; i--) {
-//         if (result[i].id <= details.pdd) {
-//           console.log(i, result[i]);
-//           res.send(result[i]);
-//           return;
-//         }
-//       }
-//     });
-//   } catch (err) {
-//     console.log("error", err);
-//   }
-// });
 
-//for showing next blog records
-app.post("/next", async (req, res) => {
-  const details = req.body;
-  //console.log("next id", details);
-
-  try {
-    // con.query(`SELECT * FROM blog `, function (err, result, fields) {
-    //   if (err) throw err;
-
-    let result= await BLOG.find({})
-
-      //console.log(result);
-      //console.log('erttrer',result.length )
-      res.send(result);
-      // for (var i = 0; i < result.length; i++) {
-      //   console.log('bcc',result[i] )
-      //   console.log('bc',result[i].blogcount )
-      //   if (result[i].blogcount >= details.ndd) {
-      //     console.log(i, result[i]);
-      //     //res.send(result[i]);
-      //     return;
-      //   }
-      // }
-    //});
-  } catch (err) {
-    console.log("error", err);
-  }
-});
-
+//also use the common allblog state tp get the blog
 //[admin blog] send the slected blog to edit page
 //for editing a  blog( this send back the data related to a specific blog to the blog edit page)
 app.post("/blogedit", async (req, res) => {
@@ -362,15 +211,9 @@ app.post("/blogedit", async (req, res) => {
   console.log("bid", details);
 
   try {
-    //con.query(
-     // `SELECT * FROM blog  WHERE url = '${details.blogurl}' `,
-     // function (err, result, fields) {
-      //  if (err) throw err;
-      let result = await BLOG.find({url:details.blogurl})
-        //console.log('url',result);
-        res.send(result);
-     // }
-    //);
+    let result = await BLOG.find({ url: details.blogurl })
+    //console.log('url',result);
+    res.send(result);
   } catch (err) {
     console.log(err);
   }
@@ -378,7 +221,7 @@ app.post("/blogedit", async (req, res) => {
 
 //not working
 //edited blog submission [this is the admin blog][updates the chnages in the blog]
-app.post("/blogeditsubmit", upload.single("image"), async (req, res) => {
+app.post("/blogeditsubmit", async (req, res) => {
   const details = req.body;
   console.log("blogeditsubmit", details);
 
@@ -389,15 +232,15 @@ app.post("/blogeditsubmit", upload.single("image"), async (req, res) => {
 
     try {
 
-      let result =await BLOG.findOneAndUpdate( { title: details.title,url:details.url,category:details.category,type:details.select,shortdescription:details.shortdesc,image:details.image,authorname:details.author,metatitle:details.metatitle,metakeywords:details.metakeyword,metadescription: details.metadesc,date:date},{_id: details.bid },{ new: true })
+      let result = await BLOG.findOneAndUpdate({ title: details.title, url: details.url, category: details.category, type: details.select, shortdescription: details.shortdesc, image: details.image, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc, date: date }, { _id: details.bid }, { new: true })
 
 
       //var sql = `UPDATE blog SET title = '${details.title}', url = '${details.url}', category = '${details.category}', type = '${details.select}', shortdescription = '${details.shortdesc}', authorname = '${details.author}', metatitle = '${details.metatitle}', metakeywords = '${details.metakeyword}', metadescription = '${details.metadesc}',date = '${date}' WHERE id = '${details.bid}' `;
 
-     // con.query(sql, function (err, result) {
-        //if (err) throw err;
-        console.log("blog edited!!!", result);
-        //res.redirect("/admin/blogs-management");
+      // con.query(sql, function (err, result) {
+      //if (err) throw err;
+      console.log("blog edited!!!", result);
+      //res.redirect("/admin/blogs-management");
       //});
     } catch (err) {
       console.log(err);
@@ -436,12 +279,12 @@ app.post("/blogeditsubmit", upload.single("image"), async (req, res) => {
 
     try {
 
-      let result =await BLOG.findOneAndUpdate( { title: details.title,url:details.url,category:details.category,type:details.select,shortdescription:details.shortdesc, image :req.file.originalname,authorname:details.author,metatitle:details.metatitle,metakeywords:details.metakeyword,metadescription: details.metadesc,date:date},{_id: details.bid },{ new: true })
+      let result = await BLOG.findOneAndUpdate({ title: details.title, url: details.url, category: details.category, type: details.select, shortdescription: details.shortdesc, image: req.file.originalname, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc, date: date }, { _id: details.bid }, { new: true })
 
       //var sql = `UPDATE blog SET title = '${details.title}', url = '${details.url}', category = '${details.category}', type = '${details.select}', shortdescription = '${details.shortdesc}', image = '${req.file.originalname}', authorname = '${details.author}', metatitle = '${details.metatitle}', metakeywords = '${details.metakeyword}', metadescription = '${details.metadesc}',date = '${date}' WHERE id = '${details.bid}' `;
       //con.query(sql, function (err, result) {
       //  if (err) throw err;
-        console.log("blog edited!!!", result);
+      console.log("blog edited!!!", result);
       //});
     } catch (err) {
       console.log(err);
@@ -452,17 +295,17 @@ app.post("/blogeditsubmit", upload.single("image"), async (req, res) => {
 //deleting messages records (contact form)
 app.post("/deleteMessage", async (req, res) => {
   const details = req.body;
-  console.log('deleet messsage',details.id);
+  console.log('deleet messsage', details.id);
 
   try {
     //var sql = `DELETE FROM contact WHERE id = ${details.id}`;
     //con.query(sql, function (err, result) {
     //  if (err) throw err;
-    let result=await CONTACT.deleteOne({_id:details.id})
+    let result = await CONTACT.deleteOne({ _id: details.id })
     console.log(result)
-      console.log("Number of records deleted: " + result.deletedCount);
-      res.send({ deletedCount: result.deletedCount });
-      //add feature to tell frontend that record has been deleted
+    console.log("Number of records deleted: " + result.deletedCount);
+    res.send({ deletedCount: result.deletedCount });
+    //add feature to tell frontend that record has been deleted
     //});
   } catch (err) {
     console.log(err);
@@ -472,7 +315,7 @@ app.post("/deleteMessage", async (req, res) => {
 //------------------------USERBLOG-----------------------------
 //usersBlog (blogs send by the users inserted into db in two phase)
 //this recive the note editor content 4sec after the rest of the form data submits[for userblog summernote]
-app.post("/usersblogdataEditor", upload.single("image"), async(req, res) => {
+app.post("/usersblogdataEditor", async (req, res) => {
   const details = req.body;
   console.log("editor", details);
 
@@ -480,16 +323,16 @@ app.post("/usersblogdataEditor", upload.single("image"), async(req, res) => {
     console.log("yes", details.summernote.length);
 
     try {
-      let result =await USERBLOG.findOneAndUpdate( { email:details.email,title: details.title,url:details.url,shortdescription:details.shortdesc,authorname:details.author,metatitle:details.metatitle,metakeywords:details.metakeyword,metadescription: details.metadesc,},{detail: details.summernote },{ new: true })
+      let result = await USERBLOG.findOneAndUpdate({ email: details.email, title: details.title, url: details.url, shortdescription: details.shortdesc, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc, }, { detail: details.summernote }, { new: true })
 
 
       //var sql = `UPDATE usersblog SET detail = '${details.summernote}' WHERE  email = '${details.email}' AND title = '${details.title}' AND url = '${details.url}' AND shortdescription = '${details.shortdesc}' AND authorname = '${details.author}' AND metatitle = '${details.metatitle}' AND metakeywords = '${details.metakeyword}' AND metadescription = '${details.metadesc}' `;
       //con.query(sql, function (err, result) {
-        // console.log("last errrrr");
-        // if (err) throw err;
-        console.log("last errrrr dnt run");
-        console.log("summernote added", result);
-        res.redirect("back");
+      // console.log("last errrrr");
+      // if (err) throw err;
+      console.log("last errrrr dnt run");
+      console.log("summernote added", result);
+      res.redirect("back");
       //});
     } catch (err) {
       console.log(err);
@@ -498,7 +341,7 @@ app.post("/usersblogdataEditor", upload.single("image"), async(req, res) => {
 });
 
 //usersblog form data[this adds the new blog from user]
-app.post("/usersblogdata", upload.single("image"), async (req, res) => {
+app.post("/usersblogdata", async (req, res) => {
   const details = req.body;
   //console.log("DD", details);
 
@@ -508,18 +351,20 @@ app.post("/usersblogdata", upload.single("image"), async (req, res) => {
     var date = new Date().toLocaleDateString();
 
     try {
-      let userblog= await new USERBLOG({ email:details.email,
+      let userblog = await new USERBLOG({
+        email: details.email,
         title: details.title,
-        url:details.url,
-        category:details.category,
-        type:details.select,
-        shortdescription:details.shortdesc,
-        authorname:details.author,
-        metatitle:details.metatitle,
-        metakeywords:details.metakeyword,
+        url: details.url,
+        category: details.category,
+        type: details.select,
+        shortdescription: details.shortdesc,
+        authorname: details.author,
+        metatitle: details.metatitle,
+        metakeywords: details.metakeyword,
         metadescription: details.metadesc,
-        date:date,
-        detail: details.summernote})
+        date: date,
+        detail: details.summernote
+      })
       userblog.save()
 
       //var sql = `INSERT INTO usersblog (email, title, url, category, type, shortdescription, authorname, metatitle, metakeywords, metadescription,date) VALUES ?`;
@@ -540,8 +385,8 @@ app.post("/usersblogdata", upload.single("image"), async (req, res) => {
       // ];
       //con.query(sql, [values], function (err, result) {
       //  if (err) throw err;
-       // console.log("data inserted!!!", result);
-     // });
+      // console.log("data inserted!!!", result);
+      // });
     } catch (err) {
       console.log(err);
     }
@@ -581,18 +426,20 @@ app.post("/usersblogdata", upload.single("image"), async (req, res) => {
 
     try {
 
-      let userblog= await new USERBLOG({ email:details.email,
+      let userblog = await new USERBLOG({
+        email: details.email,
         title: details.title,
-        url:details.url,
-        category:details.category,
-        type:details.select,
-        shortdescription:details.shortdesc,
-        image:"",
-        authorname:details.author,
-        metatitle:details.metatitle,
-        metakeywords:details.metakeyword,
+        url: details.url,
+        category: details.category,
+        type: details.select,
+        shortdescription: details.shortdesc,
+        image: "",
+        authorname: details.author,
+        metatitle: details.metatitle,
+        metakeywords: details.metakeyword,
         metadescription: details.metadesc,
-        date:date,})
+        date: date,
+      })
       userblog.save()
 
       // var sql = `INSERT INTO usersblog (email,title, url, category, type, shortdescription, image, authorname, metatitle, metakeywords, metadescription,date) VALUES ?`;
@@ -622,21 +469,18 @@ app.post("/usersblogdata", upload.single("image"), async (req, res) => {
   }
 });
 
-
-app.post("/usersubmittedblogs",  async (req, res) => {
+//gets all the blogs submitted by users
+app.post("/usersubmittedblogs", async (req, res) => {
   const details = req.body;
 
-    try {
-      let ret = await USERBLOG.find({})
-       
-      //console.log("userbloggggggs-",ret)
-
-      res.send(ret);
-      
-    } catch (err) {
-      console.log(err);
-    }
-  })
+  try {
+    let ret = await USERBLOG.find({})
+    //console.log("userbloggggggs-",ret)
+    res.send(ret);
+  } catch (err) {
+    console.log(err);
+  }
+})
 //------------------------USERBLOG-----------------------------
 
 
@@ -647,7 +491,7 @@ app.post("/showCategory", async (req, res) => {
   //console.log("sc");
 
   try {
-    let ret =await CATEGORY.find({})
+    let ret = await CATEGORY.find({})
     //console.log("RET",ret)
 
     res.send(ret);
@@ -663,57 +507,57 @@ app.post("/showCategory", async (req, res) => {
 });
 
 //for adding category records
-app.post("/addCategory",async (req, res) => {
+app.post("/addCategory", async (req, res) => {
   const details = req.body;
-  console.log('datils',details);
+  console.log('datils', details);
 
   try {
     // con.query("SELECT * FROM category", function (err, result, fields) {
     //   if (err) throw err;
-    let result =await CATEGORY.find({})
-    console.log("categories ",result)
+    let result = await CATEGORY.find({})
+    console.log("categories ", result)
 
 
-      if (result.length === 0) {
-        console.log("lengthiszero");
-       // var sql = `INSERT INTO category (category) VALUES ('${details.cat}')`;
-       // con.query(sql, function (err, result) {
-        //  if (err) throw err;
-        let category=new CATEGORY({category:details.cat.toLowerCase()})
-        category.save()//saving category in db
-          console.log("category inserted!!!");
-          res.send({ message: "categoryAdded" });
-        //});
-      } else {
-        let answer = "";
+    if (result.length === 0) {
+      console.log("lengthiszero");
+      // var sql = `INSERT INTO category (category) VALUES ('${details.cat}')`;
+      // con.query(sql, function (err, result) {
+      //  if (err) throw err;
+      let category = new CATEGORY({ category: details.cat.toLowerCase() })
+      category.save()//saving category in db
+      console.log("category inserted!!!");
+      res.send({ message: "categoryAdded" });
+      //});
+    } else {
+      let answer = "";
 
-        for (var i = 0; i < result.length; i++) {
-          console.log("detcat", details.cat);
-          console.log("rescat", result[i].category);
+      for (var i = 0; i < result.length; i++) {
+        console.log("detcat", details.cat);
+        console.log("rescat", result[i].category);
 
-          if (result[i].category == details.cat.toLowerCase()) {
-            console.log("it exists at", result[i]);
-            answer += "exist";
-            res.send({ message: "alreadyExists" }); //putting this will give error that cannoit set header after they are snet ,this might be bcz of the loop,,so whne the it loops for the first time and and its not the same ,,they are counting it asthe first time that res.send has apppear
-            break; //so that it stop right there instead of looping till the end
-          }
-        }
-
-        console.log(answer);
-        if (answer !== "exist") {
-          console.log("i work yeah");
-        //  var sql = `INSERT INTO category (category) VALUES ('${details.cat}')`;
-        //  con.query(sql, function (err, result) {
-         //   if (err) throw err;
-         let category=new CATEGORY({category:details.cat.toLowerCase()})
-         category.save()//saving category in db
-         //console.log("categories ",r)
-            console.log("category inserted!!!");
-            res.send({ message: "categoryAdded" });
-         // });
+        if (result[i].category == details.cat.toLowerCase()) {
+          console.log("it exists at", result[i]);
+          answer += "exist";
+          res.send({ message: "alreadyExists" }); //putting this will give error that cannoit set header after they are snet ,this might be bcz of the loop,,so whne the it loops for the first time and and its not the same ,,they are counting it asthe first time that res.send has apppear
+          break; //so that it stop right there instead of looping till the end
         }
       }
-   // });
+
+      console.log(answer);
+      if (answer !== "exist") {
+        console.log("i work yeah");
+        //  var sql = `INSERT INTO category (category) VALUES ('${details.cat}')`;
+        //  con.query(sql, function (err, result) {
+        //   if (err) throw err;
+        let category = new CATEGORY({ category: details.cat.toLowerCase() })
+        category.save()//saving category in db
+        //console.log("categories ",r)
+        console.log("category inserted!!!");
+        res.send({ message: "categoryAdded" });
+        // });
+      }
+    }
+    // });
   } catch (err) {
     console.log(err);
   }
@@ -722,24 +566,19 @@ app.post("/addCategory",async (req, res) => {
 //for deleting category records
 app.post("/deleteCategory", async (req, res) => {
   const details = req.body;
-  console.log('details',details);
-  console.log('detailsid',details.id);
+  console.log('details', details);
   try {
-    // var sql = `DELETE FROM category WHERE id = ${details.id}`;
-    // con.query(sql, function (err, result) {
-    //   if (err) throw err;
-   let resp=await CATEGORY.deleteOne({_id:details.id})
-   console.log(resp)
-       console.log("Number of records deleted: " + resp.deletedCount);
-      res.send({ affectedRows: resp.deletedCount, message: "deleted" });
-    //});
+    let resp = await CATEGORY.deleteOne({ _id: details.id })
+    console.log(resp)
+    console.log("Number of records deleted: " + resp.deletedCount);
+    res.send({ affectedRows: resp.deletedCount, message: "deleted" });
   } catch (err) {
     console.log(err);
   }
 });
 
 //search blog (from search bar)
-app.post("/searchblog", upload.single("image"), async (req, res) => {
+app.post("/searchblog", async (req, res) => {
   const value = req.body;
   console.log(value);
 
@@ -747,16 +586,9 @@ app.post("/searchblog", upload.single("image"), async (req, res) => {
     if (value.val == "") {
       res.send({}); //an empty data object is sent
     } else {
-     // con.query(
-      //  `SELECT * FROM blog WHERE title Like '%${value.val}%'`,
-      //  function (err, result, fields) {
-      //    if (err) throw err;
-
-      let result =await BLOG.find({"title":{"$regex":value.val, "$options": "i"}})
-          console.log('search res',result);
-          res.send(result);
-       // }
-     // );
+      let result = await BLOG.find({ "title": { "$regex": value.val, "$options": "i" } })
+      console.log('search res', result);
+      res.send(result);
     }
   } catch (err) {
     console.log(err);
@@ -766,60 +598,46 @@ app.post("/searchblog", upload.single("image"), async (req, res) => {
 //ADMIN LOGIN
 app.post("/admin/login", urlencodedParser, async (req, res) => {
   const credentials = req.body;
-  console.log('cred',credentials);
+  console.log('cred', credentials);
 
   try {
-
-
-    const result = await ADMIN.findOne({ username: credentials.username,password:credentials.password })
-
-      if (result) {
-        if (
-          credentials.username === result.username &&
-          credentials.password === result.password
-        ) {
-          console.log("admin logged in!!!");
-          // var value = `${credentials.userName}`;
-          // res.cookie("admin", value, { maxAge: 6000000, httpOnly: true });
-          // return res.redirect("/admin/dashboard");
-          res.send({ matched: true });
-        }
-      } else {
-        //res.send({ message: "wrong credentials" });
-        console.log("wrong credentials");
-        // return res.redirect("/admin/login");
-        // res.render("../views/panel/login.ejs", {
-        //   text: "Credentials mismatched!! Try again",
-        // });
-        res.send({ matched: false });
-
+    const result = await ADMIN.findOne({ username: credentials.username, password: credentials.password })
+    if (result) {
+      if (
+        credentials.username === result.username &&
+        credentials.password === result.password
+      ) {
+        console.log("admin logged in!!!");
+        // var value = `${credentials.userName}`;
+        // res.cookie("admin", value, { maxAge: 6000000, httpOnly: true });
+        // return res.redirect("/admin/dashboard");
+        res.send({ matched: true });
       }
-   // });
+    } else {
+      console.log("wrong credentials");
+      res.send({ matched: false });
+    }
   } catch (err) {
     console.log(err);
   }
 });
 
+//needs to be attended return on both if and else
 //change password
 app.post("/cpswrd", async (req, res) => {
   const details = req.body;
   console.log("abc", details);
 
   try {
-    //to update a record
-    // var sql = `UPDATE admin SET password = '${details.newPassword}' WHERE password = '${details.password}' AND username= '${details.uname}' `;
-    // con.query(sql, function (err, result) {
-    //   if (err) throw err;
-    let result =await ADMIN.findOneAndUpdate( { username:details.uname ,password: details.password},{password: details.newPassword },{ new: true })
+    let result = await ADMIN.findOneAndUpdate({ username: details.uname, password: details.password }, { password: details.newPassword }, { new: true })
     // If `new` isn't true, `findOneAndUpdate()` will return the document as it was _before_ it was updated.
-      //console.log(result);
-      if (result) {
-        console.log("password changed!!!");
-        res.send({ message: "changed" });
-      } else {
-        console.log("something went wrong");
-      }
-   // });
+    if (result) {
+      console.log("password changed!!!");
+      res.send({ message: "changed" });
+    } else {
+      console.log("something went wrong");
+    }
+    // });
   } catch (err) {
     console.log(err);
   }

@@ -16,6 +16,8 @@
 
 
 ## defects
+- convert all the anchor tag in the not admin componeddnts to link in order to avoid page reload when redirecting to another page
+- also there should be a way to delet cloud images when a blog is deleted
 - write the logic to check in url that the asked blog even exists or not,if not then redirect  to error page {i think this can be solved if the page loads oonly after the respnose is recived from the server,,only then move forward to redirect to any route}
 - visibility [button] is not workinnh
 - summernote is not working ...unanle to get the inner html i think..
@@ -37,10 +39,12 @@
 - not just put the detail in frontend,,you have to append it to the element so that it does not show the tags as text
 -timer is incorrect,,at 12 am its showing pm
 
+## NOTE::::: two apis are calling when blogs managemnet is loaded,,one in  app.js and other in itself...the second one is not needed if you remove the status filter and move that filter to lowwerr level to the notadmin section.
 
 ### things could be better
 - in single blog...in react the single blog api is not used,,as i hlready have lsit of all blogs,,so avoilding calling this api and looping pver the already fetched all blogs to find the single blog and alos the previous and next blog,,,[avoiding calling the next prev api too ]---------but later if the number of blogs are too much to afford a loop over them then api should be called...
 
+- when an image of same name is uploaded in firebase storage then the older image is replcaed by new one,,,leaving this as it as but it can be fixed by using an unique name while uploading image like uuid-v4
 
 
 
@@ -56,7 +60,10 @@
 
 - when you have html content in form of string then sometimes maybe it wont act as html even if you put it as innerHtml of an element.. so in that case you should use "dangerouslySetInnerHTML={{ __html: theHTMLstring }}"
 
-
+- wehne we submit forms with button as of type submit then the page referesh after submmiting,,there mayeb e sometime that you may need the response from server when the form submits,,in that case you can use
+//you can call a function onsubmit event in form tag,,why this?bcz it does the work of bpth your  own function and form validation,,it checks for required field and othe rvalidation
+"e.preventDefault()"  //this stops page to refresh 
+    //or you could have used return false at the bottom of the function which would have stopped refreshing page
 
 
 ### magento 

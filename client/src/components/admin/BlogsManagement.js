@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { Link } from 'react-router-dom';
+import SingleBlog from '../notAdmin/SingleBlog';
+import EditBlog from './EditBlog';
 
 const BlogsManagement = (props) => {
 
@@ -16,35 +19,6 @@ const BlogsManagement = (props) => {
         getAllBlogs()
     }, [])
 
-
-
-    function image(e) {
-
-
-
-
-        let file = document.getElementById("image").files[0];
-        console.log('image', file)
-
-
-        const imageRef = ref(storage, "skyblog/" + file.name);
-        uploadBytes(imageRef, file)
-            .then(snapshot => {
-                console.log(snapshot, snapshot.metadata.fullPath)
-                return snapshot.metadata.fullPath;
-            })
-            .then(path => {
-                getDownloadURL(imageRef)
-                    .then(url => {
-                        console.log(url)
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    });
-            })
-
-
-    }
 
 
     //this is same as show api but not filtered
@@ -79,25 +53,31 @@ const BlogsManagement = (props) => {
 
 
     async function sendData(e) {
+        e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
 
-        let image = document.getElementById("image").files[0];
+        let image = document.getElementById("image")?.files[0];
 
-        let title = document.getElementById("title").value;
-        let url = document.getElementById("url").value;
+        let title = document.getElementById("title")?.value;
+        let url = document.getElementById("url")?.value;
 
-        let category = document.getElementById("category").value;
-        let select = document.querySelector("input[type=radio][name=select]:checked").value;
+        let category = document.getElementById("category")?.value;
+        let select
+        if (document.querySelector("input[type=radio][name=select]:checked")) {
+            select = document.querySelector("input[type=radio][name=select]:checked")?.value;
+        } else {
+            select = ''
+        }
 
-        let shortdesc = document.getElementById("shortdesc").value;
-        let author = document.getElementById("author").value;
+        let shortdesc = document.getElementById("shortdesc")?.value;
+        let author = document.getElementById("author")?.value;
 
-        let metatitle = document.getElementById("metatitle").value;
-        let metakeyword = document.getElementById("metakeyword").value;
-        let metadesc = document.getElementById("metadesc").value;
+        let metatitle = document.getElementById("metatitle")?.value;
+        let metakeyword = document.getElementById("metakeyword")?.value;
+        let metadesc = document.getElementById("metadesc")?.value;
 
-        let detail = document.querySelectorAll(".note-editable")[0].innerHTML; //summernote
+        let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
 
-        let allimg = document.querySelectorAll(".note-editable")[0].getElementsByTagName('img');
+        let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
 
         //check sthe size of the images inside the summernote
         let totalsize = 0;
@@ -113,9 +93,7 @@ const BlogsManagement = (props) => {
 
 
 
-
-
-
+        let imageUrl;
         const imageRef = ref(storage, "skyblog/" + image.name);
         //uploading image to firebase storage
         await uploadBytes(imageRef, image)
@@ -128,7 +106,6 @@ const BlogsManagement = (props) => {
             });
 
         //getting the image url
-        let imageUrl;
         await getDownloadURL(imageRef)
             .then(url => {
                 imageUrl = url;
@@ -155,48 +132,42 @@ const BlogsManagement = (props) => {
         );
 
 
-
-
         if (totalsize > 2) {
-            alert("Image size is too big!");
+            alert("Image size is too big in blog content");
             //document.querySelector('.note-editor').style.border = "2px solid #db0000";
         } else {
 
 
-            // fetch("/blogdata", {
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     body: JSON.stringify({
-            //         image,
-            //         title,
-            //         url,
-            //         category,
-            //         select,
-            //         shortdesc,
-            //         author,
-            //         metatitle,
-            //         metakeyword,
-            //         metadesc,
-            //         detail
-            //     }),
-            // }).then(response=>response.json())
-            // .then(data=>console.log(data))
-            // .catch(err=>console.log(err))
+            fetch("/blogdata", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    imageUrl,
+                    title,
+                    url,
+                    category,
+                    select,
+                    shortdesc,
+                    author,
+                    metatitle,
+                    metakeyword,
+                    metadesc,
+                    detail
+                }),
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data, data.blog_added)
+                    if(data.blog_added){
+                        window.location.reload();
+                    }else{
+                        //resetting the fields
+                        document.getElementById("frm").reset();
+                        document.querySelectorAll(".note-editable")[0].innerHTML=''
+                        setDynamicLabel()
+                    }
+                })
+                .catch(err => console.log(err))
 
-
-            //   setTimeout(function () {
-
-            //       $.ajax({
-            //           url: "/usersblogdataEditor",
-            //           data: formdata1,
-            //           contentType: false,
-            //           processData: false,
-            //           type: "POST",
-            //           success: function (data) {
-            //               location.reload();
-            //           },
-            //       });
-            //   }, 4000);
         }
 
 
@@ -278,22 +249,22 @@ const BlogsManagement = (props) => {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-xs-12 col-sm-12 col-md-12 p-l-30 p-r-30">
-                                <span id="frm">
+                                <form id="frm" onSubmit={e => sendData(e)}>
                                     <div className="form-group">
                                         <label htmlFor="title" className="font-weight-600">Title</label>
                                         <input type="text" className="form-control" name="title" id="title"
-                                            autoComplete="off" placeholder="Enter Title" onChange={e => settingUrl(e)} />
+                                            autoComplete="off" placeholder="Enter Title" onChange={e => settingUrl(e)} required />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="url" className="font-weight-600">Project Url</label>
                                         <input type="text" className="form-control" name="url" id="url"
-                                            autoComplete="off" placeholder="Project URL" />
+                                            autoComplete="off" placeholder="Project URL" required />
                                     </div>
 
                                     <div className="form-group">
                                         <label htmlFor="category" className="font-weight-600">Category</label>
                                         <div className="">
-                                            <select className="form-control basic-single" name="category" id="category">
+                                            <select className="form-control basic-single" name="category" id="category" >
                                                 <optgroup label="Select Category" id="optgroup">
                                                     {allCategory?.map(x => {
                                                         return (<option value={x.category} key={x._id} >{x.category}</option>)
@@ -341,7 +312,7 @@ const BlogsManagement = (props) => {
                                     <div className="form-group">
                                         <label htmlFor="shortdesc" className="font-weight-600">Short Description</label>
                                         <textarea name="shortdesc" placeholder="" className="form-control"
-                                            id="shortdesc" rows="3"></textarea>
+                                            id="shortdesc" rows="3" required></textarea>
                                     </div>
 
                                     <div className="form-group d-flex flex-column">
@@ -370,7 +341,7 @@ const BlogsManagement = (props) => {
                                     <div className="form-group">
                                         <label htmlFor="author" className="font-weight-600">Author Name</label>
                                         <input type="text" className="form-control" name="author" id="author"
-                                            autoComplete="off" placeholder="Author Name" />
+                                            autoComplete="off" placeholder="Author Name"  />
                                     </div>
 
                                     <div className="form-group">
@@ -390,10 +361,10 @@ const BlogsManagement = (props) => {
                                         <input type="text" className="form-control" name="metadesc" id="metadesc"
                                             autoComplete="off" placeholder="Meta Description" />
                                     </div>
-                                    <button id="go" onClick={e => sendData(e)} >
+                                    <button id="go" type='submit' >
                                         POST
                                     </button>
-                                </span>
+                                </form>
                             </div>
                             <div className="col-xs-12 col-sm-12 col-md-6 p-l-30 p-r-30"></div>
                         </div>
@@ -443,7 +414,7 @@ const BlogsManagement = (props) => {
                                                 <td>{x.image}</td>
                                                 <td><label className="switch"><input onClick={e => blogVisibility(x._id, e)} id={"checkbox" + x._id} type="checkbox" defaultChecked={x.status === "checked" ? "defaultChecked" : false} data-status={x.status} /><span className="slider round"></span></label>
                                                 </td>
-                                                <td style={{ display: "flex", border: "none", justifyContent: "center" }}><a href={"/admin/edit-blog/" + x.url} target="blank" ><button style={{ background: "#09660c" }}><i className="fa fa-pen"></i></button></a><button onClick={e => deleteBlog(x._id, e)} style={{ background: "#d50606" }}><i className="fa fa-trash" ></i></button></td>
+                                                <td style={{ display: "flex", border: "none", justifyContent: "center" }}><Link to={"/admin/edit-blog/" + x.url} ><button style={{ background: "#09660c" }}><i className="fa fa-pen"></i></button></Link><button onClick={e => deleteBlog(x._id, e)} style={{ background: "#d50606" }}><i className="fa fa-trash" ></i></button></td>
                                             </tr>
                                         )
                                     })}
