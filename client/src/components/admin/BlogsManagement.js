@@ -1,68 +1,51 @@
 import React, { useEffect, useState } from 'react'
 
 
-import { initializeApp } from 'firebase/app';
-import { getStorage, ref, uploadBytes ,getDownloadURL} from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const BlogsManagement = (props) => {
 
 
     //NOTE: reloading this page bcz the summernote does not initialize without reloading
-    const { allCategory } = props
+    const { allCategory, storage } = props
 
     const [everyBlog, setEveryBlog] = useState()
-    const [checkedOrNot, setCheckedOrNot] = useState()
 
     useEffect(() => {
         console.log('00000000000000')
         getAllBlogs()
-
     }, [])
 
 
-    
+
     function image(e) {
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyD356cys4X2N0DHboL4T8MZCDR1BuN2n88",
-            authDomain: "shopp-itt.firebaseapp.com",
-            projectId: "shopp-itt",
-            storageBucket: "shopp-itt.appspot.com",
-            messagingSenderId: "500784370915",
-            appId: "1:500784370915:web:5433a992ab3e3229daa1d6",
-            measurementId: "G-DVFRLB25DQ"
-        };
-        const app = initializeApp(firebaseConfig);
-        const storage = getStorage(app);
+
+
 
 
         let file = document.getElementById("image").files[0];
-        console.log('image',file)
-        
-        //to upload image
-        // const storageRef = ref(storage, file.name);
-        // uploadBytes(storageRef, file).then((snapshot) => {
-        //     console.log('Uploaded image successfully!',snapshot);
-        // });
+        console.log('image', file)
 
 
-        const pathReference = ref(storage, 'sky.jpg');
-
-        getDownloadURL(ref(storage, 'sky.jpg'))
-  .then((url) => {
-console.log('url',url)
-//store this url to data base
-
-   
-
-
-  })
-  .catch((error) => {
-    // Handle any errors
-  });
+        const imageRef = ref(storage, "skyblog/" + file.name);
+        uploadBytes(imageRef, file)
+            .then(snapshot => {
+                console.log(snapshot, snapshot.metadata.fullPath)
+                return snapshot.metadata.fullPath;
+            })
+            .then(path => {
+                getDownloadURL(imageRef)
+                    .then(url => {
+                        console.log(url)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            })
 
 
     }
+
 
     //this is same as show api but not filtered
     async function getAllBlogs() {
@@ -97,10 +80,6 @@ console.log('url',url)
 
     async function sendData(e) {
 
-
-        //console.log("go");
-
-        // let image = document.getElementById("image")[0].files[0];
         let image = document.getElementById("image").files[0];
 
         let title = document.getElementById("title").value;
@@ -116,16 +95,12 @@ console.log('url',url)
         let metakeyword = document.getElementById("metakeyword").value;
         let metadesc = document.getElementById("metadesc").value;
 
-        // let detail = document.querySelectorAll(".note-editable")[0].html(); //summernote
         let detail = document.querySelectorAll(".note-editable")[0].innerHTML; //summernote
 
-
-
         let allimg = document.querySelectorAll(".note-editable")[0].getElementsByTagName('img');
-        //   console.log('allimng', allimg)
 
+        //check sthe size of the images inside the summernote
         let totalsize = 0;
-
         for (let i = 0; i < allimg.length; i++) {
             let base64String = allimg[i].getAttribute("src");//base64 data
 
@@ -135,54 +110,50 @@ console.log('url',url)
             totalsize += sizeInKb;
         }
 
-        console.log("image,".image);
-
-
-        // console.log(
-        //     image,
-        //     title,
-        //     url,
-        //     category,
-        //     select,
-        //     shortdesc,
-        //     author,
-        //     metatitle,
-        //     metakeyword,
-        //     metadesc
-        // );
-        //console.log(detail);
 
 
 
-        let formdata = new FormData();
-        formdata.append("summernote", detail);
-        formdata.append("image", image);
-        formdata.append("title", title);
-        formdata.append("url", url);
-        formdata.append("category", category);
-        formdata.append("select", select);
-        formdata.append("shortdesc", shortdesc);
-        formdata.append("author", author);
-        formdata.append("metatitle", metatitle);
-        formdata.append("metakeyword", metakeyword);
-        formdata.append("metadesc", metadesc);
 
 
 
-        let formdata1 = new FormData();
-        formdata1.append("summernote", detail);
+        const imageRef = ref(storage, "skyblog/" + image.name);
+        //uploading image to firebase storage
+        await uploadBytes(imageRef, image)
+            .then(snapshot => {
+                //console.log(snapshot.metadata.fullPath)
+                return snapshot.metadata.fullPath;
+            })
+            .catch(error => {
+                console.log(error)
+            });
 
-        formdata1.append("title", title);
-        formdata1.append("url", url);
-        formdata1.append("category", category);
-        formdata1.append("select", select);
-        formdata1.append("shortdesc", shortdesc);
-        formdata1.append("author", author);
-        formdata1.append("metatitle", metatitle);
-        formdata1.append("metakeyword", metakeyword);
-        formdata1.append("metadesc", metadesc);
+        //getting the image url
+        let imageUrl;
+        await getDownloadURL(imageRef)
+            .then(url => {
+                imageUrl = url;
+                //console.log(url)
+            })
+            .catch(error => {
+                console.log(error)
+            });
 
-        //  console.log(formdata1);
+
+
+        console.log(
+            imageUrl,
+            title,
+            url,
+            category,
+            select,
+            shortdesc,
+            author,
+            metatitle,
+            metakeyword,
+            metadesc,
+            detail
+        );
+
 
 
 
@@ -381,7 +352,7 @@ console.log('url',url)
                                             required onChange={e => setDynamicLabel(e)} />
                                         <label htmlFor="image" id="borderRed" style={{
                                             position: "absolute",
-                                            left: "0px",
+                                            left: "-1px",
                                             background: "#ffffff",
                                             borderRadius: "4px",
                                             padding: " 5px",
@@ -389,7 +360,7 @@ console.log('url',url)
                                             border: "1px solid rgb(229 229 229)",
                                             color: "#6c6c6c",
                                             width: "100%",
-                                            top: "33px"
+                                            top: "31px"
                                         }}>
                                             <i className="fa fa-upload"></i>
                                             <span id='dynamicLabel'>Choose a file…</span>
@@ -419,7 +390,7 @@ console.log('url',url)
                                         <input type="text" className="form-control" name="metadesc" id="metadesc"
                                             autoComplete="off" placeholder="Meta Description" />
                                     </div>
-                                    <button id="go" onClick={e => image(e)} >
+                                    <button id="go" onClick={e => sendData(e)} >
                                         POST
                                     </button>
                                 </span>

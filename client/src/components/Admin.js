@@ -15,7 +15,7 @@ import EditBlog from './admin/EditBlog';
 
 const Admin = (props) => {
 
-  const { allBlog, allCategory, catAndCount } = props
+  const { allBlog, allCategory, catAndCount, storage } = props
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const Admin = (props) => {
 
             <Route path="/messages" exact element={<Messages />} />
 
-            <Route path="/blogs-management" exact element={<BlogsManagement allBlog={allBlog} allCategory={allCategory} />} />
+            <Route path="/blogs-management" exact element={<BlogsManagement allBlog={allBlog} allCategory={allCategory} storage={storage} />} />
 
             <Route path="/user-submitted-blogs" exact element={<UserSubmittedBlogs />} />
 

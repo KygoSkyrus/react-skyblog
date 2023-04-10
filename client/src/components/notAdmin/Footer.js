@@ -122,7 +122,7 @@ const Footer = (props) => {
 								<a href="#" className="t-follow-link">
 									<span className="social-counter__icon social-counter__icon--fb t-mr-8">
 										<span className="social-counter__icon-is">
-										   <i class="fa-brands fa-linkedin-in"></i>
+										   <i className="fa-brands fa-linkedin-in"></i>
 										</span>
 									</span>
 								</a>
@@ -131,7 +131,7 @@ const Footer = (props) => {
 								<a href="#" className="t-follow-link">
 									<span className="social-counter__icon social-counter__icon--tw t-mr-8">
 										<span className="social-counter__icon-is">
-										   <i class="fa-brands fa-twitter"></i>										
+										   <i className="fa-brands fa-twitter"></i>										
 										</span>
 									</span>
 								</a>
@@ -140,7 +140,7 @@ const Footer = (props) => {
 								<a href="#" className="t-follow-link">
 									<span className="social-counter__icon social-counter__icon--ins t-mr-8">
 										<span className="social-counter__icon-is">
-										<i class="fa-brands fa-instagram"></i>
+										<i className="fa-brands fa-instagram"></i>
 										</span>
 									</span>
 								</a>
@@ -149,7 +149,7 @@ const Footer = (props) => {
 								<a href="#" className="t-follow-link">
 									<span className="social-counter__icon social-counter__icon--in t-mr-8">
 										<span className="social-counter__icon-is">
-										<i class="fa-brands fa-facebook"></i>										</span>
+										<i className="fa-brands fa-facebook"></i>										</span>
 									</span>
 								</a>
 							</li>
@@ -176,7 +176,7 @@ const Footer = (props) => {
 				<div className="row">
 					<div className="col-12 text-center">
 						<p className="mb-0 t-text-light sm-text">
-							<i class="fa-sharp fa-regular fa-copyright"></i> 2023, SKYBLOG. Designed by
+							<i className="fa-sharp fa-regular fa-copyright"></i> 2023, SKYBLOG. Designed by
 							<a href="#" className="t-link t-link--primary text-light">&nbsp;DHEERAJ GUPTA&nbsp;</a>
 							. All Rights Reserved.
 						</p>

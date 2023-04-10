@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import { Toast, ToastContainer } from 'react-bootstrap'
+
+import { initializeApp } from 'firebase/app';
+import { getStorage } from "firebase/storage";
 
 import './App.css';
 
@@ -14,14 +16,28 @@ function App() {
 
   const [allBlog, setAllBlog] = useState([]);
   const [allCategory, setAllCategory] = useState();
+  
 
   useEffect(() => {
     //move these two function to notadmin if none of these are called in admin secetion
     getAllBlogs()
     getAllCategory()
+   
   }, [])
 
 
+    const firebaseConfig = {
+      apiKey: process.env.apiKey,
+      authDomain: "shopp-itt.firebaseapp.com",
+      projectId: "shopp-itt",
+      storageBucket: "shopp-itt.appspot.com",
+      messagingSenderId: process.env.messagingSenderId,
+      appId: process.env.appId,
+      measurementId: process.env.measurementId
+  };
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+  
   async function getAllBlogs() {
 
     const res = await fetch("/show", {
@@ -126,9 +142,9 @@ function App() {
     <BrowserRouter>
 
       <Routes>
-        <Route path="/*" exact element={<NotAdmin allBlog={allBlog} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} />} />
+        <Route path="/*" exact element={<NotAdmin allBlog={allBlog} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} />} />
 
-        <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} />} />
+        <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} storage={storage} />} />
       </Routes>
       
     </BrowserRouter>
