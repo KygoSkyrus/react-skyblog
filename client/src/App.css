@@ -470,7 +470,32 @@ input[type="radio"] {
     z-index: 999;
 }
 
+.customLabel{
+  position: absolute;
+  left: -1px;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 5px;
+  padding-left: 14px;
+  border: 1px solid rgb(229 229 229);
+  color: #6c6c6c;
+  width: 100%;
+  top: 31px;
+}
 
+#displayimg{
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  position: relative;
+  top: 10px;
+  display: none;
+}
+/********************************* post your blog ****************************************/
 
 
 /********************************* Blog wrapper ****************************************/

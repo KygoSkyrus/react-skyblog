@@ -32,12 +32,13 @@
 - on admin side problem  exists in blogsmanagemnet(have to add image cloud and fix api) edit and user blogs(above mentioned)
 - have to fix navbar on mobile view
 - add a loader untill server connects to db
--in mobile view hide clock from admin panel
+- in mobile view hide clock from admin panel
 - in mobile view in panel do something like thesidebar tottally hides away just leave the ham there to bring it back
 - even for a sec its still showing a dashboard before redirecting to login page when admin not logged in
 - on hover add images zoom or something on blogs
 - not just put the detail in frontend,,you have to append it to the element so that it does not show the tags as text
 -timer is incorrect,,at 12 am its showing pm
+- should add some Toast for acknowledging the response from server, like when blog visiblity is set, password chnaged etc [for blogvisibilty use like on full page a text just fades in out]
 
 ## NOTE::::: two apis are calling when blogs managemnet is loaded,,one in  app.js and other in itself...the second one is not needed if you remove the status filter and move that filter to lowwerr level to the notadmin section.
 

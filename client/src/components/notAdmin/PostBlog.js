@@ -1,57 +1,44 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-const PostBlog = () => {
 
- //google login is not working bcz in the firrebase you have to setup the origin,,do it when u host it
-//summernote is working fine
-    function settingUrl(e) {
-        let title = e.target.value;
-        let str = title.replace(/\s+/g, "-").toLowerCase();
-        document.getElementById("url").value = str;
-    }
-   
-    function setDynamicLabel(e) {
-        // document.getElementById("image").files[0].size
-        if (document.getElementById("image")?.files[0]?.name) {
-            document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
-        } else {
-            document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
-        }
-    }
+const PostBlog = (props) => {
+
+    //google login is not working bcz in the firrebase you have to setup the origin,,do it when u host it
+    //summernote is working fine
+    const { storage } = props
 
 
     async function sendData(e) {
+        e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
 
+        let image = document.getElementById("image")?.files[0];
 
-        //console.log("go");
+        let email = document.getElementById("email")?.value;
+        let title = document.getElementById("title")?.value;
+        let url = document.getElementById("url")?.value;
 
-        // let image = document.getElementById("image")[0].files[0];
-        let image = document.getElementById("image").files[0];
+        let category = document.getElementById("category")?.value;
+        let select
+        if (document.querySelector("input[type=radio][name=select]:checked")) {
+            select = document.querySelector("input[type=radio][name=select]:checked")?.value;
+        } else {
+            select = ''
+        }
 
-        let email = document.getElementById("email").value;
-        let title = document.getElementById("title").value;
-        let url = document.getElementById("url").value;
+        let shortdesc = document.getElementById("shortdesc")?.value;
+        let author = document.getElementById("author")?.value;
 
-        let category = document.getElementById("category").value;
-        let select = document.querySelector("input[type=radio][name=select]:checked").value;
+        let metatitle = document.getElementById("metatitle")?.value;
+        let metakeyword = document.getElementById("metakeyword")?.value;
+        let metadesc = document.getElementById("metadesc")?.value;
 
-        let shortdesc = document.getElementById("shortdesc").value;
-        let author = document.getElementById("author").value;
+        let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
 
-        let metatitle = document.getElementById("metatitle").value;
-        let metakeyword = document.getElementById("metakeyword").value;
-        let metadesc = document.getElementById("metadesc").value;
+        let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
 
-        // let hvalue = document.querySelectorAll(".note-editable")[0].html(); //summernote
-        let hvalue = document.querySelectorAll(".note-editable")[0].innerHTML; //summernote
-
-
-
-        let allimg = document.querySelectorAll(".note-editable")[0].getElementsByTagName('img');
-        //   console.log('allimng', allimg)
-
+        //check sthe size of the images inside the summernote
         let totalsize = 0;
-
         for (let i = 0; i < allimg.length; i++) {
             let base64String = allimg[i].getAttribute("src");//base64 data
 
@@ -63,9 +50,32 @@ const PostBlog = () => {
 
 
 
+        let imageUrl;
+        const imageRef = ref(storage, "skyblog/" + image.name);
+        //uploading image to firebase storage
+        await uploadBytes(imageRef, image)
+            .then(snapshot => {
+                //console.log(snapshot.metadata.fullPath)
+                return snapshot.metadata.fullPath;
+            })
+            .catch(error => {
+                console.log(error)
+            });
+
+        //getting the image url
+        await getDownloadURL(imageRef)
+            .then(url => {
+                imageUrl = url;
+                //console.log(url)
+            })
+            .catch(error => {
+                console.log(error)
+            });
+
+
+
         console.log(
-            image,
-            email,
+            imageUrl,
             title,
             url,
             category,
@@ -74,74 +84,49 @@ const PostBlog = () => {
             author,
             metatitle,
             metakeyword,
-            metadesc
+            metadesc,
+            detail
         );
-        console.log(hvalue);
-
-
-
-        let formdata = new FormData();
-        formdata.append("image", image);
-        formdata.append("email", email);
-        formdata.append("title", title);
-        formdata.append("url", url);
-        formdata.append("category", category);
-        formdata.append("select", select);
-        formdata.append("shortdesc", shortdesc);
-        formdata.append("author", author);
-        formdata.append("metatitle", metatitle);
-        formdata.append("metakeyword", metakeyword);
-        formdata.append("metadesc", metadesc);
-
-
-
-        let formdata1 = new FormData();
-        formdata1.append("summernote", hvalue);
-
-        formdata1.append("email", email);
-        formdata1.append("title", title);
-        formdata1.append("url", url);
-        formdata1.append("category", category);
-        formdata1.append("select", select);
-        formdata1.append("shortdesc", shortdesc);
-        formdata1.append("author", author);
-        formdata1.append("metatitle", metatitle);
-        formdata1.append("metakeyword", metakeyword);
-        formdata1.append("metadesc", metadesc);
-
-        //  console.log(formdata1);
-
 
 
         if (totalsize > 2) {
-            alert("Image size is too big!");
+            alert("Image size is too big in blog content");
             //document.querySelector('.note-editor').style.border = "2px solid #db0000";
         } else {
 
-            //   $.ajax({
-            //           url: "/usersblogdata",
-            //           data: formdata,
-            //           contentType: false,
-            //           processData: false,
-            //           type: "POST",
-            //           success: function (data) {
-            //               location.reload();
-            //           },
-            //       });
 
-            //   setTimeout(function () {
+            fetch("/userblog", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email,
+                    imageUrl,
+                    title,
+                    url,
+                    category,
+                    select,
+                    shortdesc,
+                    author,
+                    metatitle,
+                    metakeyword,
+                    metadesc,
+                    detail
+                }),
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if(data.blog_received){
+                        window.location.reload();
+                    }else{
+                        //resetting the fields
+                        document.getElementById("frm").reset();
+                        document.querySelectorAll(".note-editable")[0].innerHTML=''
+                        setDynamicLabel()
+                        alert('something went wrong, please try again!!!')
+                    }
+                })
+                .catch(err => console.log(err))
 
-            //       $.ajax({
-            //           url: "/usersblogdataEditor",
-            //           data: formdata1,
-            //           contentType: false,
-            //           processData: false,
-            //           type: "POST",
-            //           success: function (data) {
-            //               location.reload();
-            //           },
-            //       });
-            //   }, 4000);
         }
 
 
@@ -150,6 +135,24 @@ const PostBlog = () => {
 
 
 
+
+    function settingUrl(e) {
+        let title = e.target.value;
+        let str = title.replace(/\s+/g, "-").toLowerCase();
+        document.getElementById("url").value = str;
+    }
+
+    function setDynamicLabel(e) {
+        if (document.getElementById("image")?.files[0]?.name) {
+            document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
+            const [file]=document.getElementById("image").files;
+            let displayImg=document.getElementById('displayimg')
+            displayImg.style.backgroundImage=`url('${URL.createObjectURL(file)}')`
+            displayImg.style.display="block"
+        } else {
+            document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
+        }
+    }
 
     return (
         <>
@@ -193,34 +196,32 @@ const PostBlog = () => {
 
                                             <div className="row mt-4">
                                                 <div className="col-xs-12 col-sm-12 col-md-12 p-l-30 p-r-30">
-                                                    <span id="frm">
+                                                   
+                                                    <form id="frm" onSubmit={(e) => sendData(e)}>
                                                         <div className="form-group">
                                                             <label htmlFor="Email" className="font-weight-600">Email</label>
                                                             <input type="email" className="form-control" name="email" id="email"
-                                                                autocomplete="off" placeholder="Enter your email"
+                                                                autocomplete="off" placeholder="Enter your email" required
                                                             />
-                                                        </div>
+                                                        </div> 
                                                         <div className="form-group">
                                                             <label htmlFor="title" className="font-weight-600">Title</label>
                                                             <input type="text" className="form-control" name="title" id="title"
                                                                 autocomplete="off" placeholder="Enter Title"
-                                                                onChange={e => settingUrl(e)} />
+                                                                onChange={e => settingUrl(e)} required />
                                                         </div>
                                                         <div className="form-group">
-                                                            <label htmlFor="url" className="font-weight-600">Project Url</label>
+                                                            <label htmlFor="url" className="font-weight-600">Blog Url</label>
                                                             <input type="text" className="form-control" name="url" id="url"
-                                                                autocomplete="off" placeholder="Project URL" />
+                                                                autocomplete="off" placeholder="Blog URL" required />
                                                         </div>
-
-
-
                                                         <div className="form-group">
                                                             <label htmlFor="category" className="font-weight-600">Category</label>
                                                             <input type="text" className="form-control" name="category"
-                                                                id="category" autocomplete="off" placeholder="Category" />
+                                                                id="category" autocomplete="off" placeholder="Category" required />
                                                         </div>
 
-                                                        <label htmlFor="select" className="font-weight-600">Select</label>
+                                                        <label htmlFor="select" className="font-weight-600">Select type</label>
                                                         <div className="form-group wrapper11">
                                                             <input type="radio" name="select" id="option-1"
                                                                 value="featured blogs" />
@@ -234,19 +235,19 @@ const PostBlog = () => {
 
                                                             <label htmlFor="option-1" className="option option-1">
                                                                 <div className="dot"></div>
-                                                                <span>&nbsp;Featured Blogs</span>
+                                                                <span>&nbsp;Featured</span>
                                                             </label>
                                                             <label htmlFor="option-2" className="option option-2">
                                                                 <div className="dot"></div>
-                                                                <span>&nbsp;Trending Blogs</span>
+                                                                <span>&nbsp;Trending</span>
                                                             </label>
                                                             <label htmlFor="option-3" className="option option-3">
                                                                 <div className="dot"></div>
-                                                                <span>&nbsp;Popular Blogs</span>
+                                                                <span>&nbsp;Popular</span>
                                                             </label>
                                                             <label htmlFor="option-4" className="option option-4">
                                                                 <div className="dot"></div>
-                                                                <span>&nbsp;Todays Blogs</span>
+                                                                <span>&nbsp;Todays</span>
                                                             </label>
                                                             <label htmlFor="option-5" className="option option-5">
                                                                 <div className="dot"></div>
@@ -263,35 +264,25 @@ const PostBlog = () => {
                                                             <label htmlFor="shortdesc" className="font-weight-600">Short
                                                                 Description</label>
                                                             <textarea name="shortdesc" placeholder="" className="form-control"
-                                                                id="shortdesc" rows="3"></textarea>
+                                                                id="shortdesc" rows="3" required></textarea>
                                                         </div>
 
                                                         <div className="form-group">
                                                             <label htmlFor="image" className="font-weight-600 d-block">File</label>
                                                             <input type="file" name="image" id="image" className="custom-input-file"
                                                                 data-multiple-caption="{count} files selected" accept="image/*"
-                                                                multiple required="required" style={{ border: "none" }} onChange={e => setDynamicLabel(e)} />
-                                                            <label htmlFor="image" className="form-group" style={{
-                                                                position: "absolute",
-                                                                left: "0px",
-                                                                background: "#ffffff",
-                                                                borderRadius: "4px",
-                                                                padding: " 5px",
-                                                                paddingLeft: "14px",
-                                                                border: "1px solid #ced4da",
-                                                                color: "#6c6c6c",
-                                                                width: "100%",
-                                                            }}>
+                                                                multiple required style={{ border: "none" }} onChange={e => setDynamicLabel(e)} />
+                                                            <label htmlFor="image" className="form-group customLabel">
                                                                 <i className="fa fa-upload"></i>
                                                                 <span id='dynamicLabel'>Choose a file…</span>
                                                             </label>
-
+                                                            <div id="displayimg"></div>
                                                         </div>
 
                                                         <div className="form-group">
                                                             <label htmlFor="author" className="font-weight-600">Author Name</label>
                                                             <input type="text" className="form-control" name="author" id="author"
-                                                                autocomplete="off" placeholder="Author Name" />
+                                                                autocomplete="off" placeholder="Author Name" required />
                                                         </div>
 
                                                         <div className="form-group">
@@ -317,7 +308,7 @@ const PostBlog = () => {
                                                         </div>
                                                         <div className="d-flex justify-content-center">
                                                             <button id="go" className="newsletter__button " type="submit"
-                                                                style={{ paddingLeft: "30px", paddingRight: "30px" }} onClick={(e) => sendData(e)}>
+                                                                style={{ paddingLeft: "30px", paddingRight: "30px" }}>
                                                                 send blog
                                                                 <span className="st-btn-icon">
                                                                     <span className="las la-arrow-right"></span>
@@ -325,7 +316,7 @@ const PostBlog = () => {
                                                             </button>
                                                         </div>
 
-                                                    </span>
+                                                    </form>
                                                 </div>
                                                 <div className="col-xs-12 col-sm-12 col-md-6 p-l-30 p-r-30"></div>
                                             </div>

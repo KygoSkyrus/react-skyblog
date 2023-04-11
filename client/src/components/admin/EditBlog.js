@@ -1,57 +1,35 @@
-import React, { useEffect, useState } from 'react'
-
+import React from 'react'
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useNavigate } from 'react-router-dom'
 
 
 const EditBlog = (props) => {
 
-  const { allBlog, allCategory } = props
-  // const [theBlog,setTheBlog]=useState()
-
+  const { allBlog, allCategory, storage } = props
+  const navigate = useNavigate()
   const link = document.baseURI;
   var blogurl = link.substring(
     link.lastIndexOf("/") + 1,
     link.length
   );
+  let theBlog = allBlog.find(x => x.url === blogurl)
 
-  if(allBlog.length>0){
-    console.log('allblog in edit blog poage',allBlog)
-  }
-
-
-  useEffect(() => {
-   // settingFieldsInitially()
-  }, [])
-
-
-
-
+  settingFieldsInitially()
   function settingFieldsInitially() {
 
-    let theBlog = allBlog.find(x => x.url === blogurl)
-    console.log('theBlog', theBlog)
-
-
     //ALL FIELDS
+    let blogid = document.getElementById('blogid')
     let title = document.getElementById('title')
     let url = document.getElementById("url")
     let category = document.getElementById("category")
-
     let select = document.querySelector(`[value="${theBlog?.type}"]`)
-
-
     let shortdesc = document.getElementById("shortdesc");
     let image = document.getElementById("displayimg");
     let author = document.getElementById("author");
-
     let metatitle = document.getElementById("metatitle");
     let metakeyword = document.getElementById("metakeyword");
     let metadesc = document.getElementById("metadesc");
-
     let detail = document.querySelectorAll(".note-editable")[0]; //summernote
-
-  
-
-
 
 
     //if the certain blog is found
@@ -59,14 +37,15 @@ const EditBlog = (props) => {
 
       //if the fields are loaded
       if (title && url && category && select && detail && shortdesc && author && metatitle && metakeyword && metadesc && image)
-        console.log('title is true', detail)
+        console.log('title is true', detail.innerText)
 
+      blogid.value = theBlog._id
       title.value = theBlog.title
       url.value = theBlog.url
       category.value = theBlog.category
-      select.setAttribute("checked","checked")
+      select.setAttribute("checked", "checked")
 
-      //detail.innerHTML = theBlog.detail
+      detail.innerHTML = theBlog.detail
       shortdesc.value = theBlog.shortdescription
       author.value = theBlog.authorname
 
@@ -74,20 +53,130 @@ const EditBlog = (props) => {
       metakeyword.value = theBlog.metakeywords
       metadesc.value = theBlog.metadescription
 
-      image.style.backgroundImage=`url('${theBlog.image}')`
-      // .value = theBlog.
-      // .value = theBlog.
-
-
+      image.style.backgroundImage = `url('${theBlog.image}')`
+      image.style.display="block"
 
     }
   }
 
 
-  function getFieldValues() {
+  async function sendData(e) {
+    e.preventDefault()
+
+    let image = document.getElementById("image")?.files[0];
+
+    let blogid = document.getElementById("blogid")?.value;
+    let title = document.getElementById("title")?.value;
+    let url = document.getElementById("url")?.value;
+
+    let category = document.getElementById("category")?.value;
+    let select;
     if (document.querySelector("input[type=radio][name=select]:checked")) {
-      console.log('the test', document.querySelector("input[type=radio][name=select]:checked"))
+      select = document.querySelector("input[type=radio][name=select]:checked")?.value;
+    } else {
+      select = ''
     }
+
+    let shortdesc = document.getElementById("shortdesc")?.value;
+    let author = document.getElementById("author")?.value;
+    let metatitle = document.getElementById("metatitle")?.value;
+    let metakeyword = document.getElementById("metakeyword")?.value;
+    let metadesc = document.getElementById("metadesc")?.value;
+    let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
+    let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
+
+    //check sthe size of the images inside the summernote
+    let totalsize = 0;
+    for (let i = 0; i < allimg.length; i++) {
+      let base64String = allimg[i].getAttribute("src");//base64 data
+
+      let stringLength = base64String.length - 'data:image/png;base64,'.length;
+      let sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
+      let sizeInKb = sizeInBytes / 1000000;
+      totalsize += sizeInKb;
+    }
+
+    let imageUrl;
+    if (image) {
+      const imageRef = ref(storage, "skyblog/" + image.name);
+      //uploading image to firebase storage
+      await uploadBytes(imageRef, image)
+        .then(snapshot => {
+          //console.log(snapshot.metadata.fullPath)
+          return snapshot.metadata.fullPath;
+        })
+        .catch(error => {
+          console.log(error)
+        });
+
+      //getting the image url
+      await getDownloadURL(imageRef)
+        .then(url => {
+          imageUrl = url;
+          //console.log(url)
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    } else {
+      imageUrl = theBlog.image
+    }
+
+
+    // console.log(
+    //     imageUrl,
+    //     blogid,
+    //     title,
+    //     url,
+    //     category,
+    //     select,
+    //     shortdesc,
+    //     author,
+    //     metatitle,
+    //     metakeyword,
+    //     metadesc,
+    //     detail
+    // );
+
+
+    if (totalsize > 2) {
+      alert("Image size is too big in blog content");
+      //document.querySelector('.note-editor').style.border = "2px solid #db0000";
+    } else {
+
+
+      fetch("/blogeditsubmit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          blogid,
+          imageUrl,
+          title,
+          url,
+          category,
+          select,
+          shortdesc,
+          author,
+          metatitle,
+          metakeyword,
+          metadesc,
+          detail
+        }),
+      }).then(response => response.json())
+        .then(data => {
+          console.log(data)
+          if (data.isBlogEdited) {
+            navigate('/admin/blogs-management')
+          } else {
+            alert('something went wrong, please reload and try again!!!')
+          }
+        })
+        .catch(err => console.log(err))
+
+    }
+
+
+
   }
 
 
@@ -99,11 +188,19 @@ const EditBlog = (props) => {
     document.getElementById("url").value = str;
   }
 
+  function setDynamicLabel(e) {
+    // document.getElementById("image").files[0].size
+    if (document.getElementById("image")?.files[0]?.name) {
+      document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
+    } else {
+      document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
+    }
+  }
   return (
     <>
 
 
-
+      {/* {hasLoaded? */}
 
 
 
@@ -124,20 +221,19 @@ const EditBlog = (props) => {
             </div>
           </div>
           <div className="card-body">
-
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-12 p-l-30 p-r-30">
-                <span id="frm">
-                  <input type="number" className="form-control" name="bid" id="bid" placeholder=""
+                <form id="frm" onSubmit={e => sendData(e)}>
+                  <input type="text" className="form-control" name="blogid" id="blogid" placeholder=""
                     style={{ visibility: "hidden", position: "absolute" }} />
                   <div className="form-group">
                     <label htmlFor="title" className="font-weight-600">Title</label>
                     <input type="text" className="form-control" name="title" id="title" placeholder="Enter Title"
-                      onChange={e => settingUrl(e)} />
+                      onChange={e => settingUrl(e)} required />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="url" className="font-weight-600">Project Url</label>
-                    <input type="text" className="form-control" name="url" id="url" placeholder="Project URL" />
+                    <label htmlFor="url" className="font-weight-600">Blog Url</label>
+                    <input type="text" className="form-control" name="url" id="url" placeholder="Blog URL" required />
                   </div>
                   <div className="form-group ">
                     <label htmlFor="category" className="font-weight-600">Category</label>
@@ -189,34 +285,23 @@ const EditBlog = (props) => {
 
                   <div className="form-group">
                     <label htmlFor="shortdesc" className="font-weight-600">Short Description</label>
-                    <textarea name="shortdesc" placeholder="" className="form-control" id="shortdesc" rows="3"></textarea>
+                    <textarea name="shortdesc" placeholder="" className="form-control" id="shortdesc" rows="3" required></textarea>
                   </div>
 
                   <div className="form-group d-flex flex-column">
                     <label htmlFor="image" className="font-weight-600">File</label>
                     <input type="file" name="image" id="image" className="custom-input-file border-0"
-                      data-multiple-caption="{count} files selected" accept="image/*" multiple />
-                    <label htmlFor="image" style={{
-                      position: "absolute",
-                      left: "-1px",
-                      background: "#ffffff",
-                      borderRadius: "4px",
-                      padding: " 5px",
-                      paddingLeft: "14px",
-                      border: "1px solid rgb(229 229 229)",
-                      color: "#6c6c6c",
-                      width: "100%",
-                      top: "31px"
-                    }}>
+                      data-multiple-caption="{count} files selected" accept="image/*" multiple onChange={e => setDynamicLabel(e)} />
+                    <label htmlFor="image" className='customLabel'>
                       <i className="fa fa-upload"></i>
-                      <span>Choose a file…</span>
+                      <span id='dynamicLabel'>Choose a file…</span>
                     </label>
-                    <div id="displayimg" style={{ width: "100px", height: "100px" }}></div>
+                    <div id="displayimg"></div>
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="author" className="font-weight-600">Author Name</label>
-                    <input type="text" className="form-control" name="author" id="author" placeholder="Author Name" />
+                    <input type="text" className="form-control" name="author" id="author" placeholder="Author Name" required />
                   </div>
 
                   <div className="form-group">
@@ -236,15 +321,15 @@ const EditBlog = (props) => {
                     <input type="text" className="form-control" name="metadesc" id="metadesc"
                       placeholder="Meta Description" />
                   </div>
-                  <button id="go" className='my-2 mb-3' onClick={e => getFieldValues(e)}>UPDATE</button>
-                </span>
+                  <button id="go" type='submit' className='my-2 mb-3' >UPDATE</button>
+                </form>
               </div>
               <div className="col-xs-12 col-sm-12 col-md-6 p-l-30 p-r-30"></div>
             </div>
           </div>
         </div>
       </div>
-
+      {/* :""} */}
 
     </>
   )

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Routes } from "react-router-dom";
 
-
 import Homepage from './notAdmin/Homepage';
 import Navbar from './notAdmin/Navbar';
 import SingleBlog from './notAdmin/SingleBlog';
@@ -14,7 +13,7 @@ import PostBlog from './notAdmin/PostBlog';
 
 const NotAdmin = (props) => {
 
-    const { allBlog, allCategory ,featuredArray, techArray,sportsArray, todaysArray, catAndCount, politicsArray, finalArr, trendingArray, popularArray} = props
+    const { allBlog, allCategory ,featuredArray, techArray,sportsArray, todaysArray, catAndCount, politicsArray, finalArr, trendingArray, popularArray, storage} = props
 
     return (<>
         <Navbar finalArr={finalArr} allBlog={allBlog} />
@@ -28,7 +27,7 @@ const NotAdmin = (props) => {
 
             <Route path="/contact" exact element={<Contact />} />
 
-            <Route path="/post-your-blog" exact element={<PostBlog />} />
+            <Route path="/post-your-blog" exact element={<PostBlog storage={storage} />} />
 
             <Route path="*" element={<Error />} />
             <Route path="/page-not-found" element={<Error />} />

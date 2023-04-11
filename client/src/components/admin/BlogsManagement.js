@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
-
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { Link } from 'react-router-dom';
 
 
 const BlogsManagement = (props) => {
@@ -35,21 +32,7 @@ const BlogsManagement = (props) => {
     }
 
 
-    function settingUrl(e) {
-        let title = e.target.value;
-        let str = title.replace(/\s+/g, "-").toLowerCase();
-        document.getElementById("url").value = str;
-    }
-
-    function setDynamicLabel(e) {
-        // document.getElementById("image").files[0].size
-        if (document.getElementById("image")?.files[0]?.name) {
-            document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
-        } else {
-            document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
-        }
-    }
-
+  
 
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
@@ -228,6 +211,29 @@ const BlogsManagement = (props) => {
         console.log(data);
     }
 
+
+    function settingUrl(e) {
+        let title = e.target.value;
+        let str = title.replace(/\s+/g, "-").toLowerCase();
+        document.getElementById("url").value = str;
+    }
+
+    function setDynamicLabel(e) {
+        // document.getElementById("image").files[0].size
+        if (document.getElementById("image")?.files[0]?.name) {
+            document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
+            const [file]=document.getElementById("image").files;
+            let displayImg=document.getElementById('displayimg')
+            displayImg.style.backgroundImage=`url('${URL.createObjectURL(file)}')`
+            displayImg.style.display="block"
+        } else {
+            document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
+        }
+
+        
+    }
+
+
     return (
         <>
             <div className="body-content">
@@ -255,9 +261,9 @@ const BlogsManagement = (props) => {
                                             autoComplete="off" placeholder="Enter Title" onChange={e => settingUrl(e)} required />
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="url" className="font-weight-600">Project Url</label>
+                                        <label htmlFor="url" className="font-weight-600">Blog Url</label>
                                         <input type="text" className="form-control" name="url" id="url"
-                                            autoComplete="off" placeholder="Project URL" required />
+                                            autoComplete="off" placeholder="Blog URL" required />
                                     </div>
 
                                     <div className="form-group">
@@ -320,21 +326,11 @@ const BlogsManagement = (props) => {
                                         <input type="file" name="image" id="image" className="custom-input-file border-0"
                                             data-multiple-caption="{count} files selected" accept="image/*" multiple
                                             required onChange={e => setDynamicLabel(e)} />
-                                        <label htmlFor="image" id="borderRed" style={{
-                                            position: "absolute",
-                                            left: "-1px",
-                                            background: "#ffffff",
-                                            borderRadius: "4px",
-                                            padding: " 5px",
-                                            paddingLeft: "14px",
-                                            border: "1px solid rgb(229 229 229)",
-                                            color: "#6c6c6c",
-                                            width: "100%",
-                                            top: "31px"
-                                        }}>
+                                        <label htmlFor="image" id="borderRed" className='customLabel' >
                                             <i className="fa fa-upload"></i>
                                             <span id='dynamicLabel'>Choose a file…</span>
                                         </label>
+                                        <div id="displayimg"></div>
                                     </div>
 
                                     <div className="form-group">

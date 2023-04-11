@@ -66,7 +66,7 @@ const Navbar = (props) => {
 
                             <li className="nav-item"><Link to="/contact">CONTACT</Link></li>
 
-                            <li className="nav-item"><Link to="/post-your-blog">POST A BLOG</Link></li>
+                            <li className="nav-item"><a href="/post-your-blog">POST A BLOG</a></li>
 
                             {/* <i className="fas fa-search" id="search-icon" onClick={e => handleSearchIcon(e)}></i>
                             <input className="search-input" type="text" placeholder="Search.." /> */}
