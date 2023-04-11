@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Link } from 'react-router-dom';
-import SingleBlog from '../notAdmin/SingleBlog';
-import EditBlog from './EditBlog';
+
 
 const BlogsManagement = (props) => {
 
@@ -414,7 +413,7 @@ const BlogsManagement = (props) => {
                                                 <td>{x.image}</td>
                                                 <td><label className="switch"><input onClick={e => blogVisibility(x._id, e)} id={"checkbox" + x._id} type="checkbox" defaultChecked={x.status === "checked" ? "defaultChecked" : false} data-status={x.status} /><span className="slider round"></span></label>
                                                 </td>
-                                                <td style={{ display: "flex", border: "none", justifyContent: "center" }}><Link to={"/admin/edit-blog/" + x.url} ><button style={{ background: "#09660c" }}><i className="fa fa-pen"></i></button></Link><button onClick={e => deleteBlog(x._id, e)} style={{ background: "#d50606" }}><i className="fa fa-trash" ></i></button></td>
+                                                <td style={{ display: "flex", border: "none", justifyContent: "center" }}><a href={"/admin/edit-blog/" + x.url} ><button style={{ background: "#09660c" }}><i className="fa fa-pen"></i></button></a><button onClick={e => deleteBlog(x._id, e)} style={{ background: "#d50606" }}><i className="fa fa-trash" ></i></button></td>
                                             </tr>
                                         )
                                     })}

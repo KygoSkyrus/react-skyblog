@@ -46,6 +46,9 @@
 
 - when an image of same name is uploaded in firebase storage then the older image is replcaed by new one,,,leaving this as it as but it can be fixed by using an unique name while uploading image like uuid-v4
 
+- blogs forms are at 3 place, at blg-management, and on edit, and the userblog, all tgree of them are safe,,,a common componend can be used here
+
+-to redirect to edit blog page and for blogsmanagement i sidebar i have used anchor tag instaed of the Link bcz we need to refecresh these pages as they have summernote and summernote only loads when page is refreshed
 
 
 

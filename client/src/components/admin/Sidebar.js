@@ -19,12 +19,9 @@ const Sidebar = (props) => {
     useEffect(() => {
         getSidebarWorking()
         getAdminName()
+        handleSelectedOption()
     }, [])
 
-    useEffect(()=>{
-        handleSelectedOption()
-        //setCurrentUrl(window.location.href)
-    },[])
 
     //this will set the admin name in sidebar
     async function getAdminName() {
