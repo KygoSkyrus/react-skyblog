@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+@import 'compass/css3';
+ @import 'compass/reset';
+ @import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300);
+ body {
+	 font-family: 'Open Sans', sans-serif;
+	 font-size: 16px;
+	 text-align: center;
+	 color: #444;
+	 background: #f1f1f1;
+	 background-image: linear-gradient(-45deg, #444, #fefefe);
+	 background-size: 100% 200%;
+	 background-position: center center;
+}
+ header {
+	 margin-bottom: 2em;
+}
+ h1 {
+	 font-size: 2em;
+	 margin: 2em 0 1em;
+}
+ h2 {
+	 margin: 0 auto;
+	 width: 16em;
+	 line-height: 1.4em;
+}
+ strong {
+	 font-weight: 700;
+}
+ p {
+	 line-height: 1.5em;
+	 margin-bottom: 1em;
+}
+ p:last-child {
+	 margin: 0;
+}
+ div {
+	 position: relative;
+}
+ [aria-hidden="true"] {
+	 position: absolute;
+	 height: 0;
+	 text-indent: -900em;
+}
+ .lime {
+	 color: #b2ff41;
+}
+ .red {
+	 color: #ff3b99;
+}
+ .orange {
+	 color: #ff9d00;
+}
+ .yellow {
+	 color: #f1c40f;
+}
+ .blue {
+	 color: #57caf4;
+}
+ .cyan {
+	 color: #4cf2d8;
+}
+ .green {
+	 color: #76c900;
+}
+ .gray {
+	 color: #444;
+}
+ .dark {
+	 color: #2b2b2b;
+}
+ .white {
+	 color: #fefefe;
+}
+ [type="checkbox"] {
+	 display: none;
+}
+ [type="checkbox"]:checked.valuenow-90 ~ .chart-container .svg-loader [aria-valuenow] {
+	 stroke-dashoffset: 50;
+}
+ [type="checkbox"]:checked.valuenow-66 ~ .chart-container .svg-loader [aria-valuenow] {
+	 stroke-dashoffset: 170;
+}
+ [type="checkbox"]:checked.valuenow-33 ~ .chart-container .svg-loader [aria-valuenow] {
+	 stroke-dashoffset: 335;
+}
+ [type="checkbox"]:checked[class^="valuenow-"] ~ .info label {
+	 opacity: 0.4;
+}
+ .header {
+	 padding-top: 4em;
+}
+ .header .svg-loader {
+	 transform: scale(1.4);
+}
+ article {
+	 display: flex;
+	 flex-direction: row-reverse;
+	 width: 40em;
+	 height: 24.72em;
+	 box-sizing: border-box;
+	 margin: 4em auto;
+	 padding: 3em;
+	 background-size: 200% 100%;
+	 background-position: 70% top;
+	 border-radius: 0.4em;
+}
+ article .info {
+	 text-align: left;
+	 display: flex;
+	 flex-direction: column;
+	 justify-content: space-between;
+	 color: #fefefe;
+	 perspective: 900px;
+	 flex: 0 1 14em;
+	 padding-left: 2em;
+}
+ article .info label {
+	 transform-style: preserve-3d;
+	 text-align: center;
+	 opacity: 1;
+	 color: #fefefe;
+	 border: 1px solid #fefefe;
+	 padding: 1.2em 1em;
+	 margin-top: 1em;
+	 border-radius: 0.2em;
+	 transition: opacity 0.2s ease-in-out;
+}
+ article header {
+	 margin-bottom: 1.5em;
+	 padding-bottom: 1.5em;
+	 border-bottom: 1px dashed rgba(254, 254, 254, .8);
+}
+ article header h3 {
+	 font-size: 1.65em;
+}
+ @media screen and (max-width: 480px) {
+	 article {
+		 width: 90vw;
+		 height: auto;
+		 padding: 2.2em 2em;
+		 margin: 4em auto;
+		 align-items: center;
+		 flex-direction: column-reverse;
+	}
+	 article .mobile-hide {
+		 display: none;
+	}
+	 article .info {
+		 flex: auto;
+		 padding: 0;
+		 margin: 3em 0 0;
+	}
+	 article .info label {
+		 margin-top: 2em;
+	}
+}
+ .svg-loader {
+	 position: relative;
+}
+ .svg-loader_grow {
+	 stroke-miterlimit: 10;
+	 stroke-dasharray: 500;
+	 stroke-dashoffset: -500;
+	 stroke-linejoin: round;
+	 stroke-linecap: round;
+}
+ .svg-loader_grow[aria-valuenow="0"] {
+	 stroke-dashoffset: 500;
+}
+ .svg-loader_grow[aria-valuenow="1"] {
+	 stroke-dashoffset: 495;
+}
+ .svg-loader_grow[aria-valuenow="2"] {
+	 stroke-dashoffset: 490;
+}
+ .svg-loader_grow[aria-valuenow="3"] {
+	 stroke-dashoffset: 485;
+}
+ .svg-loader_grow[aria-valuenow="4"] {
+	 stroke-dashoffset: 480;
+}
+ .svg-loader_grow[aria-valuenow="5"] {
+	 stroke-dashoffset: 475;
+}
+ .svg-loader_grow[aria-valuenow="6"] {
+	 stroke-dashoffset: 470;
+}
+ .svg-loader_grow[aria-valuenow="7"] {
+	 stroke-dashoffset: 465;
+}
+ .svg-loader_grow[aria-valuenow="8"] {
+	 stroke-dashoffset: 460;
+}
+ .svg-loader_grow[aria-valuenow="9"] {
+	 stroke-dashoffset: 455;
+}
+ .svg-loader_grow[aria-valuenow="10"] {
+	 stroke-dashoffset: 450;
+}
+ .svg-loader_grow[aria-valuenow="11"] {
+	 stroke-dashoffset: 445;
+}
+ .svg-loader_grow[aria-valuenow="12"] {
+	 stroke-dashoffset: 440;
+}
+ .svg-loader_grow[aria-valuenow="13"] {
+	 stroke-dashoffset: 435;
+}
+ .svg-loader_grow[aria-valuenow="14"] {
+	 stroke-dashoffset: 430;
+}
+ .svg-loader_grow[aria-valuenow="15"] {
+	 stroke-dashoffset: 425;
+}
+ .svg-loader_grow[aria-valuenow="16"] {
+	 stroke-dashoffset: 420;
+}
+ .svg-loader_grow[aria-valuenow="17"] {
+	 stroke-dashoffset: 415;
+}
+ .svg-loader_grow[aria-valuenow="18"] {
+	 stroke-dashoffset: 410;
+}
+ .svg-loader_grow[aria-valuenow="19"] {
+	 stroke-dashoffset: 405;
+}
+ .svg-loader_grow[aria-valuenow="20"] {
+	 stroke-dashoffset: 400;
+}
+ .svg-loader_grow[aria-valuenow="21"] {
+	 stroke-dashoffset: 395;
+}
+ .svg-loader_grow[aria-valuenow="22"] {
+	 stroke-dashoffset: 390;
+}
+ .svg-loader_grow[aria-valuenow="23"] {
+	 stroke-dashoffset: 385;
+}
+ .svg-loader_grow[aria-valuenow="24"] {
+	 stroke-dashoffset: 380;
+}
+ .svg-loader_grow[aria-valuenow="25"] {
+	 stroke-dashoffset: 375;
+}
+ .svg-loader_grow[aria-valuenow="26"] {
+	 stroke-dashoffset: 370;
+}
+ .svg-loader_grow[aria-valuenow="27"] {
+	 stroke-dashoffset: 365;
+}
+ .svg-loader_grow[aria-valuenow="28"] {
+	 stroke-dashoffset: 360;
+}
+ .svg-loader_grow[aria-valuenow="29"] {
+	 stroke-dashoffset: 355;
+}
+ .svg-loader_grow[aria-valuenow="30"] {
+	 stroke-dashoffset: 350;
+}
+ .svg-loader_grow[aria-valuenow="31"] {
+	 stroke-dashoffset: 345;
+}
+ .svg-loader_grow[aria-valuenow="32"] {
+	 stroke-dashoffset: 340;
+}
+ .svg-loader_grow[aria-valuenow="33"] {
+	 stroke-dashoffset: 335;
+}
+ .svg-loader_grow[aria-valuenow="34"] {
+	 stroke-dashoffset: 330;
+}
+ .svg-loader_grow[aria-valuenow="35"] {
+	 stroke-dashoffset: 325;
+}
+ .svg-loader_grow[aria-valuenow="36"] {
+	 stroke-dashoffset: 320;
+}
+ .svg-loader_grow[aria-valuenow="37"] {
+	 stroke-dashoffset: 315;
+}
+ .svg-loader_grow[aria-valuenow="38"] {
+	 stroke-dashoffset: 310;
+}
+ .svg-loader_grow[aria-valuenow="39"] {
+	 stroke-dashoffset: 305;
+}
+ .svg-loader_grow[aria-valuenow="40"] {
+	 stroke-dashoffset: 300;
+}
+ .svg-loader_grow[aria-valuenow="41"] {
+	 stroke-dashoffset: 295;
+}
+ .svg-loader_grow[aria-valuenow="42"] {
+	 stroke-dashoffset: 290;
+}
+ .svg-loader_grow[aria-valuenow="43"] {
+	 stroke-dashoffset: 285;
+}
+ .svg-loader_grow[aria-valuenow="44"] {
+	 stroke-dashoffset: 280;
+}
+ .svg-loader_grow[aria-valuenow="45"] {
+	 stroke-dashoffset: 275;
+}
+ .svg-loader_grow[aria-valuenow="46"] {
+	 stroke-dashoffset: 270;
+}
+ .svg-loader_grow[aria-valuenow="47"] {
+	 stroke-dashoffset: 265;
+}
+ .svg-loader_grow[aria-valuenow="48"] {
+	 stroke-dashoffset: 260;
+}
+ .svg-loader_grow[aria-valuenow="49"] {
+	 stroke-dashoffset: 255;
+}
+ .svg-loader_grow[aria-valuenow="50"] {
+	 stroke-dashoffset: 250;
+}
+ .svg-loader_grow[aria-valuenow="51"] {
+	 stroke-dashoffset: 245;
+}
+ .svg-loader_grow[aria-valuenow="52"] {
+	 stroke-dashoffset: 240;
+}
+ .svg-loader_grow[aria-valuenow="53"] {
+	 stroke-dashoffset: 235;
+}
+ .svg-loader_grow[aria-valuenow="54"] {
+	 stroke-dashoffset: 230;
+}
+ .svg-loader_grow[aria-valuenow="55"] {
+	 stroke-dashoffset: 225;
+}
+ .svg-loader_grow[aria-valuenow="56"] {
+	 stroke-dashoffset: 220;
+}
+ .svg-loader_grow[aria-valuenow="57"] {
+	 stroke-dashoffset: 215;
+}
+ .svg-loader_grow[aria-valuenow="58"] {
+	 stroke-dashoffset: 210;
+}
+ .svg-loader_grow[aria-valuenow="59"] {
+	 stroke-dashoffset: 205;
+}
+ .svg-loader_grow[aria-valuenow="60"] {
+	 stroke-dashoffset: 200;
+}
+ .svg-loader_grow[aria-valuenow="61"] {
+	 stroke-dashoffset: 195;
+}
+ .svg-loader_grow[aria-valuenow="62"] {
+	 stroke-dashoffset: 190;
+}
+ .svg-loader_grow[aria-valuenow="63"] {
+	 stroke-dashoffset: 185;
+}
+ .svg-loader_grow[aria-valuenow="64"] {
+	 stroke-dashoffset: 180;
+}
+ .svg-loader_grow[aria-valuenow="65"] {
+	 stroke-dashoffset: 175;
+}
+ .svg-loader_grow[aria-valuenow="66"] {
+	 stroke-dashoffset: 170;
+}
+ .svg-loader_grow[aria-valuenow="67"] {
+	 stroke-dashoffset: 165;
+}
+ .svg-loader_grow[aria-valuenow="68"] {
+	 stroke-dashoffset: 160;
+}
+ .svg-loader_grow[aria-valuenow="69"] {
+	 stroke-dashoffset: 155;
+}
+ .svg-loader_grow[aria-valuenow="70"] {
+	 stroke-dashoffset: 150;
+}
+ .svg-loader_grow[aria-valuenow="71"] {
+	 stroke-dashoffset: 145;
+}
+ .svg-loader_grow[aria-valuenow="72"] {
+	 stroke-dashoffset: 140;
+}
+ .svg-loader_grow[aria-valuenow="73"] {
+	 stroke-dashoffset: 135;
+}
+ .svg-loader_grow[aria-valuenow="74"] {
+	 stroke-dashoffset: 130;
+}
+ .svg-loader_grow[aria-valuenow="75"] {
+	 stroke-dashoffset: 125;
+}
+ .svg-loader_grow[aria-valuenow="76"] {
+	 stroke-dashoffset: 120;
+}
+ .svg-loader_grow[aria-valuenow="77"] {
+	 stroke-dashoffset: 115;
+}
+ .svg-loader_grow[aria-valuenow="78"] {
+	 stroke-dashoffset: 110;
+}
+ .svg-loader_grow[aria-valuenow="79"] {
+	 stroke-dashoffset: 105;
+}
+ .svg-loader_grow[aria-valuenow="80"] {
+	 stroke-dashoffset: 100;
+}
+ .svg-loader_grow[aria-valuenow="81"] {
+	 stroke-dashoffset: 95;
+}
+ .svg-loader_grow[aria-valuenow="82"] {
+	 stroke-dashoffset: 90;
+}
+ .svg-loader_grow[aria-valuenow="83"] {
+	 stroke-dashoffset: 85;
+}
+ .svg-loader_grow[aria-valuenow="84"] {
+	 stroke-dashoffset: 80;
+}
+ .svg-loader_grow[aria-valuenow="85"] {
+	 stroke-dashoffset: 75;
+}
+ .svg-loader_grow[aria-valuenow="86"] {
+	 stroke-dashoffset: 70;
+}
+ .svg-loader_grow[aria-valuenow="87"] {
+	 stroke-dashoffset: 65;
+}
+ .svg-loader_grow[aria-valuenow="88"] {
+	 stroke-dashoffset: 60;
+}
+ .svg-loader_grow[aria-valuenow="89"] {
+	 stroke-dashoffset: 55;
+}
+ .svg-loader_grow[aria-valuenow="90"] {
+	 stroke-dashoffset: 50;
+}
+ .svg-loader_grow[aria-valuenow="91"] {
+	 stroke-dashoffset: 45;
+}
+ .svg-loader_grow[aria-valuenow="92"] {
+	 stroke-dashoffset: 40;
+}
+ .svg-loader_grow[aria-valuenow="93"] {
+	 stroke-dashoffset: 35;
+}
+ .svg-loader_grow[aria-valuenow="94"] {
+	 stroke-dashoffset: 30;
+}
+ .svg-loader_grow[aria-valuenow="95"] {
+	 stroke-dashoffset: 25;
+}
+ .svg-loader_grow[aria-valuenow="96"] {
+	 stroke-dashoffset: 20;
+}
+ .svg-loader_grow[aria-valuenow="97"] {
+	 stroke-dashoffset: 15;
+}
+ .svg-loader_grow[aria-valuenow="98"] {
+	 stroke-dashoffset: 10;
+}
+ .svg-loader_grow[aria-valuenow="99"] {
+	 stroke-dashoffset: 5;
+}
+ .svg-loader_grow[aria-valuenow="100"] {
+	 stroke-dashoffset: 0;
+}
+ .svg-loader_animate {
+	 animation: goBackGrow 20s cubic-bezier(0.46, -0.42, 0.56, 1.37) infinite;
+}
+ .svg-loader_animate-color {
+	 animation: goBackColorGrow 4s ease-in-out infinite;
+}
+ .svg-loader_animate-color.reflect-x {
+	 animation-name: backGoGrow;
+	 animation-delay: 0.1s;
+}
+ .logo {
+	 fill: none;
+	 stroke: rgba(254, 254, 254, .6);
+	 stroke-miterlimit: 10;
+	 stroke-dasharray: 900;
+	 stroke-dashoffset: 200;
+	 stroke-linejoin: round;
+	 stroke-linecap: round;
+	 transform: scale(0.4);
+	 transform-origin: 50% 50%;
+	 animation: backGoLogo 40s ease-in-out infinite;
+}
+ @keyframes backGoLogo {
+	 5% {
+		 stroke-dashoffset: 900;
+	}
+	 20%, 100% {
+		 stroke-dashoffset: 200;
+	}
+}
+ circle {
+	 stroke-width: 6;
+	 transition: all 1s ease-in-out;
+	 position: relative;
+}
+ circle.fat {
+	 stroke-width: 8;
+}
+ circle.thin {
+	 stroke-width: 2;
+}
+ circle.hair-line {
+	 stroke-width: 1;
+}
+ circle.lime {
+	 stroke: #b2ff41;
+}
+ circle.red {
+	 stroke: #ff3b99;
+}
+ circle.orange {
+	 stroke: #ff9d00;
+}
+ circle.yellow {
+	 stroke: #f1c40f;
+}
+ circle.blue {
+	 stroke: #57caf4;
+}
+ circle.cyan {
+	 stroke: #4cf2d8;
+}
+ circle.green {
+	 stroke: #76c900;
+}
+ circle.gray {
+	 stroke: #444;
+}
+ circle.dark {
+	 stroke: #2b2b2b;
+}
+ circle.white {
+	 stroke: #fefefe;
+}
+ @keyframes backGoGrow {
+	 0% {
+		 stroke-dashoffset: 20;
+	}
+	 50% {
+		 stroke-dashoffset: 480;
+	}
+	 100% {
+		 stroke-dashoffset: 20;
+	}
+}
+ @keyframes goBackColorGrow {
+	 0% {
+		 stroke-dashoffset: 480;
+		 stroke: #ff3b99;
+	}
+	 50% {
+		 stroke-dashoffset: 20;
+		 stroke: #4cf2d8;
+	}
+	 100% {
+		 stroke-dashoffset: 480;
+		 stroke: #ff3b99;
+	}
+}
+ @keyframes goBackGrow {
+	 0% {
+		 stroke-dashoffset: 480;
+	}
+	 25% {
+		 stroke-dashoffset: 400;
+	}
+	 50% {
+		 stroke-dashoffset: 50;
+	}
+	 75% {
+		 stroke-dashoffset: 200;
+	}
+	 100% {
+		 stroke-dashoffset: 480;
+	}
+}
+ 
+    </style>
+</head>
+<body>
+    <header>
+  <h1>Pure <strong>CSS</strong> Loader</h1>
+  <p>... a Sassy SVG snippet.</p>
+</header>
+<section>
+  <header aria-hidden="true">
+    <h2>Enjoy this <strong>tasty snippet,</strong> it works without any JavaScript code and is "ready-to-use".</h2>
+  </header>
+  <div class="header">
+    <div class="chart-container">
+      <?xml version="1.0" encoding="utf-8"?>
+      <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="12.5em" height="12.5em" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve" class="svg-loader">
+                        <defs>
+                            <filter id="glow" x="-120%" y="-120%" width="400%" height="400%">
+                                <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0"></feOffset>
+                                <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10"></feGaussianBlur>
+                                <feBlend in="SourceGraphic" in2="blurOut" mode="overlay"></feBlend>
+                            </filter>
+                        </defs>
+                        <g transform = "rotate(-89 100 100)">
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class="svg-loader_glow white" filter="url(#glow)"/>
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class="svg-loader_grow svg-loader_animate red hair-line" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"/>
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class="svg-loader_grow svg-loader_animate lime" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" transform = "scale(.8, .8) translate(25 25)"/>
+                        </g>
+                    </svg>
+    </div>
+  </div>
+  <article>
+    <input type="checkbox" name="valuenow-90" id="valuenow-90" class="valuenow-90" value="">
+    <div class="info">
+      <div>
+        <header>
+          <h3>It's Easy.</h3>
+        </header>
+        <p>This loader is really easy to use, just change the <code>aria-valuenow</code> attribute to see it in action.</p>
+      </div>
+      <label for="valuenow-90">Change valuenow</label>
+    </div>
+    <div class="chart-container">
+      <?xml version="1.0" encoding="utf-8"?>
+      <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="12.5em" height="12.5em" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve" class="svg-loader">
+                        <defs>
+                            <filter id="glow" x="-120%" y="-120%" width="400%" height="400%">
+                                <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0"></feOffset>
+                                <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10"></feGaussianBlur>
+                                <feBlend in="SourceGraphic" in2="blurOut" mode="overlay"></feBlend>
+                            </filter>
+                        </defs>
+                        <g transform = "rotate(-89 100 100)">
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class="gray" />
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class="svg-loader_grow cyan hair-line" role="progressbar" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"/>
+                        </g>
+                    </svg>
+    </div>
+  </article>
+  <article>
+    <input type="checkbox" name="valuenow-33" id="valuenow-33" class="valuenow-33" value="">
+    <div class="info">
+      <div>
+        <header>
+          <h3>Customize it.</h3>
+        </header>
+        <p>It's pretty easy to customize.</p>
+        <p>You can use svg filters too, but take care about the performance.</p>
+      </div>
+      <label for="valuenow-33">Change valuenow</label>
+    </div>
+    <div class="chart-container">
+      <?xml version="1.0" encoding="utf-8"?>
+      <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="12.5em" height="12.5em" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve" class="svg-loader">
+                        <defs>
+                            <filter id="glow" x="-120%" y="-120%" width="400%" height="400%">
+                                <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0"></feOffset>
+                                <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10"></feGaussianBlur>
+                                <feBlend in="SourceGraphic" in2="blurOut" mode="overlay"></feBlend>
+                            </filter>
+                        </defs>
+                        <g>
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" filter="url(#glow)" class="svg-loader_grow lime" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" transform = "rotate(-89 100 100)"/>
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class="svg-loader_grow white" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" transform = "rotate(-89 100 100) scale(.8, .8) translate(25 25)"/>
+
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" filter="url(#glow)" class="white hair-line" transform = "scale(.8, .8) translate(25 25)"/>
+                        </g>
+                    </svg>
+    </div>
+  </article>
+  <article>
+    <input type="checkbox" name="valuenow-90" id="valuenow-90-0" class="valuenow-90" value="">
+    <div class="info">
+      <div>
+        <header>
+          <h3>Use Heat Bars.</h3>
+        </header>
+        <p>Build patterns to get a heat-bar with gradient-color steps.</p>
+      </div>
+      <label for="valuenow-90-0">Change valuenow</label>
+    </div>
+    <div class="chart-container">
+      <?xml version="1.0" encoding="utf-8"?>
+      <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="12.5em" height="12.5em" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve" class="svg-loader">
+                        <defs>
+                            <linearGradient id="deg-0" gradientUnits="userSpaceOnUse" x1="50%" y1="0" x2="100%" y2="50%">
+                        <stop offset="0" stop-color="#b2ff41" />
+                        <stop offset="1" stop-color="#c5ce57" />
+                    </linearGradient>
+                    <linearGradient id="deg-1" gradientUnits="userSpaceOnUse" x1="100%" y1="50%" x2="50%" y2="100%">
+                        <stop offset="0" stop-color="#c5ce57" />
+                        <stop offset="1" stop-color="#d99d6d" />
+                    </linearGradient>
+                    <linearGradient id="deg-2" gradientUnits="userSpaceOnUse" x1="50%" y1="100%" x2="0" y2="50%">
+                        <stop offset="0" stop-color="#d99d6d" />
+                        <stop offset="1" stop-color="#ec6c83" />
+                    </linearGradient>
+                    <linearGradient id="deg-3" gradientUnits="userSpaceOnUse" x1="0" y1="50%" x2="50%" y2="0">
+                        <stop offset="0" stop-color="#ec6c83" />
+                        <stop offset="1" stop-color="#FF3B99" />
+                    </linearGradient>
+                    <filter id="blur" x="0" y="0" width="200%" height="200%">
+                        <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
+                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+                    </filter>
+                    <pattern id="heatCone" x="0" y="0" width="100%" height="100%" patternContentUnits="userSpaceOnUse" patternUnits="userSpaceOnUse">
+                        <g transform = "rotate(89 100 100)">
+                        <rect width='50%' height='50%' fill='url(#deg-0)' x="50%" />
+                        <rect width='50%' height='50%' fill='url(#deg-1)' x="50%" y="50%" />
+                        <rect width='50%' height='50%' fill='url(#deg-2)' y="50%" />
+                        <rect width='50%' height='50%' fill='url(#deg-3)' />
+                      </g>
+                    </pattern>
+                            <filter id="glow" x="-120%" y="-120%" width="400%" height="400%">
+                                <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0"></feOffset>
+                                <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10"></feGaussianBlur>
+                                <feBlend in="SourceGraphic" in2="blurOut" mode="overlay"></feBlend>
+                            </filter>
+                        </defs>
+                        <g transform = "rotate(-89 100 100)">
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class="gray" />
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class="svg-loader_grow thin" stroke="url(#heatCone)" stroke-width="2" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"/>
+                        </g>
+                    </svg>
+    </div>
+  </article>
+  <article>
+    <div class="info">
+      <div>
+        <header>
+          <h3>Play with Colors.</h3>
+        </header>
+        <p>Just adding some colors we can code a temperature-color-behavior.</p>
+      </div>
+    </div>
+    <div class="chart-container">
+      <?xml version="1.0" encoding="utf-8"?>
+      <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="12.5em" height="12.5em" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve" class="svg-loader">
+                        <defs>
+                            <filter id="glow" x="-120%" y="-120%" width="400%" height="400%">
+                                <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0"></feOffset>
+                                <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10"></feGaussianBlur>
+                                <feBlend in="SourceGraphic" in2="blurOut" mode="overlay"></feBlend>
+                            </filter>
+                        </defs>
+                        <g>
+
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class=" gray" transform = "scale(.8, .8) translate(25 25)"/>
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class="svg-loader_grow svg-loader_animate-color white" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" transform = "rotate(-89 100 100) scale(.8, .8) translate(25 25)" filter="url(#glow)"/>
+                            <circle fill="none" cx="6.25em" cy="6.25em" r="5em" class="svg-loader_grow svg-loader_animate-color reflect-x white" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" transform = "rotate(-89 100 100) translate(0 200) scale(1, -1)" filter="url(#glow)"/>
+                        </g>
+                    </svg>
+    </div>
+  </article>
+</section>
+<footer>
+  <!-- <header>
+    <?xml version="1.0" encoding="utf-8"?>
+    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="222px" height="112px" viewBox="0 0 222 112" enable-background="new 0 0 222 112" xml:space="preserve" class="logo">
+                <path d="M163.464,55.536h-47.537C115.927,29.283,137.21,8,163.464,8 C189.717,8,211,29.283,211,55.536c0,26.254-21.283,47.537-47.536,47.537c-18.973,0-35.349-11.114-42.973-27.188l-18.787-40.283 C94.166,19.306,77.671,8,58.536,8C32.283,8,11,29.283,11,55.536c0,26.254,21.283,47.537,47.536,47.537 c26.254,0,47.537-21.283,47.537-47.537H58.536"/>
+                </svg>
+  </header> -->
+</footer>
+</body>
+</html>
