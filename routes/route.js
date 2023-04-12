@@ -4,6 +4,8 @@ const nodemailer = require("nodemailer");
 var bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+
+//Documnets Schema
 const BLOG=require("../schema/blog")
 const CONTACT =require("../schema/contact")
 
@@ -11,6 +13,7 @@ const CONTACT =require("../schema/contact")
 const pswrd = "";
 const emailAdd = "dheerajgupta.whyshy@gmail.com";
 
+//use firebase email instead
 //smtp server
 var smtpTransport = nodemailer.createTransport({ 
   service: "gmail",
@@ -21,11 +24,11 @@ var smtpTransport = nodemailer.createTransport({
 });
 
 
+
+//----------------------------- USER MESSAGES-----------------------------------------------
  //users messages related routes
 router.post("/message", urlencodedParser, (req, res) => {
   const details=req.body;
-  //console.log(details)
-
   
   try { 
     //sending veriication email
@@ -41,7 +44,8 @@ router.post("/message", urlencodedParser, (req, res) => {
     };
  
     console.log(mailOptions); 
-  //send main option is commented now,,due to testing i guess, although the messages will be saved in db
+
+  //send mail option is commented now,,due to testing i guess, although the messages will be saved in db
   //  res.redirect('back');
   //   smtpTransport.sendMail(mailOptions, function (error, info) {
   //     if (error) {
@@ -53,17 +57,11 @@ router.post("/message", urlencodedParser, (req, res) => {
   //     }
   //   });
 
-  
-
     //to insert a record
     let contact = new CONTACT({name:details.name,email:details.mail,phone:details.phone,note:details.textarea})
     contact.save();
-    //var sql = `INSERT INTO contact (name, email, phone, note) VALUES ('${details.name}','${details.mail}','${details.phone}','${details.textarea}')`;
-    //con.query(sql, function (err, result) {
-    //  if (err) throw err;
       console.log("record inserted!!!");
       res.redirect('back')
-    //});
   } catch (err) {
     console.log(err);
   }
@@ -73,56 +71,26 @@ router.post("/message", urlencodedParser, (req, res) => {
 //for showing database messages records
 router.post("/showMessage", async (req, res) => {
   try {
-   
     let ret =await CONTACT.find({})
-    //console.log("contact message",ret)
     res.send(ret)
   } catch (err) {
     console.log(err);
   }
 });
- //the api endpoint(route) for deleting these msgs is in server.js
-
-
- 
-
+//the api endpoint(route) for deleting these msgs is in server.js
+//----------------------------- USER MESSAGES-----------------------------------------------
 
 
 
-
-
-//the below two api's can be merged send a confirmation if u want filtered or not and write an if else here
-
-//for showing database blogs records
-router.post("/show", async (req, res) => {
+//each and every blogs
+router.post("/getallblogs", async (req, res) => {
   try {
-
-
     let ret =await BLOG.find({})
-    //console.log("blogs",ret)
-
-    const filteredArray = ret.filter(obj => obj.status !== '1');//only sending the blogs that are marked visible
-    res.send(filteredArray);
-
+    res.send(ret);
   } catch (err) {
     console.log(err);
   }
 });
-
-//for showing database blogs records in blogs-management (admin panel)
-router.post("/show2", async (req, res) => {
-  console.log("show2 api called-----------")
-  try {
-    
-    let ret =await BLOG.find({})
-    //console.log("BLOGS",ret)
-    res.send(ret)
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-
 
 
 module.exports = router;

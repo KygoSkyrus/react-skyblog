@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 
@@ -6,31 +6,7 @@ const BlogsManagement = (props) => {
 
 
     //NOTE: reloading this page bcz the summernote does not initialize without reloading
-    const { allCategory, storage } = props
-
-    const [everyBlog, setEveryBlog] = useState()
-
-    useEffect(() => {
-        console.log('00000000000000')
-        getAllBlogs()
-    }, [])
-
-
-
-    //this is same as show api but not filtered
-    async function getAllBlogs() {
-        console.log('111111111111111111')
-        const res = await fetch("/show2", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({}),
-        });
-
-        const data = await res.json();
-        setEveryBlog(data)
-        console.log("data", data);
-    }
-
+    const { allBlog, allCategory, storage } = props
 
   
 
@@ -398,7 +374,7 @@ const BlogsManagement = (props) => {
                                 </thead>
                                 <tbody id="tbody">
 
-                                    {everyBlog?.map((x, index) => {
+                                    {allBlog?.map((x, index) => {
 
                                         return (
                                             <tr key={x._id}>

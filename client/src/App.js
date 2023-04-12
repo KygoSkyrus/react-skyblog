@@ -9,6 +9,7 @@ import './App.css';
 
 import Admin from './components/Admin';
 import NotAdmin from './components/NotAdmin';
+import Loader from './Loader';
 
 
 function App() {
@@ -16,9 +17,10 @@ function App() {
 
   const [allBlog, setAllBlog] = useState([]);
   const [allCategory, setAllCategory] = useState();
-  
+  const [isLoaded,setIsLoaded] = useState(false)
 
   useEffect(() => {
+    setIsLoaded(true)
     //move these two function to notadmin if none of these are called in admin secetion
     getAllBlogs()
     getAllCategory()
@@ -26,6 +28,8 @@ function App() {
   }, [])
 
 
+
+  //-------------------- FIREBASE INITIALIZE -----------------------
     const firebaseConfig = {
       apiKey: process.env.apiKey,
       authDomain: "shopp-itt.firebaseapp.com",
@@ -37,10 +41,12 @@ function App() {
   };
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
+  //-------------------- FIREBASE INITIALIZE -----------------------
+
   
   async function getAllBlogs() {
-
-    const res = await fetch("/show", {
+    
+    const res = await fetch("/getallblogs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
@@ -50,6 +56,7 @@ function App() {
     console.log('getALLblogs', data);
     console.table(data)
     setAllBlog(data)
+    setIsLoaded(false)
   }
 
   async function getAllCategory() {
@@ -65,7 +72,7 @@ function App() {
 
 
   //---------------------moving from notadmin so that both admin and notadmin has access to this---------------------------------------
-    console.log('allBlofgs in homepge porops', allBlog)
+    console.log('allBlogs in homepge porops', allBlog)
     let catAndCount = Object();//object with category with their count
     let arrAllCatForNav = [];//categot to show in  navbar
 
@@ -80,8 +87,11 @@ function App() {
     var sportsArray = [];
 
 
+    let filteredBlogs=[];
     //looping over the array of blogs [only loop here]
     allBlog?.forEach(blog => {
+
+        if (blog.status !== '1')  filteredBlogs.push(blog);//collecting blogs that are marked visible only
 
         //calculating all category and their count
         if (catAndCount[blog.category]) {
@@ -139,16 +149,23 @@ function App() {
 
 
   return (
+    <>
+    {isLoaded?
+       <Loader />
+      :
     <BrowserRouter>
 
       <Routes>
-        <Route path="/*" exact element={<NotAdmin allBlog={allBlog} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} />} />
+        <Route path="/*" exact element={<NotAdmin allBlog={filteredBlogs} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} />} />
 
         <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} storage={storage} />} />
       </Routes>
       
     </BrowserRouter>
-  );
+    }
+    </>
+  )
+  
 }
 
 export default App;

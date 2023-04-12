@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
+import Cookies from 'js-cookie';
 
 import CategoryModal from './CategoryModal'
 import ChangePasswordModal from './ChangePasswordModal'
@@ -25,37 +26,13 @@ const Sidebar = (props) => {
 
     //this will set the admin name in sidebar
     async function getAdminName() {
-
-        const res = await fetch("/getAdminName", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({}),
-        });
-
-        const data = await res.json();
-        setAdminName(data.admin)
-        console.log('get admin name', data, data.admin)
-
+        const adminVal = Cookies.get('admin')
+        setAdminName(adminVal)
     }
 
-
-
-
     async function logout() {
-        console.log("logout function ran");
-        const res = await fetch("/logout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({}),
-        });
-
-        const data = await res.json();
-        console.log(data);
-        if (data.message == "loggedOut") {
-            window.location.reload();
-        }
+        Cookies.remove('admin')
+        window.location.reload();
     }
 
 
@@ -69,7 +46,6 @@ const Sidebar = (props) => {
             navbar.classList.toggle('active');
             menuItem?.forEach(x => {x.classList.toggle('pl');x.classList.toggle('w')})
         });
-
     }
 
 

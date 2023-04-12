@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 
@@ -84,8 +84,6 @@ const Admin = (props) => {
 
 
           <Routes>
-
-
             <Route path="/dashboard" exact element={<Dashboard allCategory={allCategory} catAndCount={catAndCount} />} />
 
             <Route path="/messages" exact element={<Messages />} />
