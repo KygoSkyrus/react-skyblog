@@ -6,10 +6,6 @@ const dotenv = require('dotenv');
 
 //Router
 app.use(require("./routes/route"));
-// const articles = require("./routes/articles");
-// const blogEdit = require("./routes/edit");
-// const categorySingle = require("./routes/category");
-// const admin = require("./routes/admin");
 
 //Document Schema
 const ADMIN = require("./schema/admin")

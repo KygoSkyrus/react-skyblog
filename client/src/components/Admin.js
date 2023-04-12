@@ -19,11 +19,14 @@ const Admin = (props) => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    redirectTo();
+    console.log(allBlog)
+    redirectToLogin();
     showTime()
   }, [])
 
-  async function redirectTo() {
+
+  //if user is admin is not logged then redirects to login page
+  async function redirectToLogin() {
     const adminVal = Cookies.get('admin')
     console.log("cookieValue", adminVal)
     if (!adminVal) {
@@ -58,8 +61,12 @@ const Admin = (props) => {
     s = (s < 10) ? "0" + s : s;
 
     var time = h + ":" + m + ":" + s + " " + session;
-    document.getElementById("MyClockDisplay").innerText = time;
-    document.getElementById("MyClockDisplay").textContent = time;
+    
+    if(document.getElementById("MyClockDisplay")){
+      let MyClockDisplay =document.getElementById("MyClockDisplay")
+      MyClockDisplay.innerText = time;
+      MyClockDisplay.textContent = time;
+    }
 
     setTimeout(showTime, 1000);
 

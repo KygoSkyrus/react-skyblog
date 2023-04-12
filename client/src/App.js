@@ -20,11 +20,11 @@ function App() {
   const [isLoaded,setIsLoaded] = useState(false)
 
   useEffect(() => {
+    document.getElementById('root').classList.add('overflow')
     setIsLoaded(true)
     //move these two function to notadmin if none of these are called in admin secetion
     getAllBlogs()
     getAllCategory()
-   
   }, [])
 
 
@@ -57,6 +57,7 @@ function App() {
     console.table(data)
     setAllBlog(data)
     setIsLoaded(false)
+    document.getElementById('root').classList.remove('overflow')
   }
 
   async function getAllCategory() {
@@ -150,19 +151,16 @@ function App() {
 
   return (
     <>
-    {isLoaded?
-       <Loader />
-      :
+      <Loader isLoaded={isLoaded} />
     <BrowserRouter>
 
       <Routes>
         <Route path="/*" exact element={<NotAdmin allBlog={filteredBlogs} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} />} />
 
-        <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} storage={storage} />} />
+        <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} storage={storage} isLoaded={isLoaded} />} />
       </Routes>
       
     </BrowserRouter>
-    }
     </>
   )
   
