@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer = (props) => {
 
@@ -12,9 +13,9 @@ const Footer = (props) => {
 				<div className="row align-items-center justify-content-center justify-content-md-between">
 					<div className="col-md-4 t-mb-30 mb-md-0">
 						<div className="brand mx-auto mr-md-auto ml-md-0">
-							<a href="" className="t-link">
+							<Link to="" className="t-link">
 							    <section className='theLogo'>SOMETHING</section>
-							</a>
+							</Link>
 						</div>
 					</div>
 					<div className="col-md-6 text-center">
@@ -38,19 +39,19 @@ const Footer = (props) => {
 						<h5 className="t-text-light mt-0 text-capitalize">quick links</h5>
 						<ul className="list">
 							<li className="t-mb-10">
-								<a href="/" className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/" className="t-link text-capitalize t-link--light sm-text">
 									home
-								</a>
+								</Link>
 							</li>
 							<li className="t-mb-10">
-								<a href="/contact" className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/contact" className="t-link text-capitalize t-link--light sm-text">
 									contact
-								</a>
+								</Link>
 							</li>
 							<li className="t-mb-10">
-								<a href="/post-your-blog" className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/post-your-blog" className="t-link text-capitalize t-link--light sm-text">
 									post a blog
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</div>
@@ -58,24 +59,24 @@ const Footer = (props) => {
 						<h5 className="t-text-light mt-0 text-capitalize">top picks</h5>
 						<ul className="list">
 							<li className="t-mb-10">
-								<a href="/category/tech" className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/category/tech" state={{ some: "value1" }} className="t-link text-capitalize t-link--light sm-text">
 									tech
-								</a>
+								</Link>
 							</li>
 							<li className="t-mb-10">
-								<a href="/category/travel" className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/category/travel" state={{ some: "value2" }} className="t-link text-capitalize t-link--light sm-text">
 									travel
-								</a>
+								</Link>
 							</li>
 							<li className="t-mb-10">
-								<a href="/category/lifestyle" className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/category/lifestyle" className="t-link text-capitalize t-link--light sm-text">
 									lifestyle
-								</a>
+								</Link>
 							</li>
 							<li className="t-mb-10">
-								<a href="/category/business" className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/category/business" className="t-link text-capitalize t-link--light sm-text">
 									business
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</div>
@@ -83,15 +84,15 @@ const Footer = (props) => {
 						<h5 className="t-text-light mt-0 text-capitalize">categories</h5>
 						<ul className="list" id="footerCat">
 							{/* <li className="t-mb-10">
-								<a href="#" className="t-link text-capitalize t-link--light sm-text">
-								</a>
+								<Link to="#" className="t-link text-capitalize t-link--light sm-text">
+								</Link>
 							</li> */}
 							{finalArr?.map((x,index)=>{
 								return(
                                 <li className="t-mb-10" key={index}>
-								<a href={"/category/"+x} className="t-link text-capitalize t-link--light sm-text">
+								<Link to={"/category/"+x} className="t-link text-capitalize t-link--light sm-text">
 									{x}
-								</a>
+								</Link>
 							    </li>
 								)
 							})
@@ -110,62 +111,62 @@ const Footer = (props) => {
 						<h5 className="t-text-light mt-0 text-capitalize">follow us</h5>
 						<ul className="list d-flex justify-content-between mt-3"> 
 							<li>
-								<a href="#" className="t-follow-link">
+								<Link to="#" className="t-follow-link">
 									<span className="social-counter__icon social-counter__icon--be t-mr-8">
 										<span className="social-counter__icon-is">
 											<i className="fa-brands fa-github"></i>
 										</span>
 									</span>
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="t-follow-link">
+								<Link to="#" className="t-follow-link">
 									<span className="social-counter__icon social-counter__icon--fb t-mr-8">
 										<span className="social-counter__icon-is">
 										   <i className="fa-brands fa-linkedin-in"></i>
 										</span>
 									</span>
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="t-follow-link">
+								<Link to="#" className="t-follow-link">
 									<span className="social-counter__icon social-counter__icon--tw t-mr-8">
 										<span className="social-counter__icon-is">
 										   <i className="fa-brands fa-twitter"></i>										
 										</span>
 									</span>
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="t-follow-link">
+								<Link to="#" className="t-follow-link">
 									<span className="social-counter__icon social-counter__icon--ins t-mr-8">
 										<span className="social-counter__icon-is">
 										<i className="fa-brands fa-instagram"></i>
 										</span>
 									</span>
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="t-follow-link">
+								<Link to="#" className="t-follow-link">
 									<span className="social-counter__icon social-counter__icon--in t-mr-8">
 										<span className="social-counter__icon-is">
 										<i className="fa-brands fa-facebook"></i>										</span>
 									</span>
-								</a>
+								</Link>
 							</li>
 						</ul>
 						{/* <div className="t-mt-30">
 							<h6 className="t-text-light text-capitalize">download app</h6>
 							<ul className="list row">
 								<li className="t-mr-8 t-mb-10 mb-xl-0">
-									<a href="#" className="t-link">
+									<Link to="#" className="t-link">
 										<img src="assets/img/g-play.png" alt="blog" className="img-fluid" />
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a href="#" className="t-link">
+									<Link to="#" className="t-link">
 										<img src="assets/img/i-store.png" alt="blog" className="img-fluid" />
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</div> */}
@@ -177,7 +178,7 @@ const Footer = (props) => {
 					<div className="col-12 text-center">
 						<p className="mb-0 t-text-light sm-text">
 							<i className="fa-sharp fa-regular fa-copyright"></i> 2023, SKYBLOG. Designed by
-							<a href="#" className="t-link t-link--primary text-light">&nbsp;DHEERAJ GUPTA&nbsp;</a>
+							<Link to="#" className="t-link t-link--primary text-light">&nbsp;DHEERAJ GUPTA&nbsp;</Link>
 							. All Rights Reserved.
 						</p>
 					</div>

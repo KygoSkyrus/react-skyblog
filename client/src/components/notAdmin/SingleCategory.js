@@ -1,20 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import OtherBlogsComp from './OtherBlogsComp';
 import CategoryList from './CategoryList';
 import BlogWrapperRight2 from './BlogWrapperRight2';
+import { useLocation } from 'react-router-dom';
 
 const SingleCategory = (props) => {
 
     const { allBlog, allCategory, catAndCount } = props
-    const link = document.baseURI;
-    var category = link.substring(
-        link.lastIndexOf("/") + 1,
-        link.length
-    );
+    const [blogIncat,setBlogIncat]=useState()
 
-    let blogInSelectCategory = allBlog.filter(x => x.category === category)
+    //on reload its not working as the useeefcts runs very early
+    let { state } = useLocation();//this is the state send from Link react router causes the page to rerender as we were having the same props
+    console.log('sc',state)
+   
+    useEffect(()=>{
+        console.log('single category',allBlog)
 
+        let category = getCurrentCategory()
+     
+        let blogInSelectCategory = allBlog.filter(x => x.category === category)
+        setBlogIncat(blogInSelectCategory)
+    },[state])
+
+    function getCurrentCategory(){
+        const link = document.baseURI;
+        var category = link.substring(
+            link.lastIndexOf("/") + 1,
+            link.length
+        );
+        return category
+    }
 
     return (
         <>
@@ -25,7 +41,7 @@ const SingleCategory = (props) => {
                     <div className="col-12">
                         <div className="t-pt-70 t-pb-70 t-bg-secondary">
                             <h4 className="mt-0 t-text-light text-capitalize text-center" id="catHead">
-                                {category}
+                                {getCurrentCategory()}
                             </h4>
                         </div>
                     </div>
@@ -41,9 +57,9 @@ const SingleCategory = (props) => {
 
                                 <div className="col-12 t-mb-60">
                                     <div className="row" id="data">
-                                        {blogInSelectCategory?.map(x => {
+                                        {blogIncat?.map(x => {
                                             return (
-                                                <BlogWrapperRight2 data={x} />
+                                                <BlogWrapperRight2 data={x} key={x._id} />
                                             )
                                         })}
                                     </div>

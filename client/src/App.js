@@ -5,11 +5,10 @@ import { initializeApp } from 'firebase/app';
 import { getStorage } from "firebase/storage";
 
 import './App.css';
-
-
 import Admin from './components/Admin';
 import NotAdmin from './components/NotAdmin';
 import Loader from './Loader';
+import ScrollToTop from './ScrollToTop';//deals with the Link to restore scroll
 
 
 function App() {
@@ -20,8 +19,8 @@ function App() {
   const [isLoaded,setIsLoaded] = useState(false)
 
   useEffect(() => {
-    document.getElementById('root').classList.add('overflow')
-    setIsLoaded(true)
+    //document.getElementById('root').classList.add('overflow')
+    //setIsLoaded(true)
     //move these two function to notadmin if none of these are called in admin secetion
     getAllBlogs()
     getAllCategory()
@@ -153,7 +152,7 @@ function App() {
     <>
       <Loader isLoaded={isLoaded} />
     <BrowserRouter>
-
+    <ScrollToTop/>
       <Routes>
         <Route path="/*" exact element={<NotAdmin allBlog={filteredBlogs} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} />} />
 

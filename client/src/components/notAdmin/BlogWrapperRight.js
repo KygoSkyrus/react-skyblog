@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const BlogWrapperRight = (props) => {
 
@@ -12,34 +13,34 @@ const BlogWrapperRight = (props) => {
                 <div className="post--right-content t-flex-100">
                     <ul className="list d-flex align-items-center">
                         <li className={`t-mr-16 `+displayCategory}>
-                            <a target="blank" href="/${catArray[i].url}"
+                            <Link  to={data?.url}
                                 className="t-link t-link--light tag tag--skew ${catClr} text-uppercase">
                                 <span className="tag__skew-reverse">
                                     {data.category}
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                         <li className="d-none d-md-flex">
-                            <a target="blank" href="/${catArray[i].url}"
+                            <Link  to={data?.url}
                                 className="t-link t-link--secondary ex-sm-text text-capitalize">
                                 <span className="las la-calendar-alt m-text"></span>
                                 {data.date}
-                            </a>
+                            </Link>
                         </li>
                     </ul>
 
                     <h5 className="post__title post__title-xmin t-mt-10 t-mb-10">
-                        <a target="blank" href="/${catArray[i].url}" className="t-link t-link--secondary">
+                        <Link  to={data?.url} className="t-link t-link--secondary">
                             {data.title}
-                        </a>
+                        </Link>
                     </h5>
                     <ul className="list d-none d-md-flex align-items-center">
                         <li className={displayRead}>
-                            <a target="blank" href="/${catArray[i].url}"
+                            <Link  to={data?.url}
                                 className="t-link t-link--secondary ex-sm-text text-capitalize">
                                 <span className="las la-clock sm-text"></span>
                                 10 min read
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

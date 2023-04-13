@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate } from "react-router-dom"
-
+import React, { useEffect } from 'react'
+//import { useNavigate } from "react-router-dom"
 
 import OtherBlogsComp from './OtherBlogsComp'
 import BlogWrapperBottom from './BlogWrapperBottom'
@@ -10,8 +9,6 @@ import CategoryList from './CategoryList'
 const SingleBlog = (props) => {
 
     const { allBlog, allCategory, catAndCount } = props
-    const [doesBlogExist, setDoesBlogExist] = useState(true)
-    const navigate = useNavigate()
 
     const link = document.baseURI;
     var blogurl = link.substring(
@@ -38,16 +35,19 @@ const SingleBlog = (props) => {
             theBlog = allBlog[i];
             break;
         }
-
-
     }
 
-    console.log('end')
 
+    //note:this problem maybe solved after incorporating redux
     //to navigate to erro page
+    // if(allBlog.length>0){
     // if(!theBlog){
-    //     navigate("/page-not-found")
+    //     // console.log('theblog is not true in singtle blog')
+    //     // navigate("/page-not-found")
+    // }else{
+    //     //console.log('theblog is not true in singtle blog-oposite')
     // }
+    
 
     return (
         <>

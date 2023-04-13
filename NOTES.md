@@ -51,6 +51,9 @@
 
 -to redirect to edit blog page and for blogsmanagement i sidebar i have used anchor tag instaed of the Link bcz we need to refecresh these pages as they have summernote and summernote only loads when page is refreshed
 
+-summernote is a problem,,there is a wysiwyg react-draft-wysiwyg,,try using this instead
+
+-redux is needed 
 
 
 

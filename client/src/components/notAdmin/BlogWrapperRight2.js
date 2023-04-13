@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const BlogWrapperRight2 = (props) => {
 
@@ -16,29 +17,29 @@ const BlogWrapperRight2 = (props) => {
           <div className="post--right-content t-flex-100">
             <ul className="list d-flex align-items-center">
               <li className="t-mr-16">
-                <a href="#" className="t-link t-link--light tag tag--skew tag-epsilon text-uppercase">
+                <Link to={data?.url} className="t-link t-link--light tag tag--skew tag-epsilon text-uppercase">
                   <span className="tag__skew-reverse">
                     {data.category}
                   </span>
-                </a>
+                </Link>
               </li>
               <li className="t-mr-16">
-                <a href="#" className="t-link t-link--secondary ex-sm-text text-capitalize">
+                <Link to={data?.url} className="t-link t-link--secondary ex-sm-text text-capitalize">
                   <span className="las la-clock sm-text"></span>
                   10 min read
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="" className="t-link t-link--secondary ex-sm-text text-capitalize">
+                <Link to={data?.url} className="t-link t-link--secondary ex-sm-text text-capitalize">
                   <span className="las la-calendar-alt ex-sm-text"></span>
                   {data.date}
-                </a>
+                </Link>
               </li>
             </ul>
             <h4 className="post__title t-mt-10 t-md-34-lg-1875">
-              <a href="blog-details.html" className="t-link t-link--secondary">
+              <Link to="blog-details.html" className="t-link t-link--secondary">
                 {data.title}
-              </a>
+              </Link>
             </h4>
             <p className="mb-0 d-none d-lg-block">
               {data.shortdescription}

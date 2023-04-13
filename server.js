@@ -15,7 +15,7 @@ const CATEGORY = require("./schema/category")
 const USERBLOG = require("./schema/userblog")
 
 dotenv.config({ path: './env/config.env' });
-app.set("view engine", "ejs");
+app.set("view engine", "ejs");//not needed
 app.use(cookieParser());
 
 var bodyParser = require("body-parser");
