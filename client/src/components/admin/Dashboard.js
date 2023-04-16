@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Dashboard = (props) => {
 
@@ -16,7 +17,7 @@ const Dashboard = (props) => {
                             </div>
                             <div className="text-right">
                                 <div className="actions">
-                                    <a href="" className="action-item"><i className="fas fa-refresh"></i></a>
+                                    <Link to="" className="action-item"><i className="fas fa-refresh"></i></Link>
                                 </div>
                             </div>
                         </div>

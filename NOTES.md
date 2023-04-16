@@ -16,6 +16,10 @@
 
 
 ## defects
+- use reactdraftwyswyg summernot is creating a lot of problems
+- blogsmanangement,editblog,post a blog needs attentions after new wyswyg is  added,also usersub,ittedblogs
+- [Fixed] where ever there is a category link,,its needs to be pass with state
+- [fixed](just a minute after logging rhis issue)A BIG PROBLEM,,,,ON REFRESING A CATEGORY PAGE <<ITS NOT LOADING TGHE BLOG>>
 - convert all the anchor tag in the not admin componeddnts to link in order to avoid page reload when redirecting to another page
 - also there should be a way to delet cloud images when a blog is deleted
 - write the logic to check in url that the asked blog even exists or not,if not then redirect  to error page {i think this can be solved if the page loads oonly after the respnose is recived from the server,,only then move forward to redirect to any route}
@@ -71,6 +75,14 @@
 //you can call a function onsubmit event in form tag,,why this?bcz it does the work of bpth your  own function and form validation,,it checks for required field and othe rvalidation
 "e.preventDefault()"  //this stops page to refresh 
     //or you could have used return false at the bottom of the function which would have stopped refreshing page
+
+- in react router Link you can pass the state as well while redirecting to a page 
+```
+<Link to="/category/tech" state={{ some: "value1" }}/>
+```
+and you can get this state from the compeonet by "props.state"
+
+- if you are using conditional redering on a based on a state then do not initialise the state while creating as it would be true all the time bcz you initialized it will not be undefined
 
 
 ### magento 

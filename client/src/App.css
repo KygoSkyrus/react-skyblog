@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@1,900&display=swap');
+
 *{
   padding: 0;
   margin: 0;
@@ -9,6 +11,47 @@
   height: 100vh;
   overflow: hidden;
 }
+
+
+/*--------------------------------- basics-----------------------------*/
+a:hover {
+  color: #000;
+  text-decoration: none;
+  transform: scale(1.01);
+}
+.height300{
+  height: 300px;
+}
+.height500{
+  height: 500px;
+}
+.fontSM{
+  font-size: 12px;
+}
+.tagSM{
+  background: none !important;
+    color: #b24592 !important;
+    border: 1px solid #b24592;
+}
+.skyVidBG{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Exo 2",sans-serif;
+  width: 100%;
+    background: #000000c7;
+    height: 184px;
+}
+.skyVidBG h4{
+  font-family: inherit;
+  font-size: 56px;
+  color: #fff;
+}
+/*--------------------------------- basics-----------------------------*/
+
+
+
 
 /*apploaded.js*/
 .mainlogo{
@@ -140,9 +183,23 @@ background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, F
 
 
 /********************* FOOTER ***************/
+.theLogo{
+  width: fit-content;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  background: url('./assets/images/sky.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+}
 /* .t-text-light{
   color: #4396da;
 } */
+.t-blue{
+  color:#4396da;
+}
 .t-bg-secondary {
   background: #070c17;
 }
@@ -157,6 +214,9 @@ background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, F
 }
 .footer-top,.footer-mid {
   border-bottom: 1px solid rgba(217, 217, 217, 0.2);
+}
+.follow{
+justify-content: space-between;
 }
 .t-follow-link{
   padding: 10px;
@@ -266,7 +326,7 @@ background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, F
 }
 
 .post__title {
-  font-family: "Bebas Neue", cursive;
+  font-family: "Exo 2", sans-serif;
   color:aliceblue;
 }
 
@@ -318,15 +378,19 @@ textarea.form-control {
   border: none;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  background: #00b9f1;
-  font-family: "Bebas Neue", cursive;
+  transition: all 0.6s ease-in-out;
+  background: #4396da;
+  /* font-family: "Bebas Neue", cursive; */
   color: #fff;
   font-size: 18px;
   text-transform: uppercase;
   border: 2px solid transparent;
 }
-
+.newsletter__button:hover{
+  border: 2px solid #4396da;
+  background-color: #fff;
+  color: #4396da;
+}
 
 
 
@@ -532,7 +596,13 @@ input[type="radio"] {
 .loader-container{
   width: 100vw;
   height: 100vh;
-  background: #000000ad;
+  background: url('./assets/images/sky.jpg');
+  background-size: cover;
+}
+.loader-container .overlay{
+  width: inherit;
+  height: inherit;
+  background: #000000ea;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -599,3 +669,30 @@ input[type="radio"] {
   letter-spacing: 18px;
 }
 /********************************* LOADER ****************************************/
+
+
+
+
+
+
+
+
+
+/********************************* RESPONSIVE ****************************************/
+
+@media (max-width:768px) {
+  .follow {
+    justify-content: flex-start;
+  }
+  .follow li{
+    margin-right: 10px;
+  }
+
+
+  .height300,
+  .height500{
+    height: unset;
+  }
+
+
+}

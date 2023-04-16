@@ -11,10 +11,10 @@ const Footer = (props) => {
 		<div className="container">
 			<div className="footer-top t-pt-40 t-pb-40">
 				<div className="row align-items-center justify-content-center justify-content-md-between">
-					<div className="col-md-4 t-mb-30 mb-md-0">
+					<div className="t-mb-30 mb-md-0 px-3">
 						<div className="brand mx-auto mr-md-auto ml-md-0">
 							<Link to="" className="t-link">
-							    <section className='theLogo'>SOMETHING</section>
+							    <section className='theLogo'>SKYBLOG</section>
 							</Link>
 						</div>
 					</div>
@@ -23,11 +23,11 @@ const Footer = (props) => {
 							<div className="t-text-primary t-mr-16 t-h1">
 								<i className="las la-headset"></i>
 							</div>
-							<div className="text-left">
+							<div className="">
 								<div className="text-capitalize text-light ex-sm-text">
 									24/7 help center
 								</div>
-								<h5 className="t-mt-10 mb-0 t-text-light">+12-2345678966</h5>
+								<h5 className="t-mt-10 mb-0 t-blue">+12-2345678966</h5>
 							</div>
 						</div>
 					</div>
@@ -36,7 +36,7 @@ const Footer = (props) => {
 			<div className="footer-mid t-pt-40 t-pb-40">
 				<div className="row">
 					<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
-						<h5 className="t-text-light mt-0 text-capitalize">quick links</h5>
+						<h5 className="t-blue mt-0 text-capitalize">quick links</h5>
 						<ul className="list">
 							<li className="t-mb-10">
 								<Link to="/" className="t-link text-capitalize t-link--light sm-text">
@@ -56,32 +56,32 @@ const Footer = (props) => {
 						</ul>
 					</div>
 					<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
-						<h5 className="t-text-light mt-0 text-capitalize">top picks</h5>
+						<h5 className="t-blue mt-0 text-capitalize">top picks</h5>
 						<ul className="list">
 							<li className="t-mb-10">
-								<Link to="/category/tech" state={{ some: "value1" }} className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/category/tech" state={{ category: "tech" }} className="t-link text-capitalize t-link--light sm-text">
 									tech
 								</Link>
 							</li>
 							<li className="t-mb-10">
-								<Link to="/category/travel" state={{ some: "value2" }} className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/category/travel" state={{ category: "travel" }} className="t-link text-capitalize t-link--light sm-text">
 									travel
 								</Link>
 							</li>
 							<li className="t-mb-10">
-								<Link to="/category/lifestyle" className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/category/lifestyle" state={{ category: "lifestyle" }} className="t-link text-capitalize t-link--light sm-text">
 									lifestyle
 								</Link>
 							</li>
 							<li className="t-mb-10">
-								<Link to="/category/business" className="t-link text-capitalize t-link--light sm-text">
+								<Link to="/category/business" state={{ category: "business" }} className="t-link text-capitalize t-link--light sm-text">
 									business
 								</Link>
 							</li>
 						</ul>
 					</div>
 					<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
-						<h5 className="t-text-light mt-0 text-capitalize">categories</h5>
+						<h5 className="t-blue mt-0 text-capitalize">categories</h5>
 						<ul className="list" id="footerCat">
 							{/* <li className="t-mb-10">
 								<Link to="#" className="t-link text-capitalize t-link--light sm-text">
@@ -90,7 +90,7 @@ const Footer = (props) => {
 							{finalArr?.map((x,index)=>{
 								return(
                                 <li className="t-mb-10" key={index}>
-								<Link to={"/category/"+x} className="t-link text-capitalize t-link--light sm-text">
+								<Link to={"/category/"+x} state={{ category: x }} className="t-link text-capitalize t-link--light sm-text">
 									{x}
 								</Link>
 							    </li>
@@ -100,7 +100,7 @@ const Footer = (props) => {
 						</ul>
 					</div>
 					<div className="col-md-6 col-lg-3 t-mb-30 mb-lg-0">
-						<h5 className="t-text-light mt-0 text-capitalize">get in touch</h5>
+						<h5 className="t-blue mt-0 text-capitalize">get in touch</h5>
 						<p className="text-light sm-text">
 							1313 Broadway, New York NY-10001, United States of America
 						</p>
@@ -108,8 +108,8 @@ const Footer = (props) => {
 						<p className="text-light sm-text mb-0">info@example.com</p>
 					</div>
 					<div className="col-md-6 col-lg-3 t-mb-30 mb-lg-0">
-						<h5 className="t-text-light mt-0 text-capitalize">follow us</h5>
-						<ul className="list d-flex justify-content-between mt-3"> 
+						<h5 className="t-blue mt-0 text-capitalize">follow us</h5>
+						<ul className="list d-flex follow mt-3"> 
 							<li>
 								<Link to="#" className="t-follow-link">
 									<span className="social-counter__icon social-counter__icon--be t-mr-8">
@@ -176,9 +176,9 @@ const Footer = (props) => {
 			<div className="footer-bottom t-pb-40 t-pt-40">
 				<div className="row">
 					<div className="col-12 text-center">
-						<p className="mb-0 t-text-light sm-text">
+						<p className="mb-0 t-blue sm-text">
 							<i className="fa-sharp fa-regular fa-copyright"></i> 2023, SKYBLOG. Designed by
-							<Link to="#" className="t-link t-link--primary text-light">&nbsp;DHEERAJ GUPTA&nbsp;</Link>
+							<span className="t-link t-link--primary text-light">&nbsp;DHEERAJ GUPTA&nbsp;</span>
 							. All Rights Reserved.
 						</p>
 					</div>

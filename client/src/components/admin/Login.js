@@ -1,16 +1,11 @@
 import Cookies from 'js-cookie'
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
 
   const [error,setError]=useState()
   const navigate=useNavigate()
-
-    // document.querySelectorAll('.dashboard')[0].style.display="none"
-    // document.querySelectorAll('.sidebar')[0].style.display="none"
-
-
 
   async function login(e) {
 
@@ -45,7 +40,7 @@ const Login = () => {
         <div className="form-wrapper m-auto" style={{ width: "30%" }}>
           <div className="form-container my-4" style={{ maxWidth: "unset" }}>
             <div className="d-flex justify-content-center flex-column align-items-center mb-4">
-            <section className='theLogo'>SOMETHING</section>
+            <section className='theLogo'>SKYBLOG</section>
             </div>
 
             <div className="panel">

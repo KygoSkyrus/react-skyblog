@@ -302,18 +302,6 @@
     }
 }
 
-
-
-.theLogo{
-  width: fit-content;
-  font-size: 32px;
-  font-weight: 900;
-  background: url('../images/sky.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  -webkit-background-clip: text;
-   -webkit-text-fill-color: transparent;
-}
 /*https://images.pexels.com/photos/158827/field-corn-air-frisch-158827.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2*/
 
 /*  =====================  SEARCH BAR   ===================================   */
@@ -376,7 +364,7 @@
   left: 0;
 }
 .search__label:hover, .search__submit:hover, .search__label:focus, .search__submit:focus, .search__label:active, .search__submit:active {
-  color: #198eee;
+  color: #4396da;
 }
 .search__label {
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.1s;
@@ -397,7 +385,7 @@
   box-shadow: 0 0 0 4px inset white;
 }
 .search:focus-within {
-  border-color: var(--color);
+  border-color: #73b5ecd6;
 }
 .search:focus-within .search__input {
   opacity: 1;

@@ -149,15 +149,10 @@ const BlogsManagement = (props) => {
 
 
     async function blogVisibility(id, e) {
-        console.log(id, e.target.getAttribute('data-status'));
-
         //checked attribute means its on and 1 or data="false" means its off
-        let checkbox = document.getElementById('checkbox');
-
         let val;
 
         if (e.target.hasAttribute('checked')) {
-
             console.log('it has checked')
             document.getElementById(`checkbox` + id).removeAttribute('checked')
             //document.getElementById(`checkbox`+id).setAttribute('datacheck','false')

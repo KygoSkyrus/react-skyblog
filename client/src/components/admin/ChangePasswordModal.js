@@ -24,7 +24,7 @@ const ChangePasswordModal = () => {
         });
 
         const data = await res.json();
-        if (data.message == "changed") {
+        if (data.message === "changed") {
             alert("Password changed successfully!");
             document.getElementById("password").value = "";
             document.getElementById("newPassword").value = "";

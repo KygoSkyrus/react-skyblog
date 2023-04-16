@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-//import { useNavigate } from "react-router-dom"
+import React from 'react'
+import { Link } from "react-router-dom"
 
 import OtherBlogsComp from './OtherBlogsComp'
 import BlogWrapperBottom from './BlogWrapperBottom'
@@ -47,7 +47,7 @@ const SingleBlog = (props) => {
     // }else{
     //     //console.log('theblog is not true in singtle blog-oposite')
     // }
-    
+
 
     return (
         <>
@@ -65,28 +65,35 @@ const SingleBlog = (props) => {
                                 <div className="col-12 t-pt-70">
                                     <div className="row justify-content-between">
 
-                                        <div className="col-md-5 t-mb-30 mb-md-0">{thePrev?.url ? <div>
-                                            <h5 className="mt-0">
-                                                <a href={thePrev?.url} id="prev-blog" className="t-link t-link--secondary">
-                                                    {thePrev?.url}
-                                                </a>
-                                            </h5>
-                                            <a href={thePrev?.url} id="prev-link" className="t-link t-link--secondary text-capitalize">
-                                                <span className="las la-arrow-left"></span>
-                                                previous post
-                                            </a></div> : ""}
+                                        <div className="col-md-5 t-mb-30 mb-md-0">
+                                            {thePrev?.url ?
+                                                <div>
+                                                    <h5 className="mt-0">
+                                                        <Link to={"/" + thePrev?.url} id="prev-blog" className="t-link t-link--secondary">
+                                                            {thePrev?.url}
+                                                        </Link>
+                                                    </h5>
+                                                    <Link to={"/" + thePrev?.url} id="prev-link" className="t-link t-link--secondary text-capitalize">
+                                                        <span className="las la-arrow-left"></span>
+                                                        previous post
+                                                    </Link></div>
+                                                : ""}
                                         </div>
 
-                                        <div className="col-md-5">{theNext?.url ? <div>
-                                            <h5 className="mt-0">
-                                                <a href={theNext?.url} id="next-blog" className="t-link t-link--secondary">
-                                                    {theNext?.url}
-                                                </a>
-                                            </h5>
-                                            <a href={theNext?.url} id="next-link" className="t-link t-link--secondary text-capitalize">
-                                                next post
-                                                <span className="las la-arrow-right"></span>
-                                            </a></div> : ""}
+                                        <div className="col-md-5">
+                                            {theNext?.url ?
+                                                <div>
+                                                    <h5 className="mt-0">
+                                                        <Link to={"/" + theNext?.url} id="next-blog" className="t-link t-link--secondary">
+                                                            {theNext?.url}
+                                                        </Link>
+                                                    </h5>
+                                                    <Link to={"/" + theNext?.url} id="next-link" className="t-link t-link--secondary text-capitalize">
+                                                        next post
+                                                        <span className="las la-arrow-right"></span>
+                                                    </Link>
+                                                </div>
+                                                : ""}
                                         </div>
                                     </div>
                                 </div>
@@ -110,9 +117,9 @@ const SingleBlog = (props) => {
                                                 <ul className="st-comments__info t-mb-16">
                                                     <li>
                                                         <h6 className="st-comments__title mb-0">
-                                                            <a href="#" className="st-comments__title-link">
+                                                            <Link to="#" className="st-comments__title-link">
                                                                 jhone doe
-                                                            </a>
+                                                            </Link>
                                                         </h6>
                                                     </li>
                                                     <li>
@@ -143,9 +150,9 @@ const SingleBlog = (props) => {
                                                         <ul className="st-comments__info t-mb-16">
                                                             <li>
                                                                 <h6 className="st-comments__title mb-0">
-                                                                    <a href="#" className="st-comments__title-link">
+                                                                    <Link to="#" className="st-comments__title-link">
                                                                         jhone doe
-                                                                    </a>
+                                                                    </Link>
                                                                 </h6>
                                                             </li>
                                                             <li>
@@ -179,9 +186,9 @@ const SingleBlog = (props) => {
                                                 <ul className="st-comments__info t-mb-16">
                                                     <li>
                                                         <h6 className="st-comments__title mb-0">
-                                                            <a href="#" className="st-comments__title-link">
+                                                            <Link to="#" className="st-comments__title-link">
                                                                 jhone doe
-                                                            </a>
+                                                            </Link>
                                                         </h6>
                                                     </li>
                                                     <li>
@@ -235,15 +242,10 @@ const SingleBlog = (props) => {
 
                         {/*  right side things  */}
 
-
-
                         <div className="col-lg-3">
                             <div className="row">
-
                                 <OtherBlogsComp allBlog={allBlog} />
-
                                 <CategoryList catAndCount={catAndCount} allCategory={allCategory} />
-
                             </div>
                         </div>
                     </div>

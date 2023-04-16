@@ -18,16 +18,16 @@ const Homepage = (props) => {
             <div className="hero t-mt-30 t-pt-30">
                 <div className="container">
                     <div className="row" id="hero">
-                        <div className="col-md-6 t-mb-30 mb-md-0">
+                        <div className="col-md-6 mb-md-0" >
                             <div className="row">
-                                <BlogWrapperInside data={sportsArray[sportsArray.length - 1]} height={"500px"} />
-                                <BlogWrapperInside data={techArray[techArray.length - 1]} height={"300px"} />
+                                <BlogWrapperInside data={sportsArray[sportsArray.length - 1]} height={"height500"} />
+                                <BlogWrapperInside data={techArray[techArray.length - 1]} height={"height300"} />
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="row">
-                                <BlogWrapperInside data={politicsArray[politicsArray.length - 1]} height={"300px"} />
-                                <BlogWrapperInside data={allBlog[allBlog.length - 2]} height={"500px"} />
+                                <BlogWrapperInside data={politicsArray[politicsArray.length - 1]} height={"height300"} />
+                                <BlogWrapperInside data={allBlog[allBlog.length - 2]} height={"height500"} />
                             </div>
                         </div>
                     </div>

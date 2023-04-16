@@ -1,24 +1,13 @@
 import React from 'react'
+import Banner from './Banner'
 
 const Contact = (props) => {
-
-    
 
   return (
    <>
 
 {/* <!-- Banner  --> */}
-    <div className="container">
-        <div className="row">
-            <div className="col-12">
-                <div className="t-pt-70 t-pb-70 t-bg-secondary">
-                    <h4 className="mt-0 t-text-light text-capitalize text-center">
-                        Contact
-                    </h4>
-                </div>
-            </div>
-        </div>
-    </div>
+<Banner text={"get in touch"} />
     {/* <!-- Banner End --> */}
 
 
@@ -32,11 +21,9 @@ const Contact = (props) => {
                         <div className="col-12 t-mb-60">
                             <div className="row d-flex justify-content-center">
 
-                                <div className="col-9 mt-5 c12">
-                                    <h4 className="mt-0 text-capitalize text-center">
-                                        get in touch
-                                    </h4>
-                                    <form action="/message" method="post" className="st-comments__form mt-4">
+                                <div className="col-9 c12">
+                                  
+                                    <form action="/message" method="post" className="st-comments__form">
                                         <div className="row d-flex">
                                             <div className="col-lg-6">
                                                 <input type="text" name="name" id="name" className="form-control t-mb-15 "
@@ -61,9 +48,6 @@ const Contact = (props) => {
                                         </div>
                                     </form>
                                 </div>
-
-
-
                             </div>
                         </div>
 

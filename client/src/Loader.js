@@ -4,7 +4,8 @@ const Loader = (props) => {
   const { isLoaded } = props
   return (
     <div className={`loader-container ${isLoaded ? "" : "d-none"}`} >
-      <div class="loader">
+      <div className='overlay'>
+      <div className="loader">
         <span>S</span>
         <span>K</span>
         <span>Y</span>
@@ -14,6 +15,7 @@ const Loader = (props) => {
         <span>G</span>
       </div>
       <section className='loading'>LOADING</section>
+      </div>
     </div>
   )
 }

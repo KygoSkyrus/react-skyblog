@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';

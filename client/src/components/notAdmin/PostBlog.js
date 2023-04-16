@@ -1,13 +1,14 @@
 import React from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+import Banner from './Banner';
+
 
 const PostBlog = (props) => {
 
     //google login is not working bcz in the firrebase you have to setup the origin,,do it when u host it
     //summernote is working fine
     const { storage } = props
-
 
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
@@ -115,12 +116,12 @@ const PostBlog = (props) => {
             }).then(response => response.json())
                 .then(data => {
                     console.log(data)
-                    if(data.blog_received){
+                    if (data.blog_received) {
                         window.location.reload();
-                    }else{
+                    } else {
                         //resetting the fields
                         document.getElementById("frm").reset();
-                        document.querySelectorAll(".note-editable")[0].innerHTML=''
+                        document.querySelectorAll(".note-editable")[0].innerHTML = ''
                         setDynamicLabel()
                         alert('something went wrong, please try again!!!')
                     }
@@ -145,10 +146,10 @@ const PostBlog = (props) => {
     function setDynamicLabel(e) {
         if (document.getElementById("image")?.files[0]?.name) {
             document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
-            const [file]=document.getElementById("image").files;
-            let displayImg=document.getElementById('displayimg')
-            displayImg.style.backgroundImage=`url('${URL.createObjectURL(file)}')`
-            displayImg.style.display="block"
+            const [file] = document.getElementById("image").files;
+            let displayImg = document.getElementById('displayimg')
+            displayImg.style.backgroundImage = `url('${URL.createObjectURL(file)}')`
+            displayImg.style.display = "block"
         } else {
             document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
         }
@@ -156,27 +157,15 @@ const PostBlog = (props) => {
 
     return (
         <>
-
             {/* <!-- google login  --> */}
             <div id="google" className="">
                 <div className="g-signin2" data-onsuccess="onSignIn"></div>
             </div>
 
 
-
-
             {/* <!-- Banner  --> */}
-            <div className="container dnone" id="head">
-                <div className="row">
-                    <div className="col-12">
-                        <div className="t-pt-70 t-pb-70 t-bg-secondary">
-                            <h4 className="mt-0 t-text-light text-capitalize text-center" >Post a Blog</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Banner text={"post a blog"} />
             {/* <!-- Banner End --> */}
-
 
 
             <div className="t-pt-70 t-pb-70 dnone" id="content">
@@ -189,36 +178,32 @@ const PostBlog = (props) => {
                                     <div className="row d-flex justify-content-center" id="data">
 
                                         <div className="col-9  c12">
-                                            <h4 className="mt-0 text-capitalize text-center">
-                                                write a blog
-                                            </h4>
-
-
+                                          
                                             <div className="row mt-4">
                                                 <div className="col-xs-12 col-sm-12 col-md-12 p-l-30 p-r-30">
-                                                   
+
                                                     <form id="frm" onSubmit={(e) => sendData(e)}>
                                                         <div className="form-group">
                                                             <label htmlFor="Email" className="font-weight-600">Email</label>
                                                             <input type="email" className="form-control" name="email" id="email"
-                                                                autocomplete="off" placeholder="Enter your email" required
+                                                                autoComplete="off" placeholder="Enter your email" required
                                                             />
-                                                        </div> 
+                                                        </div>
                                                         <div className="form-group">
                                                             <label htmlFor="title" className="font-weight-600">Title</label>
                                                             <input type="text" className="form-control" name="title" id="title"
-                                                                autocomplete="off" placeholder="Enter Title"
+                                                                autoComplete="off" placeholder="Enter Title"
                                                                 onChange={e => settingUrl(e)} required />
                                                         </div>
                                                         <div className="form-group">
                                                             <label htmlFor="url" className="font-weight-600">Blog Url</label>
                                                             <input type="text" className="form-control" name="url" id="url"
-                                                                autocomplete="off" placeholder="Blog URL" required />
+                                                                autoComplete="off" placeholder="Blog URL" required />
                                                         </div>
                                                         <div className="form-group">
                                                             <label htmlFor="category" className="font-weight-600">Category</label>
                                                             <input type="text" className="form-control" name="category"
-                                                                id="category" autocomplete="off" placeholder="Category" required />
+                                                                id="category" autoComplete="off" placeholder="Category" required />
                                                         </div>
 
                                                         <label htmlFor="select" className="font-weight-600">Select type</label>
@@ -282,20 +267,20 @@ const PostBlog = (props) => {
                                                         <div className="form-group">
                                                             <label htmlFor="author" className="font-weight-600">Author Name</label>
                                                             <input type="text" className="form-control" name="author" id="author"
-                                                                autocomplete="off" placeholder="Author Name" required />
+                                                                autoComplete="off" placeholder="Author Name" required />
                                                         </div>
 
                                                         <div className="form-group">
                                                             <label htmlFor="metatitle" className="font-weight-600">Meta Title</label>
                                                             <input type="text" className="form-control" name="metatitle"
-                                                                id="metatitle" autocomplete="off" placeholder="Meta Title" />
+                                                                id="metatitle" autoComplete="off" placeholder="Meta Title" />
                                                         </div>
 
                                                         <div className="form-group">
                                                             <label htmlFor="metakeyword" className="font-weight-600">Meta
                                                                 Keyword</label>
                                                             <input type="text" className="form-control" name="metakeyword"
-                                                                id="metakeyword" autocomplete="off"
+                                                                id="metakeyword" autoComplete="off"
                                                                 placeholder="Meta Keyword" />
                                                         </div>
 
@@ -303,11 +288,11 @@ const PostBlog = (props) => {
                                                             <label htmlFor="metadesc" className="font-weight-600">Meta
                                                                 Description</label>
                                                             <input type="text" className="form-control" name="metadesc"
-                                                                id="metadesc" autocomplete="off"
+                                                                id="metadesc" autoComplete="off"
                                                                 placeholder="Meta Description" />
                                                         </div>
                                                         <div className="d-flex justify-content-center">
-                                                            <button id="go" className="newsletter__button " type="submit"
+                                                            <button className="newsletter__button " type="submit"
                                                                 style={{ paddingLeft: "30px", paddingRight: "30px" }}>
                                                                 send blog
                                                                 <span className="st-btn-icon">
@@ -321,10 +306,7 @@ const PostBlog = (props) => {
                                                 <div className="col-xs-12 col-sm-12 col-md-6 p-l-30 p-r-30"></div>
                                             </div>
 
-
                                         </div>
-
-
 
                                     </div>
                                 </div>
@@ -334,8 +316,6 @@ const PostBlog = (props) => {
                     </div>
                 </div>
             </div>
-
-
         </>
     )
 }
