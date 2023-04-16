@@ -392,12 +392,12 @@
   padding: 0 1rem 0 0.5rem;
   width: calc(1rem * 12);
 }
-.search:focus-within .search__label {
-  /* transform: scale(0.5); */
-  /* position: absolute; */
-    /* top: 11px; */
-    /* left: -17px; */
-}
+/* .search:focus-within .search__label {
+   transform: scale(0.5); 
+   position: absolute; 
+   top: 11px; 
+   left: -17px;
+} */
 .search:focus-within .search__submit {
   animation: unhide 0.2s steps(1, end);
   display: block;
