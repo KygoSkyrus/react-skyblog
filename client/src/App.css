@@ -191,6 +191,7 @@ background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, F
   background: url('./assets/images/sky.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  background-clip:text;
   -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
 }
