@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import OtherBlogsComp from './OtherBlogsComp'
 import BlogWrapperBottom from './BlogWrapperBottom'
 import CategoryList from './CategoryList'
-
+import Error from './Error'
 
 const SingleBlog = (props) => {
 
@@ -16,10 +16,9 @@ const SingleBlog = (props) => {
         link.length
     );
 
-    let theBlog = [];
+    let theBlog;
     let theNext;
     let thePrev;
-
 
 
     for (let i = 0; i < allBlog.length; i++) {
@@ -38,68 +37,57 @@ const SingleBlog = (props) => {
     }
 
 
-    //note:this problem maybe solved after incorporating redux
-    //to navigate to erro page
-    // if(allBlog.length>0){
-    // if(!theBlog){
-    //     // console.log('theblog is not true in singtle blog')
-    //     // navigate("/page-not-found")
-    // }else{
-    //     //console.log('theblog is not true in singtle blog-oposite')
-    // }
-
-
     return (
         <>
-
-            <div className="t-pt-70 t-pb-70">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-9 t-mb-30 mb-lg-0">
-                            <div className="row">
-                                <div className="col-12" id="singleBlog">
-                                    <BlogWrapperBottom data={theBlog} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-12 t-pt-70">
-                                    <div className="row justify-content-between">
-
-                                        <div className="col-md-5 t-mb-30 mb-md-0">
-                                            {thePrev?.url ?
-                                                <div>
-                                                    <h5 className="mt-0">
-                                                        <Link to={"/" + thePrev?.url} id="prev-blog" className="t-link t-link--secondary">
-                                                            {thePrev?.url}
-                                                        </Link>
-                                                    </h5>
-                                                    <Link to={"/" + thePrev?.url} id="prev-link" className="t-link t-link--secondary text-capitalize">
-                                                        <span className="las la-arrow-left"></span>
-                                                        previous post
-                                                    </Link></div>
-                                                : ""}
-                                        </div>
-
-                                        <div className="col-md-5">
-                                            {theNext?.url ?
-                                                <div>
-                                                    <h5 className="mt-0">
-                                                        <Link to={"/" + theNext?.url} id="next-blog" className="t-link t-link--secondary">
-                                                            {theNext?.url}
-                                                        </Link>
-                                                    </h5>
-                                                    <Link to={"/" + theNext?.url} id="next-link" className="t-link t-link--secondary text-capitalize">
-                                                        next post
-                                                        <span className="las la-arrow-right"></span>
-                                                    </Link>
-                                                </div>
-                                                : ""}
-                                        </div>
+            {theBlog ?
+                <div className="t-pt-70 t-pb-70">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-9 t-mb-30 mb-lg-0">
+                                <div className="row">
+                                    <div className="col-12" id="singleBlog">
+                                        <BlogWrapperBottom data={theBlog} />
                                     </div>
                                 </div>
+                                <div className="row">
+                                    <div className="col-12 t-pt-70">
+                                        <div className="row justify-content-between">
+
+                                            <div className="col-md-5 t-mb-30 mb-md-0">
+                                                {thePrev?.url ?
+                                                    <div>
+                                                        <h5 className="mt-0">
+                                                            <Link to={"/" + thePrev?.url} id="prev-blog" className="t-link t-link--secondary">
+                                                                {thePrev?.url}
+                                                            </Link>
+                                                        </h5>
+                                                        <Link to={"/" + thePrev?.url} id="prev-link" className="t-link t-link--secondary text-capitalize">
+                                                            <span className="las la-arrow-left"></span>
+                                                            previous post
+                                                        </Link></div>
+                                                    : ""}
+                                            </div>
+
+                                            <div className="col-md-5">
+                                                {theNext?.url ?
+                                                    <div>
+                                                        <h5 className="mt-0">
+                                                            <Link to={"/" + theNext?.url} id="next-blog" className="t-link t-link--secondary">
+                                                                {theNext?.url}
+                                                            </Link>
+                                                        </h5>
+                                                        <Link to={"/" + theNext?.url} id="next-link" className="t-link t-link--secondary text-capitalize">
+                                                            next post
+                                                            <span className="las la-arrow-right"></span>
+                                                        </Link>
+                                                    </div>
+                                                    : ""}
+                                            </div>
+                                        </div>
+                                    </div>
 
 
-                                {/* <!-- <div className="col-12 t-pt-70">
+                                    {/* <!-- <div className="col-12 t-pt-70">
                             <div id="comments" className="st-comments-area">
                                 <h4 className="mt-0">
                                     2 Comments
@@ -215,9 +203,9 @@ const SingleBlog = (props) => {
 
 
 
-                                {/* <!-- post a comment --> */}
+                                    {/* <!-- post a comment --> */}
 
-                                {/* <!-- <div className="col-12 t-pt-70">
+                                    {/* <!-- <div className="col-12 t-pt-70">
                             <h4 className="mt-0 text-capitalize">
                                 leave a reply
                             </h4>
@@ -236,22 +224,22 @@ const SingleBlog = (props) => {
                                 </button>
                             </form>
                         </div> --> */}
+                                </div>
                             </div>
-                        </div>
 
 
-                        {/*  right side things  */}
+                            {/*  right side things  */}
 
-                        <div className="col-lg-3">
-                            <div className="row">
-                                <OtherBlogsComp allBlog={allBlog} />
-                                <CategoryList catAndCount={catAndCount} allCategory={allCategory} />
+                            <div className="col-lg-3">
+                                <div className="row">
+                                    <OtherBlogsComp allBlog={allBlog} />
+                                    <CategoryList catAndCount={catAndCount} allCategory={allCategory} />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
+                : <Error />}
         </>
     )
 

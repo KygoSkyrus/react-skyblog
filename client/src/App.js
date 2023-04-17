@@ -9,6 +9,7 @@ import Admin from './components/Admin';
 import NotAdmin from './components/NotAdmin';
 import Loader from './Loader';
 import ScrollToTop from './ScrollToTop';//deals with the Link to restore scroll
+import Error from './components/notAdmin/Error';
 
 
 function App() {
@@ -19,8 +20,8 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    document.getElementById('root').classList.add('overflow')
-    setIsLoaded(true)
+    // document.getElementById('root').classList.add('overflow')
+    // setIsLoaded(true)
     getAllBlogs()
     getAllCategory()
   }, [])

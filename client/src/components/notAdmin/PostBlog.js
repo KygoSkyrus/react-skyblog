@@ -1,5 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+// import { Editor } from "react-draft-wysiwyg";
+// import { EditorState } from 'draft-js';
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
+import { Editor } from "react-draft-wysiwyg";
+import { convertToRaw, EditorState } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
 
 import Banner from './Banner';
 
@@ -9,6 +18,8 @@ const PostBlog = (props) => {
     //google login is not working bcz in the firrebase you have to setup the origin,,do it when u host it
     //summernote is working fine
     const { storage } = props
+
+    const [editorState,setEditorState]=useState(EditorState.createEmpty())
 
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
@@ -135,8 +146,6 @@ const PostBlog = (props) => {
     }
 
 
-
-
     function settingUrl(e) {
         let title = e.target.value;
         let str = title.replace(/\s+/g, "-").toLowerCase();
@@ -154,6 +163,26 @@ const PostBlog = (props) => {
             document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
         }
     }
+
+
+    
+
+    const onEditorStateChange = function (editorState) {
+        setEditorState(editorState);
+        //const { blocks } = convertToRaw(editorState.getCurrentContent());
+        //gets you the plain text
+        // let text = blocks.reduce((acc, item) => {
+        //   acc = acc + item.text;
+        //   return acc;
+        // }, "");
+        //let text = editorState.getCurrentContent().getPlainText("\u0001");
+
+        let rawContentState=convertToRaw(editorState.getCurrentContent());
+        const markup = draftToHtml(rawContentState );
+        // console.log('markup',markup)
+
+      };
+ 
 
     return (
         <>
@@ -244,6 +273,28 @@ const PostBlog = (props) => {
                                                             <label htmlFor="summernote" className="font-weight-600">Blog Content</label>
                                                             <textarea id="summernote" name="summernote"></textarea>
                                                         </div>
+
+      <Editor
+        editorState={editorState}
+        toolbarClassName="toolbarClassName"
+        wrapperClassName="wrapperClassName"
+        editorClassName="editorClassName"
+        onEditorStateChange={onEditorStateChange}
+        mention={{
+          separator: " ",
+          trigger: "@",
+          suggestions: [
+            { text: "APPLE", value: "apple" },
+            { text: "BANANA", value: "banana", url: "banana" },
+            { text: "CHERRY", value: "cherry", url: "cherry" },
+            { text: "DURIAN", value: "durian", url: "durian" },
+            { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
+            { text: "FIG", value: "fig", url: "fig" },
+            { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
+            { text: "HONEYDEW", value: "honeydew", url: "honeydew" }
+          ]
+        }}
+      />
 
                                                         <div className="form-group">
                                                             <label htmlFor="shortdesc" className="font-weight-600">Short
