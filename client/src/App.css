@@ -595,14 +595,19 @@ input[type="radio"] {
 
 
 /************************************ REACT_DRAFT_EDITOR *************************************/
+.toolbarClassName{
+  border-radius: 6px 6px 0 0 !important;
+  border: 1px solid #ced4da !important;
+}
 .wrapperClassName{
-  background-color: rgb(156, 156, 156);
+  background-color:#ced4da;
   border-radius: 0.25rem;
 }
 .editorClassName{
   background-color: #fff;
-  height: 200px !important;
-  border: 1px solid grey;
+  min-height: 200px;
+    border: 1px solid #ced4da;
+    border-radius: 0 0 6px 6px;
 }
 /************************************ REACT_DRAFT_EDITOR *************************************/
 

@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { Link } from 'react-router-dom';
 
+import { Editor } from "react-draft-wysiwyg";
+import { convertToRaw, EditorState } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
 
 const BlogsManagement = (props) => {
 
@@ -8,7 +13,8 @@ const BlogsManagement = (props) => {
     //NOTE: reloading this page bcz the summernote does not initialize without reloading
     const { allBlog, allCategory, storage } = props
 
-  
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    const [editorContent, setEditorContent] = useState()
 
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
@@ -33,20 +39,21 @@ const BlogsManagement = (props) => {
         let metakeyword = document.getElementById("metakeyword")?.value;
         let metadesc = document.getElementById("metadesc")?.value;
 
-        let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
+        //let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
+        let detail = editorContent
 
+        /*
         let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
-
         //check sthe size of the images inside the summernote
         let totalsize = 0;
         for (let i = 0; i < allimg.length; i++) {
             let base64String = allimg[i].getAttribute("src");//base64 data
-
             let stringLength = base64String.length - 'data:image/png;base64,'.length;
             let sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
             let sizeInKb = sizeInBytes / 1000000;
             totalsize += sizeInKb;
         }
+        */
 
 
 
@@ -90,43 +97,37 @@ const BlogsManagement = (props) => {
         );
 
 
-        if (totalsize > 2) {
-            alert("Image size is too big in blog content");
-            //document.querySelector('.note-editor').style.border = "2px solid #db0000";
-        } else {
+        fetch("/blogdata", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                imageUrl,
+                title,
+                url,
+                category,
+                select,
+                shortdesc,
+                author,
+                metatitle,
+                metakeyword,
+                metadesc,
+                detail
+            }),
+        }).then(response => response.json())
+            .then(data => {
+                console.log(data, data.blog_added)
+                if (data.blog_added) {
+                    window.location.reload();
+                } else {
+                    //resetting the fields
+                    document.getElementById("frm").reset();
+                    // document.querySelectorAll(".note-editable")[0].innerHTML=''
+                    setDynamicLabel()
+                }
+            })
+            .catch(err => console.log(err))
 
 
-            fetch("/blogdata", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    imageUrl,
-                    title,
-                    url,
-                    category,
-                    select,
-                    shortdesc,
-                    author,
-                    metatitle,
-                    metakeyword,
-                    metadesc,
-                    detail
-                }),
-            }).then(response => response.json())
-                .then(data => {
-                    console.log(data, data.blog_added)
-                    if(data.blog_added){
-                        window.location.reload();
-                    }else{
-                        //resetting the fields
-                        document.getElementById("frm").reset();
-                        document.querySelectorAll(".note-editable")[0].innerHTML=''
-                        setDynamicLabel()
-                    }
-                })
-                .catch(err => console.log(err))
-
-        }
 
 
 
@@ -147,6 +148,20 @@ const BlogsManagement = (props) => {
         console.log(data);
     }
 
+    const onEditorStateChange = function (editorState) {
+        setEditorState(editorState);
+        //const { blocks } = convertToRaw(editorState.getCurrentContent());
+        //gets you the plain text
+        // let text = blocks.reduce((acc, item) => {
+        //   acc = acc + item.text;
+        //   return acc;
+        // }, "");
+        //let text = editorState.getCurrentContent().getPlainText("\u0001");
+
+        let rawContentState = convertToRaw(editorState.getCurrentContent());
+        const markup = draftToHtml(rawContentState);
+        setEditorContent(markup)
+    };
 
     async function blogVisibility(id, e) {
         //checked attribute means its on and 1 or data="false" means its off
@@ -193,15 +208,15 @@ const BlogsManagement = (props) => {
         // document.getElementById("image").files[0].size
         if (document.getElementById("image")?.files[0]?.name) {
             document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
-            const [file]=document.getElementById("image").files;
-            let displayImg=document.getElementById('displayimg')
-            displayImg.style.backgroundImage=`url('${URL.createObjectURL(file)}')`
-            displayImg.style.display="block"
+            const [file] = document.getElementById("image").files;
+            let displayImg = document.getElementById('displayimg')
+            displayImg.style.backgroundImage = `url('${URL.createObjectURL(file)}')`
+            displayImg.style.display = "block"
         } else {
             document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
         }
 
-        
+
     }
 
 
@@ -282,8 +297,27 @@ const BlogsManagement = (props) => {
 
                                     <div className="form-group">
                                         <label htmlFor="summernote" className="font-weight-600">Blog Content</label>
-                                        <textarea id="summernote" name="summernote"></textarea>
-                                    </div>
+                                        <Editor
+                                            editorState={editorState}
+                                            toolbarClassName="toolbarClassName"
+                                            wrapperClassName="wrapperClassName"
+                                            editorClassName="editorClassName"
+                                            onEditorStateChange={onEditorStateChange}
+                                            mention={{
+                                                separator: " ",
+                                                trigger: "@",
+                                                suggestions: [
+                                                    { text: "APPLE", value: "apple" },
+                                                    { text: "BANANA", value: "banana", url: "banana" },
+                                                    { text: "CHERRY", value: "cherry", url: "cherry" },
+                                                    { text: "DURIAN", value: "durian", url: "durian" },
+                                                    { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
+                                                    { text: "FIG", value: "fig", url: "fig" },
+                                                    { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
+                                                    { text: "HONEYDEW", value: "honeydew", url: "honeydew" }
+                                                ]
+                                            }}
+                                        />                                    </div>
 
                                     <div className="form-group">
                                         <label htmlFor="shortdesc" className="font-weight-600">Short Description</label>
@@ -307,7 +341,7 @@ const BlogsManagement = (props) => {
                                     <div className="form-group">
                                         <label htmlFor="author" className="font-weight-600">Author Name</label>
                                         <input type="text" className="form-control" name="author" id="author"
-                                            autoComplete="off" placeholder="Author Name"  />
+                                            autoComplete="off" placeholder="Author Name" />
                                     </div>
 
                                     <div className="form-group">
@@ -380,7 +414,7 @@ const BlogsManagement = (props) => {
                                                 <td>{x.image}</td>
                                                 <td><label className="switch"><input onClick={e => blogVisibility(x._id, e)} id={"checkbox" + x._id} type="checkbox" defaultChecked={x.status === "checked" ? "defaultChecked" : false} data-status={x.status} /><span className="slider round"></span></label>
                                                 </td>
-                                                <td style={{ display: "flex", border: "none", justifyContent: "center" }}><a href={"/admin/edit-blog/" + x.url} ><button style={{ background: "#09660c" }}><i className="fa fa-pen"></i></button></a><button onClick={e => deleteBlog(x._id, e)} style={{ background: "#d50606" }}><i className="fa fa-trash" ></i></button></td>
+                                                <td style={{ display: "flex", border: "none", justifyContent: "center" }}><Link to={"/admin/edit-blog/" + x.url} ><button style={{ background: "#09660c" }}><i className="fa fa-pen"></i></button></Link><button onClick={e => deleteBlog(x._id, e)} style={{ background: "#d50606" }}><i className="fa fa-trash" ></i></button></td>
                                             </tr>
                                         )
                                     })}

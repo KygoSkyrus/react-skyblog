@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-// import { Editor } from "react-draft-wysiwyg";
-// import { EditorState } from 'draft-js';
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -19,7 +15,9 @@ const PostBlog = (props) => {
     //summernote is working fine
     const { storage } = props
 
-    const [editorState,setEditorState]=useState(EditorState.createEmpty())
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    const [editorContent, setEditorContent] = useState()
+
 
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
@@ -45,21 +43,21 @@ const PostBlog = (props) => {
         let metakeyword = document.getElementById("metakeyword")?.value;
         let metadesc = document.getElementById("metadesc")?.value;
 
-        let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
+        // let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
+        let detail = editorContent
 
+        /*
         let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
-
         //check sthe size of the images inside the summernote
         let totalsize = 0;
         for (let i = 0; i < allimg.length; i++) {
             let base64String = allimg[i].getAttribute("src");//base64 data
-
             let stringLength = base64String.length - 'data:image/png;base64,'.length;
             let sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
             let sizeInKb = sizeInBytes / 1000000;
             totalsize += sizeInKb;
         }
-
+        */
 
 
         let imageUrl;
@@ -101,45 +99,42 @@ const PostBlog = (props) => {
         );
 
 
-        if (totalsize > 2) {
-            alert("Image size is too big in blog content");
-            //document.querySelector('.note-editor').style.border = "2px solid #db0000";
-        } else {
 
 
-            fetch("/userblog", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email,
-                    imageUrl,
-                    title,
-                    url,
-                    category,
-                    select,
-                    shortdesc,
-                    author,
-                    metatitle,
-                    metakeyword,
-                    metadesc,
-                    detail
-                }),
-            }).then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    if (data.blog_received) {
-                        window.location.reload();
-                    } else {
-                        //resetting the fields
-                        document.getElementById("frm").reset();
-                        document.querySelectorAll(".note-editable")[0].innerHTML = ''
-                        setDynamicLabel()
-                        alert('something went wrong, please try again!!!')
-                    }
-                })
-                .catch(err => console.log(err))
 
-        }
+        fetch("/userblog", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                email,
+                imageUrl,
+                title,
+                url,
+                category,
+                select,
+                shortdesc,
+                author,
+                metatitle,
+                metakeyword,
+                metadesc,
+                detail
+            }),
+        }).then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if (data.blog_received) {
+                    window.location.reload();
+                } else {
+                    //resetting the fields
+                    document.getElementById("frm").reset();
+                    //document.querySelectorAll(".note-editable")[0].innerHTML = ''
+                    setDynamicLabel()
+                    alert('something went wrong, please try again!!!')
+                }
+            })
+            .catch(err => console.log(err))
+
+
 
 
 
@@ -165,7 +160,7 @@ const PostBlog = (props) => {
     }
 
 
-    
+
 
     const onEditorStateChange = function (editorState) {
         setEditorState(editorState);
@@ -177,12 +172,11 @@ const PostBlog = (props) => {
         // }, "");
         //let text = editorState.getCurrentContent().getPlainText("\u0001");
 
-        let rawContentState=convertToRaw(editorState.getCurrentContent());
-        const markup = draftToHtml(rawContentState );
-        // console.log('markup',markup)
+        let rawContentState = convertToRaw(editorState.getCurrentContent());
+        const markup = draftToHtml(rawContentState);
+        setEditorContent(markup)
+    };
 
-      };
- 
 
     return (
         <>
@@ -207,7 +201,7 @@ const PostBlog = (props) => {
                                     <div className="row d-flex justify-content-center" id="data">
 
                                         <div className="col-9  c12">
-                                          
+
                                             <div className="row mt-4">
                                                 <div className="col-xs-12 col-sm-12 col-md-12 p-l-30 p-r-30">
 
@@ -271,30 +265,30 @@ const PostBlog = (props) => {
 
                                                         <div className="form-group">
                                                             <label htmlFor="summernote" className="font-weight-600">Blog Content</label>
-                                                            <textarea id="summernote" name="summernote"></textarea>
+                                                            <Editor
+                                                                editorState={editorState}
+                                                                toolbarClassName="toolbarClassName"
+                                                                wrapperClassName="wrapperClassName"
+                                                                editorClassName="editorClassName"
+                                                                onEditorStateChange={onEditorStateChange}
+                                                                mention={{
+                                                                    separator: " ",
+                                                                    trigger: "@",
+                                                                    suggestions: [
+                                                                        { text: "APPLE", value: "apple" },
+                                                                        { text: "BANANA", value: "banana", url: "banana" },
+                                                                        { text: "CHERRY", value: "cherry", url: "cherry" },
+                                                                        { text: "DURIAN", value: "durian", url: "durian" },
+                                                                        { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
+                                                                        { text: "FIG", value: "fig", url: "fig" },
+                                                                        { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
+                                                                        { text: "HONEYDEW", value: "honeydew", url: "honeydew" }
+                                                                    ]
+                                                                }}
+                                                            />
                                                         </div>
 
-      <Editor
-        editorState={editorState}
-        toolbarClassName="toolbarClassName"
-        wrapperClassName="wrapperClassName"
-        editorClassName="editorClassName"
-        onEditorStateChange={onEditorStateChange}
-        mention={{
-          separator: " ",
-          trigger: "@",
-          suggestions: [
-            { text: "APPLE", value: "apple" },
-            { text: "BANANA", value: "banana", url: "banana" },
-            { text: "CHERRY", value: "cherry", url: "cherry" },
-            { text: "DURIAN", value: "durian", url: "durian" },
-            { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
-            { text: "FIG", value: "fig", url: "fig" },
-            { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
-            { text: "HONEYDEW", value: "honeydew", url: "honeydew" }
-          ]
-        }}
-      />
+
 
                                                         <div className="form-group">
                                                             <label htmlFor="shortdesc" className="font-weight-600">Short

@@ -115,10 +115,10 @@ const Sidebar = (props) => {
                             </Link>
                         </li>
                         <li className="menu-item" data-link="management" >
-                            <a className="menu-link" href="/admin/blogs-management">
+                            <Link className="menu-link" to="/admin/blogs-management">
                                 <i className="fas fa-solid fa-blog"></i>
                                 <span className="menu-link-text">Blogs</span>
-                            </a>
+                            </Link>
                         </li>
                         <li className="menu-item" data-link="messages">
                             <Link className="menu-link" to="/admin/messages">

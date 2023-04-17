@@ -1,11 +1,18 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from 'react-router-dom'
 
+import { Editor } from "react-draft-wysiwyg";
+import { convertToRaw, EditorState } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
 
 const EditBlog = (props) => {
 
   const { allBlog, allCategory, storage } = props
+  const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const [editorContent, setEditorContent] = useState()
+
   const navigate = useNavigate()
   const link = document.baseURI;
   var blogurl = link.substring(
@@ -29,7 +36,7 @@ const EditBlog = (props) => {
     let metatitle = document.getElementById("metatitle");
     let metakeyword = document.getElementById("metakeyword");
     let metadesc = document.getElementById("metadesc");
-    let detail = document.querySelectorAll(".note-editable")[0]; //summernote
+    let detail //= document.querySelectorAll(".note-editable")[0]; //summernote
 
 
     //if the certain blog is found
@@ -37,7 +44,7 @@ const EditBlog = (props) => {
 
       //if the fields are loaded
       if (title && url && category && select && detail && shortdesc && author && metatitle && metakeyword && metadesc && image)
-        console.log('title is true', detail.innerText)
+        console.log('title is true', detail)
 
       blogid.value = theBlog._id
       title.value = theBlog.title
@@ -82,19 +89,20 @@ const EditBlog = (props) => {
     let metatitle = document.getElementById("metatitle")?.value;
     let metakeyword = document.getElementById("metakeyword")?.value;
     let metadesc = document.getElementById("metadesc")?.value;
-    let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
+    let detail = editorContent
+    
+    /*
     let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
-
     //check sthe size of the images inside the summernote
     let totalsize = 0;
     for (let i = 0; i < allimg.length; i++) {
       let base64String = allimg[i].getAttribute("src");//base64 data
-
       let stringLength = base64String.length - 'data:image/png;base64,'.length;
       let sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
       let sizeInKb = sizeInBytes / 1000000;
       totalsize += sizeInKb;
     }
+*/
 
     let imageUrl;
     if (image) {
@@ -139,10 +147,7 @@ const EditBlog = (props) => {
     // );
 
 
-    if (totalsize > 2) {
-      alert("Image size is too big in blog content");
-      //document.querySelector('.note-editor').style.border = "2px solid #db0000";
-    } else {
+ 
 
 
       fetch("/blogeditsubmit", {
@@ -173,13 +178,27 @@ const EditBlog = (props) => {
         })
         .catch(err => console.log(err))
 
-    }
+    
 
 
 
   }
 
 
+  const onEditorStateChange = function (editorState) {
+    setEditorState(editorState);
+    //const { blocks } = convertToRaw(editorState.getCurrentContent());
+    //gets you the plain text
+    // let text = blocks.reduce((acc, item) => {
+    //   acc = acc + item.text;
+    //   return acc;
+    // }, "");
+    //let text = editorState.getCurrentContent().getPlainText("\u0001");
+
+    let rawContentState = convertToRaw(editorState.getCurrentContent());
+    const markup = draftToHtml(rawContentState);
+    setEditorContent(markup)
+};
 
 
   function settingUrl(e) {
@@ -280,7 +299,27 @@ const EditBlog = (props) => {
 
                   <div className="form-group">
                     <label htmlFor="summernote" className="font-weight-600">Blog Content</label>
-                    <input id="summernote" name="summernote" />
+                    <Editor
+                                                                editorState={editorState}
+                                                                toolbarClassName="toolbarClassName"
+                                                                wrapperClassName="wrapperClassName"
+                                                                editorClassName="editorClassName"
+                                                                onEditorStateChange={onEditorStateChange}
+                                                                mention={{
+                                                                    separator: " ",
+                                                                    trigger: "@",
+                                                                    suggestions: [
+                                                                        { text: "APPLE", value: "apple" },
+                                                                        { text: "BANANA", value: "banana", url: "banana" },
+                                                                        { text: "CHERRY", value: "cherry", url: "cherry" },
+                                                                        { text: "DURIAN", value: "durian", url: "durian" },
+                                                                        { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
+                                                                        { text: "FIG", value: "fig", url: "fig" },
+                                                                        { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
+                                                                        { text: "HONEYDEW", value: "honeydew", url: "honeydew" }
+                                                                    ]
+                                                                }}
+                                                            />
                   </div>
 
                   <div className="form-group">
