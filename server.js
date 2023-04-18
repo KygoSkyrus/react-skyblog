@@ -134,13 +134,13 @@ app.post("/blogeditsubmit", async (req, res) => {
   console.log("blogeditsubmit", details);
 
   try {
-    const result = await BLOG.findOneAndUpdate({ _id: details.blogid }, { title: details.title, url: details.url, category: details.category, type: details.select, shortdescription: details.shortdesc, image: details.image, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc }, { new: true })
-    console.log("blog edited!!!");
+    const result = await BLOG.findOneAndUpdate({ _id: details.blogid }, { title: details.title, url: details.url, category: details.category, type: details.select, detail:details.detail, shortdescription: details.shortdesc, image: details.image, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc }, { new: true })
+    console.log("blog edited!!!",result);
     if(result){
       res.send({isBlogEdited:true})
     }else{
       res.send({isBlogEdited:false})
-    } 
+    }
   } catch (err) {
     console.log(err);
   }

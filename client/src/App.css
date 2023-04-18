@@ -608,6 +608,8 @@ input[type="radio"] {
   min-height: 200px;
     border: 1px solid #ced4da;
     border-radius: 0 0 6px 6px;
+    padding: 0 0.75rem;
+    line-height: 0.8;
 }
 /************************************ REACT_DRAFT_EDITOR *************************************/
 

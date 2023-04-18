@@ -87,7 +87,6 @@ router.post("/getallblogs", async (req, res) => {
   console.log('getallblogs api hit')
   try {
     let ret =await BLOG.find({})
-    console.log('ret',ret)
     res.send(ret);
   } catch (err) {
     console.log(err);

@@ -58,8 +58,12 @@ const UserSubmittedBlogs = () => {
                                         <th>Category</th>
                                         <th>Type</th>
                                         <th>Image</th>
-                                        <th>Visibility</th>
-                                        <th>Edit/Delete</th>
+                                        <th>Description</th>
+                                        <th>Content</th>
+                                        <th>Author</th>
+                                        <th>Date</th>
+                                        {/* <th>Visibility</th>
+                                        <th>Edit/Delete</th> */}
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
@@ -71,10 +75,14 @@ const UserSubmittedBlogs = () => {
                                                 <td>{x.category}</td>
                                                 <td>{x.type}</td>
                                                 <td>{x.image}</td>
-                                                <td><label className="switch"><input onClick="blogVisibility('${data[i]._id}',event)" id="checkbox${data[i]._id}" type="checkbox" checked={x.status} /><span className="slider round"></span></label>
+                                                <td>{x.shortdescription}</td>
+                                                <td>{x.detail}</td>
+                                                <td>{x.authorname}</td>
+                                                <td>{x.date}</td>
+                                                {/* <td><label className="switch"><input onClick="blogVisibility('${data[i]._id}',event)" id="checkbox${data[i]._id}" type="checkbox" checked={x.status} /><span className="slider round"></span></label>
                                                 </td>
                                                 <td style={{display: "flex",border: "none",justifyContent: "center"}}><a href="/admin/blog-edit/${data[i].url
-                    }" target="blank" ><button style={{background: "#09660c"}}><i className="fa fa-pen"></i></button></a><button onClick='deleteBlog("${data[i]._id}")' style={{background: "#d50606"}}><i className="fa fa-trash" ></i></button></td>
+                    }" target="blank" ><button style={{background: "#09660c"}}><i className="fa fa-pen"></i></button></a><button onClick='deleteBlog("${data[i]._id}")' style={{background: "#d50606"}}><i className="fa fa-trash" ></i></button></td> */}
                                             </tr>
                                         )
                                     })}

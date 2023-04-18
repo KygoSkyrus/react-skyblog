@@ -1,11 +1,13 @@
-import React,{useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from 'react-router-dom'
 
 import { Editor } from "react-draft-wysiwyg";
-import { convertToRaw, EditorState } from "draft-js";
+import { convertToRaw, EditorState, ContentState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
+
+import htmlToDraft from 'html-to-draftjs';
 
 const EditBlog = (props) => {
 
@@ -21,8 +23,21 @@ const EditBlog = (props) => {
   );
   let theBlog = allBlog.find(x => x.url === blogurl)
 
-  settingFieldsInitially()
+  useEffect(()=>{
+
+    settingFieldsInitially()
+  },[])
+
   function settingFieldsInitially() {
+    //html to draft
+    const blocksFromHtml = htmlToDraft(theBlog.detail);
+    //console.log('blocks fromhtmk', blocksFromHtml)
+    const { contentBlocks, entityMap } = blocksFromHtml;
+    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    const editorState = EditorState.createWithContent(contentState);
+    //console.log('blockeditor statek', editorState)
+    setEditorState(editorState)
+
 
     //ALL FIELDS
     let blogid = document.getElementById('blogid')
@@ -36,15 +51,15 @@ const EditBlog = (props) => {
     let metatitle = document.getElementById("metatitle");
     let metakeyword = document.getElementById("metakeyword");
     let metadesc = document.getElementById("metadesc");
-    let detail //= document.querySelectorAll(".note-editable")[0]; //summernote
+    //let detail //= document.querySelectorAll(".note-editable")[0]; //summernote
 
 
     //if the certain blog is found
     if (theBlog) {
 
       //if the fields are loaded
-      if (title && url && category && select && detail && shortdesc && author && metatitle && metakeyword && metadesc && image)
-        console.log('title is true', detail)
+      if (title && url && category && select  && shortdesc && author && metatitle && metakeyword && metadesc && image){
+        console.log('title is true', blogid)
 
       blogid.value = theBlog._id
       title.value = theBlog.title
@@ -52,7 +67,7 @@ const EditBlog = (props) => {
       category.value = theBlog.category
       select.setAttribute("checked", "checked")
 
-      detail.innerHTML = theBlog.detail
+      // detail.innerHTML = theBlog.detail
       shortdesc.value = theBlog.shortdescription
       author.value = theBlog.authorname
 
@@ -61,8 +76,8 @@ const EditBlog = (props) => {
       metadesc.value = theBlog.metadescription
 
       image.style.backgroundImage = `url('${theBlog.image}')`
-      image.style.display="block"
-
+      image.style.display = "block"
+      }
     }
   }
 
@@ -90,7 +105,7 @@ const EditBlog = (props) => {
     let metakeyword = document.getElementById("metakeyword")?.value;
     let metadesc = document.getElementById("metadesc")?.value;
     let detail = editorContent
-    
+console.log('in send func',detail)
     /*
     let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
     //check sthe size of the images inside the summernote
@@ -131,56 +146,35 @@ const EditBlog = (props) => {
     }
 
 
-    // console.log(
-    //     imageUrl,
-    //     blogid,
-    //     title,
-    //     url,
-    //     category,
-    //     select,
-    //     shortdesc,
-    //     author,
-    //     metatitle,
-    //     metakeyword,
-    //     metadesc,
-    //     detail
-    // );
 
 
- 
-
-
-      fetch("/blogeditsubmit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          blogid,
-          imageUrl,
-          title,
-          url,
-          category,
-          select,
-          shortdesc,
-          author,
-          metatitle,
-          metakeyword,
-          metadesc,
-          detail
-        }),
-      }).then(response => response.json())
-        .then(data => {
-          console.log(data)
-          if (data.isBlogEdited) {
-            navigate('/admin/blogs-management')
-          } else {
-            alert('something went wrong, please reload and try again!!!')
-          }
-        })
-        .catch(err => console.log(err))
-
-    
-
-
+    fetch("/blogeditsubmit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        blogid,
+        imageUrl,
+        title,
+        url,
+        category,
+        select,
+        shortdesc,
+        author,
+        metatitle,
+        metakeyword,
+        metadesc,
+        detail
+      }),
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data)
+        if (data.isBlogEdited) {
+          navigate('/admin/blogs-management')
+        } else {
+          alert('something went wrong, please reload and try again!!!')
+        }
+      })
+      .catch(err => console.log(err))
 
   }
 
@@ -197,8 +191,9 @@ const EditBlog = (props) => {
 
     let rawContentState = convertToRaw(editorState.getCurrentContent());
     const markup = draftToHtml(rawContentState);
+    console.log('markup',markup)
     setEditorContent(markup)
-};
+  };  
 
 
   function settingUrl(e) {
@@ -300,26 +295,26 @@ const EditBlog = (props) => {
                   <div className="form-group">
                     <label htmlFor="summernote" className="font-weight-600">Blog Content</label>
                     <Editor
-                                                                editorState={editorState}
-                                                                toolbarClassName="toolbarClassName"
-                                                                wrapperClassName="wrapperClassName"
-                                                                editorClassName="editorClassName"
-                                                                onEditorStateChange={onEditorStateChange}
-                                                                mention={{
-                                                                    separator: " ",
-                                                                    trigger: "@",
-                                                                    suggestions: [
-                                                                        { text: "APPLE", value: "apple" },
-                                                                        { text: "BANANA", value: "banana", url: "banana" },
-                                                                        { text: "CHERRY", value: "cherry", url: "cherry" },
-                                                                        { text: "DURIAN", value: "durian", url: "durian" },
-                                                                        { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
-                                                                        { text: "FIG", value: "fig", url: "fig" },
-                                                                        { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
-                                                                        { text: "HONEYDEW", value: "honeydew", url: "honeydew" }
-                                                                    ]
-                                                                }}
-                                                            />
+                      editorState={editorState}
+                      toolbarClassName="toolbarClassName"
+                      wrapperClassName="wrapperClassName"
+                      editorClassName="editorClassName"
+                      onEditorStateChange={onEditorStateChange}
+                      mention={{
+                        separator: " ",
+                        trigger: "@",
+                        suggestions: [
+                          { text: "APPLE", value: "apple" },
+                          { text: "BANANA", value: "banana", url: "banana" },
+                          { text: "CHERRY", value: "cherry", url: "cherry" },
+                          { text: "DURIAN", value: "durian", url: "durian" },
+                          { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
+                          { text: "FIG", value: "fig", url: "fig" },
+                          { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
+                          { text: "HONEYDEW", value: "honeydew", url: "honeydew" }
+                        ]
+                      }}
+                    />
                   </div>
 
                   <div className="form-group">
