@@ -9,7 +9,6 @@ import Admin from './components/Admin';
 import NotAdmin from './components/NotAdmin';
 import Loader from './Loader';
 import ScrollToTop from './ScrollToTop';//deals with the Link to restore scroll
-import Error from './components/notAdmin/Error';
 
 
 function App() {

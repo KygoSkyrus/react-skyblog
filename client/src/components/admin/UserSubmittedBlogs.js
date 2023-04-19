@@ -27,6 +27,25 @@ const UserSubmittedBlogs = () => {
     }
 
 
+    async function deleteBlog(id) {
+        await fetch("/deleteuserblog", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                id,
+            }),
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.isDeleted) {
+                    window.location.reload()
+                } else {
+                    alert('something went wrong')
+                };
+            })
+
+    }
+
     return (
         <>
 
@@ -40,7 +59,7 @@ const UserSubmittedBlogs = () => {
                             </div>
                             <div className="text-right">
                                 <div className="actions">
-                                    <a href="" className="action-item"><i className="fas fa-refresh"></i></a>
+                                    <span onClick={e=>window.location.reload()} className="action-item cursor-pointer"><i className="fas fa-refresh"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -62,6 +81,7 @@ const UserSubmittedBlogs = () => {
                                         <th>Content</th>
                                         <th>Author</th>
                                         <th>Date</th>
+                                        <th>Delete</th>
                                         {/* <th>Visibility</th>
                                         <th>Edit/Delete</th> */}
                                     </tr>
@@ -83,6 +103,7 @@ const UserSubmittedBlogs = () => {
                                                 </td>
                                                 <td style={{display: "flex",border: "none",justifyContent: "center"}}><a href="/admin/blog-edit/${data[i].url
                     }" target="blank" ><button style={{background: "#09660c"}}><i className="fa fa-pen"></i></button></a><button onClick='deleteBlog("${data[i]._id}")' style={{background: "#d50606"}}><i className="fa fa-trash" ></i></button></td> */}
+                                                <td style={{ display: "flex", border: "none", justifyContent: "center" }}><button onClick={e => deleteBlog(x._id, e)} style={{ background: "#d50606" }}><i className="fa fa-trash" ></i></button></td>
                                             </tr>
                                         )
                                     })}

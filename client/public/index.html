@@ -83,40 +83,40 @@
     ></script>
 
     <!-- GOOGLE -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
 
     <script>
-      $(document).ready(function () {
-        $("#summernote").summernote();
-      });
+      // $(document).ready(function () {
+      //   $("#summernote").summernote();
+      // });
 
-      googleLogin();
-      async function googleLogin() {
-        var auth2;
-        var googleUser; // The current user
-        //this is not working
-        let x = await gapi.load("auth2", function () {
-          auth2 = gapi.auth2.init({
-            client_id:
-              "371526208721-u9ce3pinmkt2aa959r57j9u2q9crul09.apps.googleusercontent.com",
-          });
-          console.log("auth2", auth2);
-          auth2.isSignedIn.listen(signinChanged);
-        });
+      // googleLogin();
+      // async function googleLogin() {
+      //   var auth2;
+      //   var googleUser; // The current user
+      //   //this is not working
+      //   let x = await gapi.load("auth2", function () {
+      //     auth2 = gapi.auth2.init({
+      //       client_id:
+      //         "371526208721-u9ce3pinmkt2aa959r57j9u2q9crul09.apps.googleusercontent.com",
+      //     });
+      //     console.log("auth2", auth2);
+      //     auth2.isSignedIn.listen(signinChanged);
+      //   });
 
-        var signinChanged = function (val) {
-          console.log("Signin state changed to ", val);
-          if (val) {
-            document.getElementById("google").classList.add("dnone");
-            document.getElementById("content").classList.remove("dnone");
-            document.getElementById("head").classList.remove("dnone");
-          } else {
-            document.getElementById("google").classList.remove("dnone");
-            document.getElementById("content").classList.add("dnone");
-            document.getElementById("head").classList.add("dnone");
-          }
-        };
-      }
+      //   var signinChanged = function (val) {
+      //     console.log("Signin state changed to ", val);
+      //     if (val) {
+      //       document.getElementById("google").classList.add("dnone");
+      //       document.getElementById("content").classList.remove("dnone");
+      //       document.getElementById("head").classList.remove("dnone");
+      //     } else {
+      //       document.getElementById("google").classList.remove("dnone");
+      //       document.getElementById("content").classList.add("dnone");
+      //       document.getElementById("head").classList.add("dnone");
+      //     }
+      //   };
+      // }
     </script>
   </body>
 </html>

@@ -209,6 +209,20 @@ app.post("/usersubmittedblogs", async (req, res) => {
     console.log(err);
   }
 })
+
+//deletes the user submitted blogs
+app.post("/deleteuserblog", async (req, res) => {
+  const details = req.body;
+
+  try {
+    let resp = await USERBLOG.deleteOne({ _id: details.id })
+    console.log(resp)
+    console.log("Number of records deleted: " + resp.deletedCount);
+    res.send({isDeleted:true})
+  } catch (err) {
+    console.log(err);
+  }
+});
 //------------------------USERBLOG-----------------------------
 
 

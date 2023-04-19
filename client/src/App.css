@@ -48,6 +48,9 @@ a:hover {
   font-size: 56px;
   color: #fff;
 }
+.cursor-pointer{
+  cursor: pointer;
+}
 /*--------------------------------- basics-----------------------------*/
 
 

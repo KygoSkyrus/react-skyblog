@@ -231,8 +231,9 @@ const BlogsManagement = (props) => {
                             </div>
                             <div className="text-right">
                                 <div className="actions">
-                                    <a href="" className="action-item" ><i
-                                        className="fas fa-refresh"></i></a>
+                                    <span onClick={e=>window.location.reload()} className="action-item cursor-pointer" >
+                                        <i
+                                        className="fas fa-refresh"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -379,7 +380,7 @@ const BlogsManagement = (props) => {
                             </div>
                             <div className="text-right">
                                 <div className="actions">
-                                    <a href="" className="action-item"><i className="fas fa-refresh"></i></a>
+                                    <span onClick={e=>window.location.reload()} className="action-item cursor-pointer"><i className="fas fa-refresh"></i></span>
                                 </div>
                             </div>
                         </div>

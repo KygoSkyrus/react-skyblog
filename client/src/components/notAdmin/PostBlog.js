@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { GoogleLogin } from '@react-oauth/google';
+//import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
@@ -178,12 +180,20 @@ const PostBlog = (props) => {
     };
 
 
+    const responseMessage = (response) => {
+        console.log(response);
+    };
+    const errorMessage = (error) => {
+        console.log(error);
+    };
+
     return (
         <>
             {/* <!-- google login  --> */}
             <div id="google" className="">
                 <div className="g-signin2" data-onsuccess="onSignIn"></div>
             </div>
+            <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
 
 
             {/* <!-- Banner  --> */}

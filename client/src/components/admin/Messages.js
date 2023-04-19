@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 const Messages = () => {
 
@@ -49,7 +48,9 @@ const Messages = () => {
                             </div>
                             <div className="text-right">
                                 <div className="actions">
-                                    <Link to="" className="action-item"><i className="fas fa-refresh"></i></Link>
+                                    <span onClick={e=>window.location.reload()} className="action-item">
+                                        <i className="fas fa-refresh"></i>
+                                        </span>
                                 </div>
                             </div>
                         </div>
