@@ -31,7 +31,7 @@ const SingleCategory = (props) => {
         <>
             {blogIncat?.length > 0 ?
                 <>
-                    <Banner text={category} />
+                    <Banner text={document.baseURI.substring(document.baseURI.lastIndexOf("/") + 1,document.baseURI.length)} />
 
                     <div className="t-pt-70 t-pb-70">
                         <div className="container">

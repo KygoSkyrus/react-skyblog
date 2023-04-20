@@ -19,8 +19,8 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    // document.getElementById('root').classList.add('overflow')
-    // setIsLoaded(true)
+    document.getElementById('root').classList.add('overflow')
+    setIsLoaded(true)
     getAllBlogs()
     getAllCategory()
   }, [])
@@ -138,13 +138,6 @@ function App() {
 
 
   //NOTE :: Remeber to reverse the arrays to show latest blog first
-
-
-  //----------------------moving from notadmin so that both admin and notadmin has access to this---------------------------------------
-
-
-
-
 
 
   return (

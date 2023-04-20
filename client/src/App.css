@@ -41,7 +41,7 @@ a:hover {
   font-family: "Exo 2",sans-serif;
   width: 100%;
     background: #000000c7;
-    height: 184px;
+    /* height: 184px; */
 }
 .skyVidBG h4{
   font-family: inherit;
@@ -50,6 +50,11 @@ a:hover {
 }
 .cursor-pointer{
   cursor: pointer;
+}
+.googleLogin{
+      padding: 9px 12px;
+    box-shadow: 0 0 2px #c7c7c7;
+    border-radius: 5px;
 }
 /*--------------------------------- basics-----------------------------*/
 
@@ -622,7 +627,7 @@ input[type="radio"] {
 
 
 /********************************* LOADER ****************************************/
-
+/* 
 .loader-container{
   width: 100vw;
   height: 100vh;
@@ -697,7 +702,121 @@ input[type="radio"] {
 .loading{
   color: #bfbfbf;
   letter-spacing: 18px;
+} */
+.loader-container{
+  width: 100vw;
+  height: 100vh;
+  background: url('./assets/images/sky.jpg');
+  background-size: cover;
 }
+.loader-container .overlay{
+  width: inherit;
+  height: inherit;
+  background: #000000ea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1050;
+  top: 0;
+}
+.loader{
+	-webkit-perspective:700px;
+	perspective: 700px;
+}
+
+.loader>span{
+	font-size: 130px;
+	font-family: "franklin gothic medium",sans-serif;
+	display: inline-block;
+	animation:flip 1.6s infinite linear;
+	transform-origin:0 70%;
+	transform-style:preserve-3d;
+	-webkit-transform-style:preserve-3d;
+}
+.loading{
+  color: #bfbfbf;
+  letter-spacing: 18px;
+} 
+/* 191a1a */
+.letterHolder{
+  margin: 0;
+  padding: 0;
+  font-weight: 100;
+  font-size: 1.1em;
+  color: #4396da;
+  letter-spacing: 8px;
+}
+
+.letterHolder span {
+  position: relative;
+  top: 0.63em;  
+  display: inline-block;
+  text-transform: uppercase;  
+  opacity: 0;
+  transform: rotateX(-90deg);
+}
+
+.let1 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+.let2 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 1.3s;
+}
+
+.let3 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 1.4s;
+}
+
+.let4 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 1.5s;
+
+}
+
+.let5 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 1.6s;
+}
+
+.let6 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 1.7s;
+}
+
+.let7 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 1.8s;
+}
+
+@keyframes drop {
+    10% {
+        opacity: 0.5;
+    }
+    20% {
+        opacity: 1;
+        top: 3.78em;
+        transform: rotateX(-360deg);
+    }
+    80% {
+        opacity: 1;
+        top: 3.78em;
+        transform: rotateX(-360deg);
+    }
+    90% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        top: 6.94em
+    }
+}
+
 /********************************* LOADER ****************************************/
 
 
@@ -709,6 +828,8 @@ input[type="radio"] {
 
 
 /********************************* RESPONSIVE ****************************************/
+
+
 
 @media (max-width:768px) {
   .follow {
@@ -724,7 +845,39 @@ input[type="radio"] {
     height: unset;
   }
 
+  video{
+    display: none;
+  }
+.skyVidBG{
+  position: static; 
+    top: unset; 
+     left: unset; 
+     transform: unset;
+    height: 86px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #070c17;
+  }
+  .skyVidBG h4{
+    font-size: 46px;  
+  }
 
+}
+@media only screen and (max-width:991px) and (min-width:768px) {
+  .skyVidBG{
+    height: 140px;
+  }
+}
+@media only screen and (max-width:1199px) and (min-width:992px) {
+  .skyVidBG{
+    height: 162px;
+  }
+}
+@media (min-width:1200px) {
+  .skyVidBG{
+    height: 184px;
+  }
 }
 
 
