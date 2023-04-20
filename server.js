@@ -364,6 +364,9 @@ app.post("/cpswrd", async (req, res) => {
 // });
 //------------------------------- ADMIN -------------------------------
 
+if(process.env.NODE_ENV ==="production"){
+  app.use(express.static("client/build"));
+}
 
 
 const port = process.env.PORT || 4000;
