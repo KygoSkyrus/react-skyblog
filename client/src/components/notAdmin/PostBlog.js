@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { GoogleLogin } from '@react-oauth/google';
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
@@ -214,10 +213,10 @@ const PostBlog = (props) => {
     );
 
     // log out function to log the user out of google and set the profile array to null
-    const logOut = () => {
-        googleLogout();
-        setProfile(null);
-    };
+    // const logOut = () => {
+    //     googleLogout();
+    //     setProfile(null);
+    // };
 
 
     return (
