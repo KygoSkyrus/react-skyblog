@@ -15,9 +15,20 @@
 
 /*--------------------------------- basics-----------------------------*/
 a:hover {
-  color: #000;
+  color: #070c17;
   text-decoration: none;
-  transform: scale(1.01);
+  /* letter-spacing: 1px; */
+  /* transform: scale(1.01); */
+  transform: none;
+}
+a:hover .tag__skew-reverse{
+  transform: none;
+}
+.footer-mid a:hover{
+  color: #4396da;
+}
+.whiteAnchor a:hover{
+  color: #fff;
 }
 .height300{
   height: 300px;
@@ -236,9 +247,9 @@ justify-content: space-between;
   color: white;
   transition: all 0.3s;
 }
-.t-follow-link:hover{
+/* .t-follow-link:hover{
   color:#4396da;
-}
+} */
 /********************* FOOTER ***************/
 
 
@@ -891,7 +902,12 @@ input[type="radio"] {
 
 @media (max-width:992px) {
 .marginTop{
-  margin-top:30px;
+  margin-top:70px;
+}
+
+.marginTop.pxIsZero{
+  padding-left: 0;
+    padding-right: 0;
 }
 }
 

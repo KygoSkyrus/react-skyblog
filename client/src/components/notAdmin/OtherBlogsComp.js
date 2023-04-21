@@ -17,7 +17,7 @@ const OtherBlogsComp = (props) => {
 					</div>
 				</div>
 			</div>
-			<div className="col-12 t-mt-30">
+			<div className="col-12 t-mt-30 px-0">
 
 				{allBlog?.slice(allBlog.length - 4, allBlog.length).map(x => {
 					return (

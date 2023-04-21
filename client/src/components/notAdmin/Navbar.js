@@ -15,6 +15,12 @@ const Navbar = (props) => {
         document.querySelectorAll('.menu-toggle')[0]?.classList.toggle("is-active");
     }
 
+    function hideMobileNav(e){
+        if(document.querySelectorAll('.nav')[0]?.classList.contains('mobile-nav')){
+            document.getElementById('mobile-menu').click()
+        }
+    }
+
     function getSearchedBlog(e) {   
         document.getElementById('searchdropdown').classList.remove('hide')//removes display none
         setSearchedOptions(allBlog.filter(x => x.title.toLowerCase().includes(e.target.value.toLowerCase())))//responsible for filter search data
@@ -37,7 +43,7 @@ const Navbar = (props) => {
                             <span className="bar"></span>
                             <span className="bar"></span>
                         </div>
-                        <ul className="nav list w-100 t-pl-30 t-pr-30 navbars__list pl-lg-0">
+                        <ul className="nav list w-100 t-pl-30 t-pr-30 navbars__list pl-lg-0" >
 
                             <li className="dropdown list__item navbars__list-item nav-item">
                                 <span>CATEGORY <i className="fa fa-angle-down" ></i>
@@ -45,7 +51,7 @@ const Navbar = (props) => {
                                     <div className="dropdown-content" id="ulCategory">
                                         {finalArr?.map((x, index) => {
                                             return (
-                                                <span className="sub-menu__item" key={index}>
+                                                <span className="sub-menu__item" onClick={e=>hideMobileNav(e)} key={index}>
                                                     <Link to={"category/" + x} state={{ category: x }}
                                                         className="t-link sub-menu__link text-uppercase">
                                                         {x}
@@ -57,14 +63,12 @@ const Navbar = (props) => {
                                 </span>
                             </li>
 
-                            <li className="nav-item"><Link state={{ category: "tech" }} to="/category/tech">TECH</Link></li>
-                            <li className="nav-item"><Link state={{ category: "travel" }} to="/category/travel">TRAVEL</Link></li>
-                            <li className="nav-item"><Link state={{ category: "lifestyle" }} to="/category/lifestyle">LIFESTYLE</Link></li>
-                            <li className="nav-item"><Link state={{ category: "business" }} to="/category/business">BUSINESS</Link></li>
-
-                            <li className="nav-item"><Link to="/contact">CONTACT</Link></li>
-
-                            <li className="nav-item"><Link to="/post-your-blog">POST A BLOG</Link></li>
+                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link state={{ category: "tech" }} to="/category/tech">TECH</Link></li>
+                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link state={{ category: "travel" }} to="/category/travel">TRAVEL</Link></li>
+                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link state={{ category: "lifestyle" }} to="/category/lifestyle">LIFESTYLE</Link></li>
+                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link state={{ category: "business" }} to="/category/business">BUSINESS</Link></li>
+                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link to="/contact">CONTACT</Link></li>
+                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link to="/post-your-blog">POST A BLOG</Link></li>
 
                             {/* <i className="fas fa-search" id="search-icon" onClick={e => handleSearchIcon(e)}></i>
                             <input className="search-input" type="text" placeholder="Search.." /> */}

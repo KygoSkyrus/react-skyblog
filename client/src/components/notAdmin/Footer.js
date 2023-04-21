@@ -102,9 +102,9 @@ const Footer = (props) => {
 					<div className="col-md-6 col-lg-3 t-mb-30 mb-lg-0">
 						<h5 className="t-blue mt-0 text-capitalize">get in touch</h5>
 						<p className="text-light sm-text">
-							1313 Broadway, New York NY-10001, United States of America
+							76 Street, New York NY-10001, United States of America
 						</p>
-						<p className="text-light sm-text">+12-2345687966 (For Ads)</p>
+						<p className="text-light sm-text">+12-2345687966</p>
 						<p className="text-light sm-text mb-0">info@example.com</p>
 					</div>
 					<div className="col-md-6 col-lg-3 t-mb-30 mb-lg-0">

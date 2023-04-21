@@ -36,7 +36,7 @@ const SingleCategory = (props) => {
                     <div className="t-pt-70 t-pb-70">
                         <div className="container">
                             <div className="row">
-                                <div className="col-lg-9 t-mb-30 mb-lg-0 ">
+                                <div className="col-lg-9 t-mb-30 mb-lg-0 theSection">
                                     <div className="row">
 
                                         <div className="col-12 t-mb-60">

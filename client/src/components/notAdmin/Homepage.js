@@ -17,7 +17,7 @@ const Homepage = (props) => {
             {/* <!-- Hero  --> */}
             <div className="hero t-mt-30 t-pt-30">
                 <div className="container">
-                    <div className="row" id="hero">
+                    <div className="row whiteAnchor " id="hero">
                         <div className="col-md-6 mb-md-0" >
                             <div className="row">
                                 <BlogWrapperInside data={sportsArray[sportsArray.length - 1]} height={"height500"} />
@@ -70,7 +70,7 @@ const Homepage = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 marginTop">
+                        <div className="col-lg-3 marginTop pxIsZero">
                             <div className="row">
                                 <OtherBlogsComp allBlog={allBlog} />
                             </div>
@@ -84,7 +84,7 @@ const Homepage = (props) => {
 
             {/* looks good ,logic is in place  just need more blog of type -atleast 5*/}
             {/* <!-- Popular Blogs Start --> */}
-            <section className="t-pt-70 t-pb-70 t-bg-secondary theSection">
+            <section className="t-pt-70 t-pb-70 t-bg-secondary ">
                 <div className="container">
                     <div className="row t-mb-30">
                         <div className="col-12">
@@ -97,11 +97,11 @@ const Homepage = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-lg-6 t-mb-30 mb-lg-0">
+                    <div className="row whiteAnchor ">
+                        <div className="col-lg-6 t-mb-30 mb-lg-0 px-0">
                             <BlogWrapperInside data={popularArray[popularArray.length - 1]} />
                         </div>
-                        <div className="col-lg-6">
+                        <div className="col-lg-6 px-0">
                             <div className="row">
                                 {
                                     popularArray.slice(popularArray.length - 5, popularArray.length - 1).map(x => {
@@ -192,7 +192,7 @@ const Homepage = (props) => {
 
             {/* looks good ,logic is in place  just need more blog of type -atleast 4*/}
             {/* <!-- Viral Blogs Start --> */}
-            <section className="t-bg-secondary t-pt-70 t-pb-70 theSection">
+            <section className="t-bg-secondary t-pt-70 t-pb-70">
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
@@ -204,7 +204,7 @@ const Homepage = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-12 t-mt-30">
+                        <div className="col-12 t-mt-30 whiteAnchor px-0">
                             <div className="row" id="trending">
                                 {trendingArray?.slice(trendingArray.length - 4, trendingArray.length).map(x => {
                                     return (
