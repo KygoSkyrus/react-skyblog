@@ -191,8 +191,9 @@ const PostBlog = (props) => {
         let userId = Cookies.get('userid')
         console.log(userId)
         if (userId) {
-            document.getElementById('email').value =userId
             setUser(true)
+            if(document.getElementById('email'))
+            document.getElementById('email').value =userId
         } else if (user) {
             console.log('user is', user)
             fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
