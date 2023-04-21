@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie';
 
 import CategoryModal from './CategoryModal'
 import ChangePasswordModal from './ChangePasswordModal'
-
-
 import "../../assets/css/sidebar.css"
-
 
 const Sidebar = (props) => {
 
     const { allCategory } = props
     const [adminName, setAdminName] = useState()
 
-
-    //const [currentUrl,setCurrentUrl]=useState()
-
     useEffect(() => {
         getSidebarWorking()
         getAdminName()
         handleSelectedOption()
     }, [])
-
 
     //this will set the admin name in sidebar
     async function getAdminName() {
@@ -35,8 +28,6 @@ const Sidebar = (props) => {
         window.location.reload();
     }
 
-
-
     function getSidebarWorking() {
         const btnToggler = document.querySelector(".navbar-togglerr");
         const navbar = document.querySelector(".sidebar");
@@ -44,15 +35,13 @@ const Sidebar = (props) => {
 
         btnToggler.addEventListener('click', () => {
             navbar.classList.toggle('active');
-            menuItem?.forEach(x => {x.classList.toggle('pl');x.classList.toggle('w')})
+            menuItem?.forEach(x => { x.classList.toggle('pl'); x.classList.toggle('w') })
         });
     }
 
-
-
     function handleSelectedOption(e) {
         let currentOption;
-     
+
         switch (window.location.href) {
 
             case window.location.origin + "/admin/dashboard": common("dashboard")
@@ -71,15 +60,15 @@ const Sidebar = (props) => {
                 break;
         }
 
-        function common(data){
+        function common(data) {
             document.querySelector(`[data-link="${data}"]`)?.classList.add('selected')
-            currentOption=data
+            currentOption = data
         }
 
         //removing selected class from other options
-        document.getElementById('handleSelected')?.childNodes.forEach(x=>{
-            if(x.classList.contains('selected') ){
-                if(x.dataset.link!==currentOption){
+        document.getElementById('handleSelected')?.childNodes.forEach(x => {
+            if (x.classList.contains('selected')) {
+                if (x.dataset.link !== currentOption) {
                     x.classList.remove('selected')
                 }
             }
@@ -91,7 +80,6 @@ const Sidebar = (props) => {
 
     return (
         <>
-
             <nav className="sidebar">
                 <div className="navbar-container">
 
@@ -102,12 +90,7 @@ const Sidebar = (props) => {
                         <span className="navbar-togglerr"><i className='fas fa-solid fa-bars'></i></span>
                     </div>
 
-
-                    {/* <input type="search" name="search" placeholder="Search..."
-                        className="navbar-search" id="search" />
-                    <i id='icon-search' className="fas fa-regular fa-magnifying-glass"></i> */}
-
-                    <ul className="menu-list" id='handleSelected' onClick={e=>handleSelectedOption(e)}>
+                    <ul className="menu-list" id='handleSelected' onClick={e => handleSelectedOption(e)}>
                         <li className="menu-item" data-link="dashboard" >
                             <Link className="menu-link" to="/admin/dashboard">
                                 <i className="fas fa-solid fa-table"></i>
@@ -134,8 +117,8 @@ const Sidebar = (props) => {
                         </li>
                         <li className="menu-item" data-toggle="modal" data-target="#manageCat">
                             <span className="menu-link" href="">
-                            <i className="fas fa-th-list"></i>
-                            <span className="menu-link-text">Category</span>
+                                <i className="fas fa-th-list"></i>
+                                <span className="menu-link-text">Category</span>
                             </span>
                         </li>
                         <li className="menu-item" data-toggle="modal" data-target="#change">
@@ -161,20 +144,11 @@ const Sidebar = (props) => {
                 </div>
             </nav>
 
-            {/*            
-            <main className="dashboard">
-        <h1 className="title">Dashboard</h1>
-    </main> */}
-
-
             {/* <!--change password Modal --> */}
             <ChangePasswordModal />
 
             {/* <!--  manage category Modal --> */}
             <CategoryModal allCategory={allCategory} />
-
-
-
         </>
     )
 }

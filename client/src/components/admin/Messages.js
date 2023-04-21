@@ -8,9 +8,7 @@ const Messages = () => {
         getMessages();
     }, [])
 
-
     async function getMessages() {
-
         const res = await fetch("/showMessage", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -19,27 +17,21 @@ const Messages = () => {
 
         const data = await res.json();
         setMessages(data)
-        console.log("messages", data);
     }
 
     async function deleteMessage(id) {
-        console.log('deletemesg', id);
-        const res = await fetch("/deleteMessage", {
+        await fetch("/deleteMessage", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 id,
             }),
         });
-
-        const data = await res.json();
-        console.log(data);
     }
 
     return (
         <>
             <div className="body-content">
-
                 <div className="card mb-4">
                     <div className="card-header">
                         <div className="d-flex justify-content-between align-items-center">
@@ -48,14 +40,13 @@ const Messages = () => {
                             </div>
                             <div className="text-right">
                                 <div className="actions">
-                                    <span onClick={e=>window.location.reload()} className="action-item">
+                                    <span onClick={e => window.location.reload()} className="action-item">
                                         <i className="fas fa-refresh"></i>
-                                        </span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
 
                     <div className="card-body">
                         <div className="table-responsive">
@@ -89,7 +80,6 @@ const Messages = () => {
                         </div>
                     </div>
                 </div>
-                {/* <!--Page length options--> */}
             </div>
         </>
     )

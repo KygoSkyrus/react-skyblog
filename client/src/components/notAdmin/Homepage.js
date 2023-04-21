@@ -48,7 +48,7 @@ const Homepage = (props) => {
                                     <div className="section-title t-mb-30">
                                         <div className="tag tag--skew tag-delta d-inline-block">
                                             <h5 className="tag__skew-reverse t-text-light text-capitalize mt-0 mb-0">
-                                                today's news
+                                                today's blogs
                                             </h5>
                                         </div>
                                     </div>
@@ -112,18 +112,6 @@ const Homepage = (props) => {
                                         )
                                     })
                                 }
-                                {/* <div className="col-md-6 t-mb-30">
-                                                                        <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none" />
-                                                            </div>
-                                                            <div className="col-md-6 t-mb-30">
-                                                                        <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none"  />
-                                                            </div>
-                                                            <div className="col-md-6 t-mb-30">
-                                                                        <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none"  />
-                                                            </div>
-                                                            <div className="col-md-6 t-mb-30">
-                                                                        <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none"  />
-                                                            </div> */}
                             </div>
                         </div>
 
@@ -199,7 +187,7 @@ const Homepage = (props) => {
                             <div className="section-title">
                                 <div className="tag tag--skew tag-delta d-inline-block">
                                     <h5 className="tag__skew-reverse t-text-light text-capitalize mt-0 mb-0">
-                                        viral news
+                                        trending blogs
                                     </h5>
                                 </div>
                             </div>
@@ -296,9 +284,6 @@ const Homepage = (props) => {
                 </div>
             </section>
             {/* <!-- Category Based Blogs End --> */}
-
-
-
         </>
     )
 }

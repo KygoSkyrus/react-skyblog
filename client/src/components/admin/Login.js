@@ -4,31 +4,31 @@ import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
 
-  const [error,setError]=useState()
-  const navigate=useNavigate()
+  const [error, setError] = useState()
+  const navigate = useNavigate()
 
   async function login(e) {
 
     let username = document.getElementById('username').value
     let password = document.getElementById('passWord').value
 
-     fetch("/admin/login",{
+    fetch("/admin/login", {
       method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username, password
-        }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username, password
+      }),
     }).then(response => response.json())
-    .then(data=>{
-      if(data.matched===true){
-        Cookies.set('admin',username,{  httpOnly: false, expires: 0.5})
-        navigate("/admin/dashboard")
-      }else if(data.matched===false){
-        setError('Incorrect credentials')
+      .then(data => {
+        if (data.matched === true) {
+          Cookies.set('admin', username, { httpOnly: false, expires: 0.5 })
+          navigate("/admin/dashboard")
+        } else if (data.matched === false) {
+          setError('Incorrect credentials')
+        }
       }
-    }
-    )
-    .catch(err=>console.log(err))
+      )
+      .catch(err => console.log(err))
 
   }
 
@@ -37,10 +37,10 @@ const Login = () => {
       <div
         className="d-flex align-items-center justify-content-center text-center h-100vh"
       >
-        <div className="form-wrapper m-auto" style={{ width: "30%" ,minWidth:"300px"}}>
+        <div className="form-wrapper m-auto" style={{ width: "30%", minWidth: "300px" }}>
           <div className="form-container my-4" style={{ maxWidth: "unset" }}>
             <div className="d-flex justify-content-center flex-column align-items-center mb-4">
-            <section className='theLogo'>SKYBLOG</section>
+              <section className='theLogo'>SKYBLOG</section>
             </div>
 
             <div className="panel">
@@ -64,7 +64,7 @@ const Login = () => {
                   />
                 </div>
 
-                <button  className="btn btn-block" onClick={e => login(e)}>
+                <button className="btn btn-block" onClick={e => login(e)}>
                   Sign in
                 </button>
               </div>

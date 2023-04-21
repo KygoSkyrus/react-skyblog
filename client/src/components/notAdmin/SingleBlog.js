@@ -20,10 +20,7 @@ const SingleBlog = (props) => {
     let theBlog;
     let theNext;
     let thePrev;
-
-
     for (let i = 0; i < allBlog.length; i++) {
-        console.log('loop')
         //setting the prev blog
         thePrev = allBlog[i - 1];
 

@@ -13,23 +13,19 @@ import BlogsManagement from './admin/BlogsManagement';
 import UserSubmittedBlogs from './admin/UserSubmittedBlogs';
 import EditBlog from './admin/EditBlog';
 
-
 const Admin = (props) => {
 
   const { allBlog, allCategory, catAndCount, storage } = props
   let navigate = useNavigate();
 
   useEffect(() => {
-    console.log(allBlog)
     redirectToLogin();
     showTime()
   }, [])
 
-
-  //if user is admin is not logged then redirects to login page
+  //if admin is not logged then redirects to login page
   async function redirectToLogin() {
     const adminVal = Cookies.get('admin')
-    console.log("cookieValue", adminVal)
     if (!adminVal) {
       navigate('/admin/login')
     }
@@ -56,22 +52,20 @@ const Admin = (props) => {
       session = "AM";
     }
 
-
     h = (h < 10) ? "0" + h : h;
     m = (m < 10) ? "0" + m : m;
     s = (s < 10) ? "0" + s : s;
 
     var time = h + ":" + m + ":" + s + " " + session;
-    
-    if(document.getElementById("MyClockDisplay")){
-      let MyClockDisplay =document.getElementById("MyClockDisplay")
+
+    if (document.getElementById("MyClockDisplay")) {
+      let MyClockDisplay = document.getElementById("MyClockDisplay")
       MyClockDisplay.innerText = time;
       MyClockDisplay.textContent = time;
     }
-
     setTimeout(showTime, 1000);
-
   }
+
   return (
     <>
       {/* moving login route out of the all admin things as it was showing sidebar on login */}
@@ -90,7 +84,6 @@ const Admin = (props) => {
             <div id="MyClockDisplay" className="clock" ></div>
           </main>
 
-
           <Routes>
             <Route path="/dashboard" exact element={<Dashboard allCategory={allCategory} catAndCount={catAndCount} />} />
 
@@ -100,7 +93,7 @@ const Admin = (props) => {
 
             <Route path="/user-submitted-blogs" exact element={<UserSubmittedBlogs />} />
 
-            <Route path="/edit-blog/:id" exact element={<EditBlog allBlog={allBlog} allCategory={allCategory} storage={storage}  />} />
+            <Route path="/edit-blog/:id" exact element={<EditBlog allBlog={allBlog} allCategory={allCategory} storage={storage} />} />
 
             <Route path="*" element={<Error />} />
           </Routes>

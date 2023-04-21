@@ -2,19 +2,13 @@ import React, { useEffect, useState } from 'react'
 
 const UserSubmittedBlogs = () => {
 
-
-    //in this add a add button for blogs,,it will be like visiblity switch,,,when ne it means it will be added to the adminb blogs
-    //add the deleted and add api to backend and think about edit,,,not a good idea to edit the blog,,,leave it
-
     const [userBlogs, setUserBlogs] = useState()
 
     useEffect(() => {
         getUserBlogs();
     }, [])
 
-
     async function getUserBlogs() {
-
         const res = await fetch("/usersubmittedblogs", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -23,9 +17,7 @@ const UserSubmittedBlogs = () => {
 
         const data = await res.json();
         setUserBlogs(data)
-        console.log("messages", data);
     }
-
 
     async function deleteBlog(id) {
         await fetch("/deleteuserblog", {
@@ -43,14 +35,11 @@ const UserSubmittedBlogs = () => {
                     alert('something went wrong')
                 };
             })
-
     }
 
     return (
         <>
-
             <div className='body-content'>
-
                 <div className="card mb-4">
                     <div className="card-header">
                         <div className="d-flex justify-content-between align-items-center">
@@ -59,13 +48,11 @@ const UserSubmittedBlogs = () => {
                             </div>
                             <div className="text-right">
                                 <div className="actions">
-                                    <span onClick={e=>window.location.reload()} className="action-item cursor-pointer"><i className="fas fa-refresh"></i></span>
+                                    <span onClick={e => window.location.reload()} className="action-item cursor-pointer"><i className="fas fa-refresh"></i></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
 
                     <div className="card-body">
                         <div className="table-responsive">
@@ -112,9 +99,7 @@ const UserSubmittedBlogs = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </>
     )
 }

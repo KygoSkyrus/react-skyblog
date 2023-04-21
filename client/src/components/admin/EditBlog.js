@@ -24,21 +24,19 @@ const EditBlog = (props) => {
   );
   let theBlog = allBlog.find(x => x.url === blogurl)
 
-  useEffect(()=>{
+  useEffect(() => {
 
     settingFieldsInitially()
-  },[])
+  }, [])
 
   function settingFieldsInitially() {
+    
     //html to draft
     const blocksFromHtml = htmlToDraft(theBlog.detail);
-    //console.log('blocks fromhtmk', blocksFromHtml)
     const { contentBlocks, entityMap } = blocksFromHtml;
     const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
     const editorState = EditorState.createWithContent(contentState);
-    //console.log('blockeditor statek', editorState)
     setEditorState(editorState)
-
 
     //ALL FIELDS
     let blogid = document.getElementById('blogid')
@@ -52,46 +50,34 @@ const EditBlog = (props) => {
     let metatitle = document.getElementById("metatitle");
     let metakeyword = document.getElementById("metakeyword");
     let metadesc = document.getElementById("metadesc");
-    //let detail //= document.querySelectorAll(".note-editable")[0]; //summernote
-
 
     //if the certain blog is found
     if (theBlog) {
-
       //if the fields are loaded
-      if (title && url && category && select  && shortdesc && author && metatitle && metakeyword && metadesc && image){
-        console.log('title is true', blogid)
-
-      blogid.value = theBlog._id
-      title.value = theBlog.title
-      url.value = theBlog.url
-      category.value = theBlog.category
-      select.setAttribute("checked", "checked")
-
-      // detail.innerHTML = theBlog.detail
-      shortdesc.value = theBlog.shortdescription
-      author.value = theBlog.authorname
-
-      metatitle.value = theBlog.metatitle
-      metakeyword.value = theBlog.metakeywords
-      metadesc.value = theBlog.metadescription
-
-      image.style.backgroundImage = `url('${theBlog.image}')`
-      image.style.display = "block"
+      if (title && url && category && select && shortdesc && author && metatitle && metakeyword && metadesc && image) {
+        blogid.value = theBlog._id
+        title.value = theBlog.title
+        url.value = theBlog.url
+        category.value = theBlog.category
+        select.setAttribute("checked", "checked")
+        shortdesc.value = theBlog.shortdescription
+        author.value = theBlog.authorname
+        metatitle.value = theBlog.metatitle
+        metakeyword.value = theBlog.metakeywords
+        metadesc.value = theBlog.metadescription
+        image.style.backgroundImage = `url('${theBlog.image}')`
+        image.style.display = "block"
       }
     }
   }
-
 
   async function sendData(e) {
     e.preventDefault()
 
     let image = document.getElementById("image")?.files[0];
-
     let blogid = document.getElementById("blogid")?.value;
     let title = document.getElementById("title")?.value;
     let url = document.getElementById("url")?.value;
-
     let category = document.getElementById("category")?.value;
     let select;
     if (document.querySelector("input[type=radio][name=select]:checked")) {
@@ -99,26 +85,12 @@ const EditBlog = (props) => {
     } else {
       select = ''
     }
-
     let shortdesc = document.getElementById("shortdesc")?.value;
     let author = document.getElementById("author")?.value;
     let metatitle = document.getElementById("metatitle")?.value;
     let metakeyword = document.getElementById("metakeyword")?.value;
     let metadesc = document.getElementById("metadesc")?.value;
     let detail = editorContent
-console.log('in send func',detail)
-    /*
-    let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
-    //check sthe size of the images inside the summernote
-    let totalsize = 0;
-    for (let i = 0; i < allimg.length; i++) {
-      let base64String = allimg[i].getAttribute("src");//base64 data
-      let stringLength = base64String.length - 'data:image/png;base64,'.length;
-      let sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
-      let sizeInKb = sizeInBytes / 1000000;
-      totalsize += sizeInKb;
-    }
-*/
 
     let imageUrl;
     if (image) {
@@ -126,7 +98,6 @@ console.log('in send func',detail)
       //uploading image to firebase storage
       await uploadBytes(imageRef, image)
         .then(snapshot => {
-          //console.log(snapshot.metadata.fullPath)
           return snapshot.metadata.fullPath;
         })
         .catch(error => {
@@ -137,7 +108,6 @@ console.log('in send func',detail)
       await getDownloadURL(imageRef)
         .then(url => {
           imageUrl = url;
-          //console.log(url)
         })
         .catch(error => {
           console.log(error)
@@ -145,9 +115,6 @@ console.log('in send func',detail)
     } else {
       imageUrl = theBlog.image
     }
-
-
-
 
     fetch("/blogeditsubmit", {
       method: "POST",
@@ -168,7 +135,6 @@ console.log('in send func',detail)
       }),
     }).then(response => response.json())
       .then(data => {
-        console.log(data)
         if (data.isBlogEdited) {
           navigate('/admin/blogs-management')
         } else {
@@ -192,10 +158,8 @@ console.log('in send func',detail)
 
     let rawContentState = convertToRaw(editorState.getCurrentContent());
     const markup = draftToHtml(rawContentState);
-    console.log('markup',markup)
     setEditorContent(markup)
-  };  
-
+  };
 
   function settingUrl(e) {
     let title = e.target.value;
@@ -204,22 +168,15 @@ console.log('in send func',detail)
   }
 
   function setDynamicLabel(e) {
-    // document.getElementById("image").files[0].size
     if (document.getElementById("image")?.files[0]?.name) {
       document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
     } else {
       document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
     }
   }
+
   return (
     <>
-
-
-      {/* {hasLoaded? */}
-
-
-
-
       <div className="body-content">
         <div className="card mb-4">
           <div className="card-header">
@@ -364,8 +321,6 @@ console.log('in send func',detail)
           </div>
         </div>
       </div>
-      {/* :""} */}
-
     </>
   )
 }

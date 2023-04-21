@@ -12,8 +12,6 @@ import ScrollToTop from './ScrollToTop';//deals with the Link to restore scroll
 
 
 function App() {
-
-
   const [allBlog, setAllBlog] = useState();//remove this to show loader
   const [allCategory, setAllCategory] = useState();
   const [isLoaded, setIsLoaded] = useState(false)
@@ -24,8 +22,6 @@ function App() {
     getAllBlogs()
     getAllCategory()
   }, [])
-
-
 
   //-------------------- FIREBASE INITIALIZE -----------------------
   const firebaseConfig = {
@@ -41,9 +37,7 @@ function App() {
   const storage = getStorage(app);
   //-------------------- FIREBASE INITIALIZE -----------------------
 
-
   async function getAllBlogs() {
-
     const res = await fetch("/getallblogs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -51,8 +45,6 @@ function App() {
     });
 
     const data = await res.json();
-    console.log('getALLblogs', data);
-    console.table(data)
     setAllBlog(data)
     setIsLoaded(false)
     document.getElementById('root').classList.remove('overflow')
@@ -65,13 +57,9 @@ function App() {
       body: JSON.stringify({}),
     });
     const data = await res.json();
-    console.log('getALLcategory', data);
     setAllCategory(data)
   }
 
-
-  //---------------------moving from notadmin so that both admin and notadmin has access to this---------------------------------------
-  console.log('allBlogs in homepge porops', allBlog)
   let catAndCount = Object();//object with category with their count
   let arrAllCatForNav = [];//categot to show in  navbar
 
@@ -129,16 +117,13 @@ function App() {
     }
   });
 
-  console.log('arrAllCatForNav', arrAllCatForNav)
   //categories that are in navbar
   let catinnav = ["tech", "lifestyle", "business", "travel"];
   let finalArr = arrAllCatForNav.filter(function (item) {
     return !catinnav.includes(item);
   });
 
-
   //NOTE :: Remeber to reverse the arrays to show latest blog first
-
 
   return (
     <>
@@ -154,7 +139,6 @@ function App() {
         : <Loader isLoaded={isLoaded} />}
     </>
   )
-
 }
 
 export default App;

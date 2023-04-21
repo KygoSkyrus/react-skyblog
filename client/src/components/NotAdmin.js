@@ -27,11 +27,9 @@ const NotAdmin = (props) => {
 
             <Route path="/contact" exact element={<Contact />} />
 
-                <Route path="/post-your-blog" exact element={<PostBlog storage={storage} />} />
-          
+            <Route path="/post-your-blog" exact element={<PostBlog storage={storage} />} />
 
             <Route path="*" element={<Error />} />
-            <Route path="/page-not-found" element={<Error />} />
         </Routes>
 
         <Footer finalArr={finalArr} />

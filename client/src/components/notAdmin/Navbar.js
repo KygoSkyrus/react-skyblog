@@ -6,8 +6,6 @@ import "../../assets/css/navbar.css"
 const Navbar = (props) => {
 
     const { allBlog, finalArr } = props
-
-    //have to in corporate serach thing in navbar
     const [searchedOptions, setSearchedOptions] = useState()
 
     function handleMenu(e) {
@@ -15,19 +13,19 @@ const Navbar = (props) => {
         document.querySelectorAll('.menu-toggle')[0]?.classList.toggle("is-active");
     }
 
-    function hideMobileNav(e){
-        if(document.querySelectorAll('.nav')[0]?.classList.contains('mobile-nav')){
+    function hideMobileNav(e) {
+        if (document.querySelectorAll('.nav')[0]?.classList.contains('mobile-nav')) {
             document.getElementById('mobile-menu').click()
         }
     }
 
-    function getSearchedBlog(e) {   
+    function getSearchedBlog(e) {
         document.getElementById('searchdropdown').classList.remove('hide')//removes display none
         setSearchedOptions(allBlog.filter(x => x.title.toLowerCase().includes(e.target.value.toLowerCase())))//responsible for filter search data
     }
 
-    function hideSearched(e){
-        e.target.value=""; //clearing the input on focus out
+    function hideSearched(e) {
+        e.target.value = ""; //clearing the input on focus out
         document.getElementById('searchdropdown').classList.toggle('hide')//hiding the dropdown
     }
 
@@ -51,7 +49,7 @@ const Navbar = (props) => {
                                     <div className="dropdown-content" id="ulCategory">
                                         {finalArr?.map((x, index) => {
                                             return (
-                                                <span className="sub-menu__item" onClick={e=>hideMobileNav(e)} key={index}>
+                                                <span className="sub-menu__item" onClick={e => hideMobileNav(e)} key={index}>
                                                     <Link to={"category/" + x} state={{ category: x }}
                                                         className="t-link sub-menu__link text-uppercase">
                                                         {x}
@@ -63,19 +61,16 @@ const Navbar = (props) => {
                                 </span>
                             </li>
 
-                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link state={{ category: "tech" }} to="/category/tech">TECH</Link></li>
-                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link state={{ category: "travel" }} to="/category/travel">TRAVEL</Link></li>
-                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link state={{ category: "lifestyle" }} to="/category/lifestyle">LIFESTYLE</Link></li>
-                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link state={{ category: "business" }} to="/category/business">BUSINESS</Link></li>
-                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link to="/contact">CONTACT</Link></li>
-                            <li className="nav-item" onClick={e=>hideMobileNav(e)}><Link to="/post-your-blog">POST A BLOG</Link></li>
-
-                            {/* <i className="fas fa-search" id="search-icon" onClick={e => handleSearchIcon(e)}></i>
-                            <input className="search-input" type="text" placeholder="Search.." /> */}
+                            <li className="nav-item" onClick={e => hideMobileNav(e)}><Link state={{ category: "tech" }} to="/category/tech">TECH</Link></li>
+                            <li className="nav-item" onClick={e => hideMobileNav(e)}><Link state={{ category: "travel" }} to="/category/travel">TRAVEL</Link></li>
+                            <li className="nav-item" onClick={e => hideMobileNav(e)}><Link state={{ category: "lifestyle" }} to="/category/lifestyle">LIFESTYLE</Link></li>
+                            <li className="nav-item" onClick={e => hideMobileNav(e)}><Link state={{ category: "business" }} to="/category/business">BUSINESS</Link></li>
+                            <li className="nav-item" onClick={e => hideMobileNav(e)}><Link to="/contact">CONTACT</Link></li>
+                            <li className="nav-item" onClick={e => hideMobileNav(e)}><Link to="/post-your-blog">POST A BLOG</Link></li>
 
                             <div className="searchContainer">
                                 <form action="" className="search">
-                                    <input className="search__input" type="search" placeholder="Search" id="searchInput" onChange={e => getSearchedBlog(e)} onBlur={e=>hideSearched(e)} />
+                                    <input className="search__input" type="search" placeholder="Search" id="searchInput" onChange={e => getSearchedBlog(e)} onBlur={e => hideSearched(e)} />
 
                                     <div className="search__icon-container">
                                         <label htmlFor="searchInput" className="search__label" aria-label="Search">
@@ -91,7 +86,7 @@ const Navbar = (props) => {
                                 <div className="search-dropdown" id='searchdropdown'>
                                     {searchedOptions?.map(x => {
                                         return (
-                                            <Link className="dropdown-item" to={"/"+x.url} key={x._id}>{x.title}</Link>
+                                            <Link className="dropdown-item" to={"/" + x.url} key={x._id}>{x.title}</Link>
                                         )
                                     })}
                                 </div>

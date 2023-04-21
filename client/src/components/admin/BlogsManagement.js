@@ -9,10 +9,7 @@ import draftToHtml from "draftjs-to-html";
 
 const BlogsManagement = (props) => {
 
-
-    //NOTE: reloading this page bcz the summernote does not initialize without reloading
     const { allBlog, allCategory, storage } = props
-
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const [editorContent, setEditorContent] = useState()
 
@@ -20,10 +17,8 @@ const BlogsManagement = (props) => {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
 
         let image = document.getElementById("image")?.files[0];
-
         let title = document.getElementById("title")?.value;
         let url = document.getElementById("url")?.value;
-
         let category = document.getElementById("category")?.value;
         let select
         if (document.querySelector("input[type=radio][name=select]:checked")) {
@@ -31,14 +26,11 @@ const BlogsManagement = (props) => {
         } else {
             select = ''
         }
-
         let shortdesc = document.getElementById("shortdesc")?.value;
         let author = document.getElementById("author")?.value;
-
         let metatitle = document.getElementById("metatitle")?.value;
         let metakeyword = document.getElementById("metakeyword")?.value;
         let metadesc = document.getElementById("metadesc")?.value;
-
         //let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
         let detail = editorContent
 
@@ -55,15 +47,11 @@ const BlogsManagement = (props) => {
         }
         */
 
-
-
-
         let imageUrl;
         const imageRef = ref(storage, "skyblog/" + image.name);
         //uploading image to firebase storage
         await uploadBytes(imageRef, image)
             .then(snapshot => {
-                //console.log(snapshot.metadata.fullPath)
                 return snapshot.metadata.fullPath;
             })
             .catch(error => {
@@ -74,28 +62,10 @@ const BlogsManagement = (props) => {
         await getDownloadURL(imageRef)
             .then(url => {
                 imageUrl = url;
-                //console.log(url)
             })
             .catch(error => {
                 console.log(error)
             });
-
-
-
-        console.log(
-            imageUrl,
-            title,
-            url,
-            category,
-            select,
-            shortdesc,
-            author,
-            metatitle,
-            metakeyword,
-            metadesc,
-            detail
-        );
-
 
         fetch("/blogdata", {
             method: "POST",
@@ -115,37 +85,25 @@ const BlogsManagement = (props) => {
             }),
         }).then(response => response.json())
             .then(data => {
-                console.log(data, data.blog_added)
                 if (data.blog_added) {
                     window.location.reload();
                 } else {
                     //resetting the fields
                     document.getElementById("frm").reset();
-                    // document.querySelectorAll(".note-editable")[0].innerHTML=''
                     setDynamicLabel()
                 }
             })
             .catch(err => console.log(err))
-
-
-
-
-
     }
 
-
     async function deleteBlog(id) {
-        console.log(id);
-        const res = await fetch("/deleteblog", {
+        await fetch("/deleteblog", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 id,
             }),
         });
-
-        const data = await res.json();
-        console.log(data);
     }
 
     const onEditorStateChange = function (editorState) {
@@ -168,24 +126,15 @@ const BlogsManagement = (props) => {
         let val;
 
         if (e.target.hasAttribute('checked')) {
-            console.log('it has checked')
             document.getElementById(`checkbox` + id).removeAttribute('checked')
-            //document.getElementById(`checkbox`+id).setAttribute('datacheck','false')
             val = '1';//final value of the checkbox
         } else if (e.target.getAttribute('data-status') === "1") {
-            console.log('it has 1')
             document.getElementById(`checkbox` + id).removeAttribute('1')
-            //document.getElementById(`checkbox`+id).removeAttribute('datacheck')
             document.getElementById(`checkbox` + id).setAttribute('checked', 'checked')
             val = 'checked';//final value of the checkbox
         }
 
-
-
-
-        console.log(val)
-
-        const res = await fetch("/blogVisibility", {
+        await fetch("/blogVisibility", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -193,10 +142,8 @@ const BlogsManagement = (props) => {
             }),
         });
 
-        const data = await res.json();
-        console.log(data);
+    
     }
-
 
     function settingUrl(e) {
         let title = e.target.value;
@@ -205,7 +152,6 @@ const BlogsManagement = (props) => {
     }
 
     function setDynamicLabel(e) {
-        // document.getElementById("image").files[0].size
         if (document.getElementById("image")?.files[0]?.name) {
             document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
             const [file] = document.getElementById("image").files;
@@ -215,10 +161,7 @@ const BlogsManagement = (props) => {
         } else {
             document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
         }
-
-
     }
-
 
     return (
         <>
@@ -386,8 +329,6 @@ const BlogsManagement = (props) => {
                         </div>
                     </div>
 
-
-
                     <div className="card-body">
                         <div className="table-responsive">
                             <table className="table display table-bordered table-striped table-hover column-rendering">
@@ -419,7 +360,6 @@ const BlogsManagement = (props) => {
                                             </tr>
                                         )
                                     })}
-
                                 </tbody>
                             </table>
                         </div>

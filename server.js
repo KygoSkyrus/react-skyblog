@@ -27,10 +27,9 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb' }));
 
 app.use(express.static(path.join(__dirname, 'client/build')));
-app.get('/*', function(req,res) {
-		res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
-
 
 
 const db = process.env.dbURI;
@@ -55,8 +54,6 @@ mongoose.connect(db, {
 //blog data[creates a new blog from admin side]
 app.post("/blogdata", async (req, res) => {
   const details = req.body;
-  console.log("DD", details);
-
   var date = new Date().toLocaleDateString();
   try {
     let blog = await new BLOG({
@@ -75,7 +72,6 @@ app.post("/blogdata", async (req, res) => {
       status: "checked"
     })
     blog.save().then(response => {
-      console.log('res', response)
       res.send({ blog_added: true });
     })
       .catch(err => {
@@ -92,12 +88,9 @@ app.post("/blogdata", async (req, res) => {
 //deleting blog record
 app.post("/deleteblog", async (req, res) => {
   const details = req.body;
-  console.log(details);
 
   try {
-    let resp = await BLOG.deleteOne({ _id: details.id })
-    console.log(resp)
-    console.log("Number of records deleted: " + resp.deletedCount);
+    await BLOG.deleteOne({ _id: details.id })
   } catch (err) {
     console.log(err);
   }
@@ -107,12 +100,10 @@ app.post("/deleteblog", async (req, res) => {
 //seeting blogs visibility
 app.post("/blogVisibility", async (req, res) => {
   const details = req.body;
-  console.log('visibilityyyyy', details);
 
   try {
     //findByIdAndUpdate: is the alternatice to directly use id
-    let result = await BLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
-    console.log("result in visibility", result);
+    await BLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
   } catch (err) {
     console.log(err);
   }
@@ -135,15 +126,13 @@ app.post("/singleblog", async (req, res) => {
 //edited blog submission [this is the admin blog][updates the changes in the blog]
 app.post("/blogeditsubmit", async (req, res) => {
   const details = req.body;
-  console.log("blogeditsubmit", details);
 
   try {
-    const result = await BLOG.findOneAndUpdate({ _id: details.blogid }, { title: details.title, url: details.url, category: details.category, type: details.select, detail:details.detail, shortdescription: details.shortdesc, image: details.image, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc }, { new: true })
-    console.log("blog edited!!!",result);
-    if(result){
-      res.send({isBlogEdited:true})
-    }else{
-      res.send({isBlogEdited:false})
+    const result = await BLOG.findOneAndUpdate({ _id: details.blogid }, { title: details.title, url: details.url, category: details.category, type: details.select, detail: details.detail, shortdescription: details.shortdesc, image: details.image, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc }, { new: true })
+    if (result) {
+      res.send({ isBlogEdited: true })
+    } else {
+      res.send({ isBlogEdited: false })
     }
   } catch (err) {
     console.log(err);
@@ -156,7 +145,6 @@ app.post("/blogeditsubmit", async (req, res) => {
 //deleting messages records (contact form)
 app.post("/deleteMessage", async (req, res) => {
   const details = req.body;
-  console.log('delete messsage', details.id);
 
   try {
     let result = await CONTACT.deleteOne({ _id: details.id })
@@ -173,35 +161,34 @@ app.post("/deleteMessage", async (req, res) => {
 app.post("/userblog", async (req, res) => {
   const details = req.body;
 
-    var date = new Date().toLocaleDateString();
-    try {
-      let userblog = await new USERBLOG({
-        email: details.email,
-        title: details.title,
-        url: details.url,
-        category: details.category,
-        type: details.select,
-        shortdescription: details.shortdesc,
-        authorname: details.author,
-        image: details.imageUrl,
-        metatitle: details.metatitle,
-        metakeywords: details.metakeyword,
-        metadescription: details.metadesc,
-        detail: details.detail,
-        date: date,
-      })
-      userblog.save().
+  var date = new Date().toLocaleDateString();
+  try {
+    let userblog = await new USERBLOG({
+      email: details.email,
+      title: details.title,
+      url: details.url,
+      category: details.category,
+      type: details.select,
+      shortdescription: details.shortdesc,
+      authorname: details.author,
+      image: details.imageUrl,
+      metatitle: details.metatitle,
+      metakeywords: details.metakeyword,
+      metadescription: details.metadesc,
+      detail: details.detail,
+      date: date,
+    })
+    userblog.save().
       then(response => {
-        console.log('res', response)
         res.send({ blog_received: true });
       })
-        .catch(err => {
-          console.log(err)
-          res.send({ blog_received: false });
-        })
-    } catch (err) {
-      console.log(err);
-    }
+      .catch(err => {
+        console.log(err)
+        res.send({ blog_received: false });
+      })
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 //gets all the blogs submitted by users
@@ -220,9 +207,7 @@ app.post("/deleteuserblog", async (req, res) => {
 
   try {
     let resp = await USERBLOG.deleteOne({ _id: details.id })
-    console.log(resp)
-    console.log("Number of records deleted: " + resp.deletedCount);
-    res.send({isDeleted:true})
+    res.send({ isDeleted: true })
   } catch (err) {
     console.log(err);
   }
@@ -248,28 +233,23 @@ app.post("/addCategory", async (req, res) => {
 
   try {
     let result = await CATEGORY.find({})
-    console.log("categories ", result)
     if (result.length === 0) {
       let category = new CATEGORY({ category: details.cat.toLowerCase() })
       category.save()//saving category in db
-      console.log("category inserted!!!");
       res.send({ message: "categoryAdded" });
     } else {
       let answer = "";
       for (var i = 0; i < result.length; i++) {
         if (result[i].category == details.cat.toLowerCase()) {
-          console.log("it exists at", result[i]);
           answer += "exist";
           res.send({ message: "alreadyExists" }); //putting this will give error that cannoit set header after they are snet ,this might be bcz of the loop,,so whne the it loops for the first time and and its not the same ,,they are counting it asthe first time that res.send has apppear
           break; //so that it stop right there instead of looping till the end
         }
       }
 
-      console.log(answer);
       if (answer !== "exist") {
         let category = new CATEGORY({ category: details.cat.toLowerCase() })
         category.save()//saving category in db
-        console.log("category inserted!!!");
         res.send({ message: "categoryAdded" });
       }
     }
@@ -283,7 +263,7 @@ app.post("/deleteCategory", async (req, res) => {
   const details = req.body;
   try {
     let resp = await CATEGORY.deleteOne({ _id: details.id })
-    console.log("Number of records deleted: " + resp.deletedCount);
+    //console.log("Number of records deleted: " + resp.deletedCount);
     res.send({ affectedRows: resp.deletedCount, message: "deleted" });
   } catch (err) {
     console.log(err);
@@ -322,11 +302,9 @@ app.post("/admin/login", urlencodedParser, async (req, res) => {
         credentials.username === result.username &&
         credentials.password === result.password
       ) {
-        console.log("admin logged in!!!");
         res.send({ matched: true });
       }
     } else {
-      console.log("wrong credentials");
       res.send({ matched: false });
     }
   } catch (err) {
@@ -334,11 +312,10 @@ app.post("/admin/login", urlencodedParser, async (req, res) => {
   }
 });
 
-//needs to be attended return on both if and else
+//needs to be attended, return on both if and else
 //change password
 app.post("/cpswrd", async (req, res) => {
   const details = req.body;
-  console.log("abc", details);
 
   try {
     let result = await ADMIN.findOneAndUpdate({ username: details.uname, password: details.password }, { password: details.newPassword }, { new: true })
@@ -368,10 +345,9 @@ app.post("/cpswrd", async (req, res) => {
 // });
 //------------------------------- ADMIN -------------------------------
 
-if(process.env.NODE_ENV ==="production"){
+if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`server is running at ${port}`));

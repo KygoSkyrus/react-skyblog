@@ -47,6 +47,9 @@
 ## NOTE::::: two apis are calling when blogs managemnet is loaded,,one in  app.js and other in itself...the second one is not needed if you remove the status filter and move that filter to lowwerr level to the notadmin section.
 
 ### things could be better
+- in USERSUBMITED BLOGS  :::  //in this add a add button for blogs,,it will be like visiblity switch,,,when on it means it will be added to the adminb blogs
+    //add the deleted and add api to backend and think about edit,,,not a good idea to edit the blog,,,leave it
+
 - in single blog...in react the single blog api is not used,,as i hlready have lsit of all blogs,,so avoilding calling this api and looping pver the already fetched all blogs to find the single blog and alos the previous and next blog,,,[avoiding calling the next prev api too ]---------but later if the number of blogs are too much to afford a loop over them then api should be called...
 
 - when an image of same name is uploaded in firebase storage then the older image is replcaed by new one,,,leaving this as it as but it can be fixed by using an unique name while uploading image like uuid-v4

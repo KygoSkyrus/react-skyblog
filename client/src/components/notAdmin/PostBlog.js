@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useGoogleLogin } from '@react-oauth/google';
 import Cookies from 'js-cookie';
-
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -10,29 +9,22 @@ import draftToHtml from "draftjs-to-html";
 
 import Banner from './Banner';
 
-
 const PostBlog = (props) => {
 
-    //google login is not working bcz in the firrebase you have to setup the origin,,do it when u host it
-    //summernote is working fine
     const { storage } = props
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const [editorContent, setEditorContent] = useState()
 
     const [user, setUser] = useState();
-    //const [profile, setProfile] = useState();
-
 
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
 
         let image = document.getElementById("image")?.files[0];
-
         let email = document.getElementById("email")?.value;
         let title = document.getElementById("title")?.value;
         let url = document.getElementById("url")?.value;
-
         let category = document.getElementById("category")?.value;
         let select
         if (document.querySelector("input[type=radio][name=select]:checked")) {
@@ -40,37 +32,19 @@ const PostBlog = (props) => {
         } else {
             select = ''
         }
-
         let shortdesc = document.getElementById("shortdesc")?.value;
         let author = document.getElementById("author")?.value;
 
         let metatitle = document.getElementById("metatitle")?.value;
         let metakeyword = document.getElementById("metakeyword")?.value;
         let metadesc = document.getElementById("metadesc")?.value;
-
-        // let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
         let detail = editorContent
-
-        /*
-        let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
-        //check sthe size of the images inside the summernote
-        let totalsize = 0;
-        for (let i = 0; i < allimg.length; i++) {
-            let base64String = allimg[i].getAttribute("src");//base64 data
-            let stringLength = base64String.length - 'data:image/png;base64,'.length;
-            let sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
-            let sizeInKb = sizeInBytes / 1000000;
-            totalsize += sizeInKb;
-        }
-        */
-
 
         let imageUrl;
         const imageRef = ref(storage, "skyblog/" + image.name);
         //uploading image to firebase storage
         await uploadBytes(imageRef, image)
             .then(snapshot => {
-                //console.log(snapshot.metadata.fullPath)
                 return snapshot.metadata.fullPath;
             })
             .catch(error => {
@@ -81,31 +55,10 @@ const PostBlog = (props) => {
         await getDownloadURL(imageRef)
             .then(url => {
                 imageUrl = url;
-                //console.log(url)
             })
             .catch(error => {
                 console.log(error)
             });
-
-
-
-        console.log(
-            imageUrl,
-            title,
-            url,
-            category,
-            select,
-            shortdesc,
-            author,
-            metatitle,
-            metakeyword,
-            metadesc,
-            detail
-        );
-
-
-
-
 
         fetch("/userblog", {
             method: "POST",
@@ -126,25 +79,17 @@ const PostBlog = (props) => {
             }),
         }).then(response => response.json())
             .then(data => {
-                console.log(data)
                 if (data.blog_received) {
                     window.location.reload();
                 } else {
                     //resetting the fields
                     document.getElementById("frm").reset();
-                    //document.querySelectorAll(".note-editable")[0].innerHTML = ''
                     setDynamicLabel()
                     alert('something went wrong, please try again!!!')
                 }
             })
             .catch(err => console.log(err))
-
-
-
-
-
     }
-
 
     function settingUrl(e) {
         let title = e.target.value;
@@ -179,23 +124,18 @@ const PostBlog = (props) => {
         setEditorContent(markup)
     };
 
-
-
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
         onError: (error) => console.log('Login Failed:', error)
     });
 
     useEffect(() => {
-        console.log(user)
         let userId = Cookies.get('userid')
-        console.log(userId)
         if (userId) {
             setUser(true)
-            if(document.getElementById('email'))
-            document.getElementById('email').value =userId
+            if (document.getElementById('email'))
+                document.getElementById('email').value = userId
         } else if (user) {
-            console.log('user is', user)
             fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
                 headers: {
                     Authorization: `Bearer ${user.access_token}`,
@@ -204,8 +144,6 @@ const PostBlog = (props) => {
             })
                 .then(response => response.json())
                 .then((res) => {
-                    //console.log('res', res)
-                    //setProfile(res.email);
                     Cookies.set('userid', res.email, { httpOnly: false, expires: 0.5 })
                     document.getElementById('email').value = res.email
                 })
@@ -213,12 +151,10 @@ const PostBlog = (props) => {
         }
     }, [user]);
 
-    // log out function to log the user out of google and set the profile array to null
+    // log out function to log the user out of google 
     // const logOut = () => {
     //     googleLogout();
-    //     setProfile(null);
     // };
-
 
     return (
         <>

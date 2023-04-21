@@ -12,7 +12,7 @@ const OtherBlogsComp = (props) => {
 				<div className="section-title">
 					<div className="tag tag--skew tag-delta d-inline-block">
 						<h5 className="tag__skew-reverse t-text-light text-capitalize mt-0 mb-0">
-							other news
+							related blogs
 						</h5>
 					</div>
 				</div>
