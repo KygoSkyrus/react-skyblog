@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 import OtherBlogsComp from './OtherBlogsComp'
 import BlogWrapperBottom from './BlogWrapperBottom'
@@ -9,6 +9,7 @@ import Error from './Error'
 const SingleBlog = (props) => {
 
     const { allBlog, allCategory, catAndCount } = props
+    let { state } = useLocation();
 
     const link = document.baseURI;
     var blogurl = link.substring(

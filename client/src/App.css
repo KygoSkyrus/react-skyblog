@@ -56,6 +56,7 @@ a:hover {
     box-shadow: 0 0 2px #c7c7c7;
     border-radius: 5px;
 }
+
 /*--------------------------------- basics-----------------------------*/
 
 
@@ -877,6 +878,15 @@ input[type="radio"] {
 @media (min-width:1200px) {
   .skyVidBG{
     height: 184px;
+  }
+}
+
+
+/* for adding padding on section */
+@media (max-width:576px) {
+  .theSection{
+    margin-right: 15px;
+    margin-left: 15px;
   }
 }
 

@@ -39,7 +39,7 @@ const Homepage = (props) => {
 
             {/* looks good ,logic is in place  just need more blog of type -atleast 3*/}
             {/* <!-- News Today  --> */}
-            <section className="t-pb-70 t-pt-70">
+            <section className="t-pb-70 t-pt-70 theSection">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-9 t-mb-30 mb-lg-0">
@@ -84,7 +84,7 @@ const Homepage = (props) => {
 
             {/* looks good ,logic is in place  just need more blog of type -atleast 3*/}
             {/* <!-- Featured Blogs Start --> */}
-            <section className="t-pt-70 t-pb-70">
+            <section className="t-pt-70 t-pb-70 theSection">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-9 t-mb-30 mb-lg-0">
@@ -141,7 +141,7 @@ const Homepage = (props) => {
 
             {/* looks good ,logic is in place  just need more blog of type -atleast 5*/}
             {/* <!-- Popular Blogs Start --> */}
-            <section className="t-pt-70 t-pb-70">
+            <section className="t-pt-70 t-pb-70 theSection">
                 <div className="container">
                     <div className="row t-mb-30">
                         <div className="col-12">
@@ -194,7 +194,7 @@ const Homepage = (props) => {
 
             {/* looks good ,logic is in place  just need more blog of type -atleast 4*/}
             {/* <!-- Viral Blogs Start --> */}
-            <section className="t-bg-secondary t-pt-70 t-pb-70">
+            <section className="t-bg-secondary t-pt-70 t-pb-70 theSection">
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
@@ -225,7 +225,7 @@ const Homepage = (props) => {
 
 
             {/* <!-- Category Based Blogs Start --> */}
-            <section className="t-pt-70 t-pb-70">
+            <section className="t-pt-70 t-pb-70 theSection">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12 t-mb-30 mb-lg-0">
