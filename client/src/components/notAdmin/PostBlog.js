@@ -195,6 +195,7 @@ const PostBlog = (props) => {
                         Accept: 'application/json'
                     }
                 })
+                .then(response=>response.json())
                     .then((res) => {
                         console.log('res',res)
                         setProfile(res.data);
@@ -219,7 +220,7 @@ const PostBlog = (props) => {
             <Banner text={"post a blog"} />
             {/* <!-- Banner End --> */}
 
-            {!profile ?
+            {profile ?
                 <div className='d-flex flex-column justify-content-center align-items-center' style={{ height: "50vh" }}>
                     <section>You need to sign in first to post your blog to us</section>
                     <button onClick={() => login()} className='d-flex googleLogin mt-3'>
