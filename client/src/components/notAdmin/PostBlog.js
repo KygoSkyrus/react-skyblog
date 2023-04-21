@@ -19,8 +19,8 @@ const PostBlog = (props) => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const [editorContent, setEditorContent] = useState()
 
-    const [user, setUser] = useState([]);
-    const [profile, setProfile] = useState([]);
+    const [user, setUser] = useState();
+    const [profile, setProfile] = useState();
 
 
     async function sendData(e) {
@@ -205,6 +205,7 @@ const PostBlog = (props) => {
                 })
                     .then((res) => {
                         setProfile(res.data);
+                        console.log('res.data',res.data)
                     })
                     .catch((err) => console.log(err));
             }

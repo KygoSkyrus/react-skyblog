@@ -830,8 +830,6 @@ input[type="radio"] {
 
 /********************************* RESPONSIVE ****************************************/
 
-
-
 @media (max-width:768px) {
   .follow {
     justify-content: flex-start;
@@ -891,4 +889,11 @@ input[type="radio"] {
 }
 
 
+@media (max-width:992px) {
+.marginTop{
+  margin-top:30px;
+}
+}
 
+
+/********************************* RESPONSIVE ****************************************/

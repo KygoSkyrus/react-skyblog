@@ -37,7 +37,7 @@ const Login = () => {
       <div
         className="d-flex align-items-center justify-content-center text-center h-100vh"
       >
-        <div className="form-wrapper m-auto" style={{ width: "30%" }}>
+        <div className="form-wrapper m-auto" style={{ width: "30%" ,minWidth:"300px"}}>
           <div className="form-container my-4" style={{ maxWidth: "unset" }}>
             <div className="d-flex justify-content-center flex-column align-items-center mb-4">
             <section className='theLogo'>SKYBLOG</section>

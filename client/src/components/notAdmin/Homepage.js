@@ -70,7 +70,7 @@ const Homepage = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3">
+                        <div className="col-lg-3 marginTop">
                             <div className="row">
                                 <OtherBlogsComp allBlog={allBlog} />
                             </div>
@@ -82,66 +82,9 @@ const Homepage = (props) => {
 
 
 
-            {/* looks good ,logic is in place  just need more blog of type -atleast 3*/}
-            {/* <!-- Featured Blogs Start --> */}
-            <section className="t-pt-70 t-pb-70 theSection">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-9 t-mb-30 mb-lg-0">
-                        <div className="col-12 t-mb-30">
-                            <div className="section-title">
-                                <div className="tag tag--skew tag-zeta d-inline-block">
-                                    <h5 className="tag__skew-reverse t-text-light text-capitalize mt-0 mb-0">
-                                        featured blogs
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                            <div className="row">
-                                {featuredArray.slice(featuredArray.length - 3, featuredArray.length).map(x => {
-                                    return (
-                                        <BlogWrapperRight2 data={x} key={x._id} />
-                                    )
-                                })}
-                            </div>
-                        </div>
-
-                        <div className='col-lg-3'>
-                            <div className='row'>
-
-                            <div className="t-mb-30">
-                                {allBlog && allCategory ?
-                                    <CategoryList catAndCount={catAndCount} allCategory={allCategory} />
-                                    : ""}
-                            </div>
-
-                                <div className="newsletter t-mb-70">
-                                    <span className="sm-text d-block t-text-light text-capitalize text-center">
-                                        get more news
-                                    </span>
-                                    <h5 className="text-light text-capitalize text-center my-3">
-                                        in your email inbox
-                                    </h5>
-                                    <form action="#" className="newsletter__form">
-                                        <input type="email" placeholder="enter your email" className="newsletter__input w-100 t-mb-10" fdprocessedid="u5p3vh" />
-                                        <button className="newsletter__button w-100" fdprocessedid="5npyk">
-                                            sign up
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* <!-- Featured Blogs Start --> */}
-
-
-
-
             {/* looks good ,logic is in place  just need more blog of type -atleast 5*/}
             {/* <!-- Popular Blogs Start --> */}
-            <section className="t-pt-70 t-pb-70 theSection">
+            <section className="t-pt-70 t-pb-70 t-bg-secondary theSection">
                 <div className="container">
                     <div className="row t-mb-30">
                         <div className="col-12">
@@ -164,23 +107,23 @@ const Homepage = (props) => {
                                     popularArray.slice(popularArray.length - 5, popularArray.length - 1).map(x => {
                                         return (
                                             <div className="col-md-6 t-mb-30" key={x._id}>
-                                                <BlogWrapperBottom data={popularArray[popularArray.length - 1]} displayDesc="d-none" displayRead="d-none" />
+                                                <BlogWrapperBottom data={popularArray[popularArray.length - 1]} displayDetail="d-none" displayDesc="d-none" displayRead="d-none" />
                                             </div>
                                         )
                                     })
                                 }
                                 {/* <div className="col-md-6 t-mb-30">
-                                            <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none" />
-                                </div>
-                                <div className="col-md-6 t-mb-30">
-                                            <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none"  />
-                                </div>
-                                <div className="col-md-6 t-mb-30">
-                                            <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none"  />
-                                </div>
-                                <div className="col-md-6 t-mb-30">
-                                            <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none"  />
-                                </div> */}
+                                                                        <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none" />
+                                                            </div>
+                                                            <div className="col-md-6 t-mb-30">
+                                                                        <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none"  />
+                                                            </div>
+                                                            <div className="col-md-6 t-mb-30">
+                                                                        <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none"  />
+                                                            </div>
+                                                            <div className="col-md-6 t-mb-30">
+                                                                        <BlogWrapperBottom data={popularArray[popularArray.length-1]} displayDesc="d-none" displayRead="d-none"  />
+                                                            </div> */}
                             </div>
                         </div>
 
@@ -189,6 +132,61 @@ const Homepage = (props) => {
             </section>
             {/* <!-- Popular Blogs Start --> */}
 
+
+
+            {/* looks good ,logic is in place  just need more blog of type -atleast 3*/}
+            {/* <!-- Featured Blogs Start --> */}
+            <section className="t-pt-70 t-pb-70 theSection">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-9 t-mb-30 mb-lg-0">
+                            <div className="col-12 t-mb-30">
+                                <div className="section-title">
+                                    <div className="tag tag--skew tag-zeta d-inline-block">
+                                        <h5 className="tag__skew-reverse t-text-light text-capitalize mt-0 mb-0">
+                                            featured blogs
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row">
+                                {featuredArray.slice(featuredArray.length - 3, featuredArray.length).map(x => {
+                                    return (
+                                        <BlogWrapperRight2 data={x} key={x._id} />
+                                    )
+                                })}
+                            </div>
+                        </div>
+
+                        <div className='col-lg-3'>
+                            <div className='row'>
+
+                                <div className="t-mb-30">
+                                    {allBlog && allCategory ?
+                                        <CategoryList catAndCount={catAndCount} allCategory={allCategory} />
+                                        : ""}
+                                </div>
+
+                                <div className="newsletter t-mb-70">
+                                    <span className="sm-text d-block t-text-light text-capitalize text-center">
+                                        get more news
+                                    </span>
+                                    <h5 className="text-light text-capitalize text-center my-3">
+                                        in your email inbox
+                                    </h5>
+                                    <form action="#" className="newsletter__form">
+                                        <input type="email" placeholder="enter your email" className="newsletter__input w-100 t-mb-10" fdprocessedid="u5p3vh" />
+                                        <button className="newsletter__button w-100" fdprocessedid="5npyk">
+                                            sign up
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/* <!-- Featured Blogs Start --> */}
 
 
 

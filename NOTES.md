@@ -87,9 +87,9 @@ and you can get this state from the compeonet by "props.state"
 
 -whne you are in production, whihc measn your are using build of react and in thtabu has usedf react router.,,then it will only worek when u route from default pagebusing the onpage link, but if you type and try to open it then it wont be able to get that page,, this is bcz then it willg  try to get the page 'build/cart' and it wont be able to find it,,, so you have to set the index.html as the static 
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('/*', function(req,res) {
-		res.sendFile(path.join(__dirname, 'build', 'index.html'));
+		res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 
