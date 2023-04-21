@@ -85,9 +85,16 @@ and you can get this state from the compeonet by "props.state"
 - if you are using conditional redering on a based on a state then do not initialise the state while creating as it would be true all the time bcz you initialized it will not be undefined
 
 
-### magento 
-Consumer Key: oss8zd78nlg78i4w1k2s0sknv26hnoyd
-Consumer Secret: r1mul7xs4bj3kn80diin9l5epaax1f0n
-Access Token: fy1plwmgrw4tg03mbdmd6qrowiylfxio
-Access Token Secret: g58w2qwvdvzvn9j22ld2hv00hszn09ft
-https://mcstaging.charbroil.com/
+-whne you are in production, whihc measn your are using build of react and in thtabu has usedf react router.,,then it will only worek when u route from default pagebusing the onpage link, but if you type and try to open it then it wont be able to get that page,, this is bcz then it willg  try to get the page 'build/cart' and it wont be able to find it,,, so you have to set the index.html as the static 
+
+app.use(express.static(path.join(__dirname, 'build')));
+app.get('/*', function(req,res) {
+		res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+
+- on render uou can do this by
+In your case render.com has a simple solution for that. On the dashboard for your app, click the Redirects/Rewrites tab and add the following:
+# Source: /*
+# Destination: /index.html
+# Action: Rewrite
