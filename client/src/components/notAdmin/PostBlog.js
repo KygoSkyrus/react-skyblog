@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useGoogleLogin } from '@react-oauth/google';
+import Cookies from 'js-cookie';
 
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
@@ -20,7 +21,7 @@ const PostBlog = (props) => {
     const [editorContent, setEditorContent] = useState()
 
     const [user, setUser] = useState();
-    const [profile, setProfile] = useState();
+    //const [profile, setProfile] = useState();
 
 
     async function sendData(e) {
@@ -187,7 +188,11 @@ const PostBlog = (props) => {
 
     useEffect(() => {
         console.log(user)
-        if (user) {
+        let userId = Cookies.get('userid')
+        console.log(userId)
+        if (userId) {
+            setUser(true)
+        } else if (user) {
             console.log('user is', user)
             fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
                 headers: {
@@ -197,9 +202,10 @@ const PostBlog = (props) => {
             })
                 .then(response => response.json())
                 .then((res) => {
-                    console.log('res', res)
-                    setProfile(res.data);
-                    console.log('res.data', res.data, res.json())
+                    //console.log('res', res)
+                    //setProfile(res.email);
+                    Cookies.set('userid', res.email, { httpOnly: false, expires: 0.5 })
+                    document.getElementById('email').value = res.email
                 })
                 .catch((err) => console.log(err));
         }
@@ -247,7 +253,7 @@ const PostBlog = (props) => {
                                                             <div className="form-group">
                                                                 <label htmlFor="Email" className="font-weight-600">Email</label>
                                                                 <input type="email" className="form-control" name="email" id="email"
-                                                                    autoComplete="off" placeholder="Enter your email" required
+                                                                    autoComplete="off" placeholder="Enter your email" required readOnly
                                                                 />
                                                             </div>
                                                             <div className="form-group">
