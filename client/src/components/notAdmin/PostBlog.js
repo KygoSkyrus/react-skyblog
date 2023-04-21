@@ -191,6 +191,7 @@ const PostBlog = (props) => {
         let userId = Cookies.get('userid')
         console.log(userId)
         if (userId) {
+            document.getElementById('email').value =userId
             setUser(true)
         } else if (user) {
             console.log('user is', user)
