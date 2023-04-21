@@ -185,27 +185,25 @@ const PostBlog = (props) => {
         onError: (error) => console.log('Login Failed:', error)
     });
 
-    useEffect(
-        () => {
-            if (user) {
-                console.log('user is',user)
-                fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-                    headers: {
-                        Authorization: `Bearer ${user.access_token}`,
-                        Accept: 'application/json'
-                    }
+    useEffect(() => {
+        console.log(user)
+        if (user) {
+            console.log('user is', user)
+            fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                headers: {
+                    Authorization: `Bearer ${user.access_token}`,
+                    Accept: 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then((res) => {
+                    console.log('res', res)
+                    setProfile(res.data);
+                    console.log('res.data', res.data, res.json())
                 })
-                .then(response=>response.json())
-                    .then((res) => {
-                        console.log('res',res)
-                        setProfile(res.data);
-                        console.log('res.data',res.data,res.json())
-                    })
-                    .catch((err) => console.log(err));
-            }
-        },
-        [user]
-    );
+                .catch((err) => console.log(err));
+        }
+    }, [user]);
 
     // log out function to log the user out of google and set the profile array to null
     // const logOut = () => {
@@ -220,7 +218,7 @@ const PostBlog = (props) => {
             <Banner text={"post a blog"} />
             {/* <!-- Banner End --> */}
 
-            {user ?
+            {!user ?
                 <div className='d-flex flex-column justify-content-center align-items-center' style={{ height: "50vh" }}>
                     <section>You need to sign in first to post your blog to us</section>
                     <button onClick={() => login()} className='d-flex googleLogin mt-3'>
