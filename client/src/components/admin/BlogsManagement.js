@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
@@ -52,7 +53,7 @@ const BlogsManagement = (props) => {
         */
 
         let imageUrl;
-        const imageRef = ref(storage, "skyblog/" + image.name);
+        const imageRef = ref(storage, "skyblog/" + uuidv4());
         //uploading image to firebase storage
         await uploadBytes(imageRef, image)
             .then(snapshot => {

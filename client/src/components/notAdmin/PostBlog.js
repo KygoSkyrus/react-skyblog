@@ -6,6 +6,7 @@ import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
+import { v4 as uuidv4 } from 'uuid';
 
 import Banner from './Banner';
 import LoaderAPI from '../../LoaderAPI';
@@ -43,7 +44,7 @@ const PostBlog = (props) => {
         let detail = editorContent
 
         let imageUrl;
-        const imageRef = ref(storage, "skyblog/" + image.name);
+        const imageRef = ref(storage, "skyblog/" + uuidv4());
         //uploading image to firebase storage
         await uploadBytes(imageRef, image)
             .then(snapshot => {

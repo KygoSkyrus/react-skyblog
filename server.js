@@ -135,9 +135,8 @@ app.post("/singleblog", async (req, res) => {
 //edited blog submission [this is the admin blog][updates the changes in the blog]
 app.post("/blogeditsubmit", async (req, res) => {
   const details = req.body;
-
   try {
-    const result = await BLOG.findOneAndUpdate({ _id: details.blogid }, { title: details.title, url: details.url, category: details.category, type: details.select, detail: details.detail, shortdescription: details.shortdesc, image: details.image, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc }, { new: true })
+    const result = await BLOG.findOneAndUpdate({ _id: details.blogid }, { title: details.title, url: details.url, category: details.category, type: details.select, detail: details.detail, shortdescription: details.shortdesc, image: details.imageUrl, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc }, { new: true })
     if (result) {
       res.send({ isBlogEdited: true })
     } else {

@@ -7,8 +7,8 @@ import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState, ContentState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
-
 import htmlToDraft from 'html-to-draftjs';
+import { v4 as uuidv4 } from 'uuid';
 import LoaderAPI from '../../LoaderAPI';
 
 const EditBlog = (props) => {
@@ -98,7 +98,7 @@ let theBlog;
 
     let imageUrl;
     if (image) {
-      const imageRef = ref(storage, "skyblog/" + image.name);
+      const imageRef = ref(storage, "skyblog/" + uuidv4());
       //uploading image to firebase storage
       await uploadBytes(imageRef, image)
         .then(snapshot => {
@@ -119,7 +119,6 @@ let theBlog;
     } else {
       imageUrl = theBlog?.image
     }
-
     fetch("/blogeditsubmit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -176,6 +175,10 @@ let theBlog;
   function setDynamicLabel(e) {
     if (document.getElementById("image")?.files[0]?.name) {
       document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
+      const [file] = document.getElementById("image").files;
+            let displayImg = document.getElementById('displayimg')
+            displayImg.style.backgroundImage = `url('${URL.createObjectURL(file)}')`
+            displayImg.style.display = "block"
     } else {
       document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
     }
