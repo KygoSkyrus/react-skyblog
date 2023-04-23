@@ -6,6 +6,7 @@ import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
+import LoaderAPI from '../../LoaderAPI';
 
 const BlogsManagement = (props) => {
 
@@ -13,8 +14,11 @@ const BlogsManagement = (props) => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const [editorContent, setEditorContent] = useState()
 
+    const [showLoader, setShowLoader] = useState(false)
+
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
+        setShowLoader(true)//start showing loader
 
         let image = document.getElementById("image")?.files[0];
         let title = document.getElementById("title")?.value;
@@ -86,9 +90,11 @@ const BlogsManagement = (props) => {
         }).then(response => response.json())
             .then(data => {
                 if (data.blog_added) {
+                    setShowLoader(false)
                     window.location.reload();
                 } else {
                     //resetting the fields
+                    setShowLoader(false)
                     document.getElementById("frm").reset();
                     setDynamicLabel()
                 }
@@ -97,13 +103,21 @@ const BlogsManagement = (props) => {
     }
 
     async function deleteBlog(id) {
-        await fetch("/deleteblog", {
+        setShowLoader(true)
+        fetch("/deleteblog", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 id,
             }),
-        });
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.isDeleted) {
+                    setShowLoader(false)
+                    window.location.reload()
+                }
+            })
     }
 
     const onEditorStateChange = function (editorState) {
@@ -122,6 +136,7 @@ const BlogsManagement = (props) => {
     };
 
     async function blogVisibility(id, e) {
+        setShowLoader(true)
         //checked attribute means its on and 1 or data="false" means its off
         let val;
 
@@ -134,15 +149,21 @@ const BlogsManagement = (props) => {
             val = 'checked';//final value of the checkbox
         }
 
-        await fetch("/blogVisibility", {
+        fetch("/blogVisibility", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 id, val
             }),
-        });
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.isSet) {
+                setShowLoader(false)
+            }
+        })
 
-    
+
     }
 
     function settingUrl(e) {
@@ -165,7 +186,7 @@ const BlogsManagement = (props) => {
 
     return (
         <>
-            <div className="body-content">
+            <div className="body-content">  
                 <div className="card mb-4">
                     <div className="card-header">
                         <div className="d-flex justify-content-between align-items-center">
@@ -174,9 +195,9 @@ const BlogsManagement = (props) => {
                             </div>
                             <div className="text-right">
                                 <div className="actions">
-                                    <span onClick={e=>window.location.reload()} className="action-item cursor-pointer" >
+                                    <span onClick={e => window.location.reload()} className="action-item cursor-pointer" >
                                         <i
-                                        className="fas fa-refresh"></i></span>
+                                            className="fas fa-refresh"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -323,7 +344,7 @@ const BlogsManagement = (props) => {
                             </div>
                             <div className="text-right">
                                 <div className="actions">
-                                    <span onClick={e=>window.location.reload()} className="action-item cursor-pointer"><i className="fas fa-refresh"></i></span>
+                                    <span onClick={e => window.location.reload()} className="action-item cursor-pointer"><i className="fas fa-refresh"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -366,6 +387,7 @@ const BlogsManagement = (props) => {
                     </div>
                 </div>
             </div>
+            <LoaderAPI showLoader={showLoader} />
         </>
     )
 }

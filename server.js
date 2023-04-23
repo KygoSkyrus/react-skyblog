@@ -90,7 +90,11 @@ app.post("/deleteblog", async (req, res) => {
   const details = req.body;
 
   try {
-    await BLOG.deleteOne({ _id: details.id })
+    let result = await BLOG.deleteOne({ _id: details.id })
+    if(result.deletedCount>0){
+      res.send({ isDeleted: true });
+      console.log('result',result)
+    }
   } catch (err) {
     console.log(err);
   }
@@ -103,7 +107,12 @@ app.post("/blogVisibility", async (req, res) => {
 
   try {
     //findByIdAndUpdate: is the alternatice to directly use id
-    await BLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
+    let result = await BLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
+    if (result) {
+      res.send({ isSet: true })
+    } else {
+      res.send({ isSet: false })
+    }
   } catch (err) {
     console.log(err);
   }
@@ -207,7 +216,7 @@ app.post("/deleteuserblog", async (req, res) => {
 
   try {
     let resp = await USERBLOG.deleteOne({ _id: details.id })
-    res.send({ isDeleted: true })
+    res.send({ deletedCount: resp.deletedCount })
   } catch (err) {
     console.log(err);
   }

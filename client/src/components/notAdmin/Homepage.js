@@ -20,14 +20,14 @@ const Homepage = (props) => {
                     <div className="row whiteAnchor " id="hero">
                         <div className="col-md-6 mb-md-0" >
                             <div className="row">
-                                <BlogWrapperInside data={sportsArray[sportsArray.length - 1]} height={"height500"} />
+                                <BlogWrapperInside data={sportsArray[sportsArray.length - 1]} height={"height400"} />
                                 <BlogWrapperInside data={techArray[techArray.length - 1]} height={"height300"} />
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="row">
                                 <BlogWrapperInside data={politicsArray[politicsArray.length - 1]} height={"height300"} />
-                                <BlogWrapperInside data={allBlog[allBlog.length - 2]} height={"height500"} />
+                                <BlogWrapperInside data={allBlog[allBlog.length - 2]} height={"height400"} />
                             </div>
                         </div>
                     </div>
@@ -97,17 +97,17 @@ const Homepage = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="row whiteAnchor ">
-                        <div className="col-lg-6 t-mb-30 mb-lg-0 px-0">
-                            <BlogWrapperInside data={popularArray[popularArray.length - 1]} />
+                    <div className="row whiteAnchor">
+                        <div className="col-lg-6 mb-lg-0 px-0">
+                            <BlogWrapperInside data={popularArray[popularArray.length - 1]} height="height500" />
                         </div>
                         <div className="col-lg-6 px-0">
-                            <div className="row">
+                            <div className="row whiteTLink pLeftRight15">
                                 {
                                     popularArray.slice(popularArray.length - 5, popularArray.length - 1).map(x => {
                                         return (
                                             <div className="col-md-6 t-mb-30" key={x._id}>
-                                                <BlogWrapperBottom data={popularArray[popularArray.length - 1]} displayDetail="d-none" displayDesc="d-none" displayRead="d-none" />
+                                                <BlogWrapperBottom data={x} displayDetail="d-none" displayDesc="d-none" displayRead="d-none" />
                                             </div>
                                         )
                                     })
@@ -194,9 +194,9 @@ const Homepage = (props) => {
                         </div>
                         <div className="col-12 t-mt-30 whiteAnchor px-0">
                             <div className="row" id="trending">
-                                {trendingArray?.slice(trendingArray.length - 4, trendingArray.length).map(x => {
+                                {trendingArray?.slice(trendingArray.length - 3, trendingArray.length).map(x => {
                                     return (
-                                        <div className="col-md-6 col-lg-3 t-mb-30 mb-lg-0" key={x._id}>
+                                        <div className="col-md-6 col-lg-4 t-mb-30 mb-lg-0" key={x._id}>
                                             <BlogWrapperInside data={x} />
                                         </div>
                                     )
@@ -215,7 +215,7 @@ const Homepage = (props) => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12 t-mb-30 mb-lg-0">
-                            <div className="row">
+                            <div className="row threeCat">
                                 <div className="col-lg-4 t-mb-30 mb-lg-0">
                                     <div className="row">
                                         <div className="col-12 t-mb-30">

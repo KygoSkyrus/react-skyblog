@@ -1,10 +1,13 @@
-import React from 'react'
+import React,{useState} from 'react'
+import LoaderAPI from '../../LoaderAPI';
 
 const CategoryModal = (props) => {
 
     const { allCategory } = props
+    const [showLoader, setShowLoader] = useState(false)
 
     async function addCategory() {
+        setShowLoader(true)
         var cat = document.getElementById("cat").value;
 
         const res = await fetch("/addCategory", {
@@ -17,13 +20,16 @@ const CategoryModal = (props) => {
 
         const data = await res.json();
         if (data.message === "alreadyExists") {
+            setShowLoader(false)
             alert("category already exists");
         } else if (data.message === "categoryAdded") {
+            setShowLoader(false)
             window.location.reload();
         }
     }
 
     async function deleteCategory(id) {
+        setShowLoader(true)
         const res = await fetch("/deleteCategory", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -32,7 +38,10 @@ const CategoryModal = (props) => {
 
         const data = await res.json();
         if (data.message === "deleted") {
+            setShowLoader(false)
             window.location.reload();
+        }else{
+            setShowLoader(false)
         }
     }
 
@@ -75,6 +84,7 @@ const CategoryModal = (props) => {
                     </div>
                 </div>
             </div>
+            <LoaderAPI  showLoader={showLoader} />
         </>
     )
 }

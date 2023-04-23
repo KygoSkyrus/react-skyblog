@@ -8,6 +8,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 
 import Banner from './Banner';
+import LoaderAPI from '../../LoaderAPI';
 
 const PostBlog = (props) => {
 
@@ -15,10 +16,11 @@ const PostBlog = (props) => {
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const [editorContent, setEditorContent] = useState()
-
+    const [showLoader, setShowLoader] = useState(false)
     const [user, setUser] = useState();
 
     async function sendData(e) {
+        setShowLoader(true)
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
 
         let image = document.getElementById("image")?.files[0];
@@ -80,8 +82,10 @@ const PostBlog = (props) => {
         }).then(response => response.json())
             .then(data => {
                 if (data.blog_received) {
+                    setShowLoader(false)
                     window.location.reload();
                 } else {
+                    setShowLoader(false)
                     //resetting the fields
                     document.getElementById("frm").reset();
                     setDynamicLabel()
@@ -344,6 +348,7 @@ const PostBlog = (props) => {
                     </div>
                 </div>
             }
+            <LoaderAPI showLoader={showLoader} />
         </>
     )
 }

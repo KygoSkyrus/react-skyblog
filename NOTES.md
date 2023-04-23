@@ -47,6 +47,8 @@
 ## NOTE::::: two apis are calling when blogs managemnet is loaded,,one in  app.js and other in itself...the second one is not needed if you remove the status filter and move that filter to lowwerr level to the notadmin section.
 
 ### things could be better
+- on deleting blog,,no response is recueved from server,,admin has to refresh in order to see the changes,,
+- try putting a loader when an action is in progress,,like deleting a blog,,while posting etc
 - in USERSUBMITED BLOGS  :::  //in this add a add button for blogs,,it will be like visiblity switch,,,when on it means it will be added to the adminb blogs
     //add the deleted and add api to backend and think about edit,,,not a good idea to edit the blog,,,leave it
 

@@ -280,7 +280,7 @@
 
 .dropdown:hover .dropdown-content {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 }
 
 .dropdown:hover .dropbtn {
@@ -294,6 +294,8 @@
         left: 0;
         min-width: unset;
         background-color: inherit;
+        flex-direction: column;
+        box-shadow: none;
     }
 
     .dropbtn {

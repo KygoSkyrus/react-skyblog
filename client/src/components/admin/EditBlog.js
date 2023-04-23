@@ -9,6 +9,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 
 import htmlToDraft from 'html-to-draftjs';
+import LoaderAPI from '../../LoaderAPI';
 
 const EditBlog = (props) => {
 
@@ -16,23 +17,25 @@ const EditBlog = (props) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
   const [editorContent, setEditorContent] = useState()
 
+  const [showLoader, setShowLoader] = useState(false)
+
   const navigate = useNavigate()
-  const link = document.baseURI;
-  var blogurl = link.substring(
-    link.lastIndexOf("/") + 1,
-    link.length
-  );
-  let theBlog = allBlog.find(x => x.url === blogurl)
-
+  
+let theBlog;
   useEffect(() => {
-
-    settingFieldsInitially()
+    const link = document.baseURI;
+    var blogurl = link.substring(
+      link.lastIndexOf("/") + 1,
+      link.length
+    );
+    theBlog = allBlog.find(x => x.url === blogurl)
+    settingFieldsInitially(theBlog)
   }, [])
 
-  function settingFieldsInitially() {
+  function settingFieldsInitially(theBlog) {
     
     //html to draft
-    const blocksFromHtml = htmlToDraft(theBlog.detail);
+    const blocksFromHtml = htmlToDraft(theBlog?.detail);
     const { contentBlocks, entityMap } = blocksFromHtml;
     const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
     const editorState = EditorState.createWithContent(contentState);
@@ -72,6 +75,7 @@ const EditBlog = (props) => {
   }
 
   async function sendData(e) {
+    setShowLoader(true)
     e.preventDefault()
 
     let image = document.getElementById("image")?.files[0];
@@ -113,7 +117,7 @@ const EditBlog = (props) => {
           console.log(error)
         });
     } else {
-      imageUrl = theBlog.image
+      imageUrl = theBlog?.image
     }
 
     fetch("/blogeditsubmit", {
@@ -136,8 +140,10 @@ const EditBlog = (props) => {
     }).then(response => response.json())
       .then(data => {
         if (data.isBlogEdited) {
+          setShowLoader(false)
           navigate('/admin/blogs-management')
         } else {
+          setShowLoader(false)
           alert('something went wrong, please reload and try again!!!')
         }
       })
@@ -321,6 +327,7 @@ const EditBlog = (props) => {
           </div>
         </div>
       </div>
+      <LoaderAPI  showLoader={showLoader} />
     </>
   )
 }

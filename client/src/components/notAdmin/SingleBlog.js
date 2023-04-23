@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from "react-router-dom"
 
 import OtherBlogsComp from './OtherBlogsComp'
@@ -9,31 +10,37 @@ import Error from './Error'
 const SingleBlog = (props) => {
 
     const { allBlog, allCategory, catAndCount } = props
+    const [thePrev, setThePrev] = useState()
+    const [theNext, setTheNext] = useState()
+    const [theBlog, setTheBlog] = useState()
+
     let { state } = useLocation();
 
-    const link = document.baseURI;
-    var blogurl = link.substring(
-        link.lastIndexOf("/") + 1,
-        link.length
-    );
+    useEffect(() => {
+        console.log('ur')
+        const link = document.baseURI;
+        var blogurl = link.substring(
+            link.lastIndexOf("/") + 1,
+            link.length
+        );
+        for (let i = 0; i < allBlog.length-1; i++) {
+            //setting the prev blog
+            let thePrev = allBlog[i - 1];
+            setThePrev(thePrev)
 
-    let theBlog;
-    let theNext;
-    let thePrev;
-    for (let i = 0; i < allBlog.length; i++) {
-        //setting the prev blog
-        thePrev = allBlog[i - 1];
+            //setting the next blog
+            let theNext = allBlog[i + 1];
+            setTheNext(theNext)
 
-        //setting the next blog
-        theNext = allBlog[i + 1];
-
-        //setting the main blog
-        if (allBlog[i].url === blogurl) {
-            theBlog = allBlog[i];
-            break;
+            let theBlog;
+            //setting the main blog
+            if (allBlog[i].url === blogurl) {
+                theBlog = allBlog[i];
+                setTheBlog(theBlog)
+                break;
+            }
         }
-    }
-
+    }, [state])
 
     return (
         <>
@@ -55,11 +62,11 @@ const SingleBlog = (props) => {
                                                 {thePrev?.url ?
                                                     <div>
                                                         <h5 className="mt-0">
-                                                            <Link to={"/" + thePrev?.url} id="prev-blog" className="t-link t-link--secondary">
+                                                            <Link to={"/" + thePrev?.url} state={{ url: thePrev?.url }} id="prev-blog" className="t-link t-link--secondary">
                                                                 {thePrev?.url}
                                                             </Link>
                                                         </h5>
-                                                        <Link to={"/" + thePrev?.url} id="prev-link" className="t-link t-link--secondary text-capitalize">
+                                                        <Link to={"/" + thePrev?.url} state={{ url: thePrev?.url }} id="prev-link" className="t-link t-link--secondary text-capitalize">
                                                             <span className="las la-arrow-left"></span>
                                                             previous post
                                                         </Link></div>
@@ -70,11 +77,11 @@ const SingleBlog = (props) => {
                                                 {theNext?.url ?
                                                     <div>
                                                         <h5 className="mt-0">
-                                                            <Link to={"/" + theNext?.url} id="next-blog" className="t-link t-link--secondary">
+                                                            <Link to={"/" + theNext?.url} state={{ url: theNext?.url }} id="next-blog" className="t-link t-link--secondary">
                                                                 {theNext?.url}
                                                             </Link>
                                                         </h5>
-                                                        <Link to={"/" + theNext?.url} id="next-link" className="t-link t-link--secondary text-capitalize">
+                                                        <Link to={"/" + theNext?.url} state={{ url: theNext?.url }} id="next-link" className="t-link t-link--secondary text-capitalize">
                                                             next post
                                                             <span className="las la-arrow-right"></span>
                                                         </Link>

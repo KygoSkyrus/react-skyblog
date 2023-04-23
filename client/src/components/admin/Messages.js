@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import LoaderAPI from '../../LoaderAPI'
 
 const Messages = () => {
 
     const [messages, setMessages] = useState()
+    const [showLoader, setShowLoader] = useState(false)
 
     useEffect(() => {
         getMessages();
@@ -20,13 +22,23 @@ const Messages = () => {
     }
 
     async function deleteMessage(id) {
-        await fetch("/deleteMessage", {
+        setShowLoader(true)
+        fetch("/deleteMessage", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 id,
             }),
-        });
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.deletedCount>0) {
+                setShowLoader(false)
+                window.location.reload()
+            }else{
+                setShowLoader(false)
+            }
+        })
     }
 
     return (
@@ -81,6 +93,7 @@ const Messages = () => {
                     </div>
                 </div>
             </div>
+            <LoaderAPI showLoader={showLoader} />
         </>
     )
 }

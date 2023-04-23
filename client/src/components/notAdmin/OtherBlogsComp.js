@@ -19,7 +19,7 @@ const OtherBlogsComp = (props) => {
 			</div>
 			<div className="col-12 t-mt-30 px-0">
 
-				{allBlog?.slice(allBlog.length - 4, allBlog.length).map(x => {
+				{allBlog?.slice(allBlog.length - 6, allBlog.length-2).map(x => {
 					return (
 						<BlogWrapperRight data={x} key={x._id} displayRead='d-none' fontSM="fontSM" tagSM="tagSM" />
 					)

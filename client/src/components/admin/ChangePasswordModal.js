@@ -1,8 +1,11 @@
-import React from 'react'
+import React,{useState} from 'react'
+import LoaderAPI from '../../LoaderAPI';
 
 const ChangePasswordModal = () => {
+    const [showLoader, setShowLoader] = useState(false)
 
     async function cpswrd() {
+        setShowLoader(true)
         const uname = document.getElementById("uname").value;
         const password = document.getElementById("password").value;
         const newPassword = document.getElementById("newPassword").value;
@@ -21,6 +24,7 @@ const ChangePasswordModal = () => {
 
         const data = await res.json();
         if (data.message === "changed") {
+            setShowLoader(false)
             alert("Password changed successfully!");
             document.getElementById("password").value = "";
             document.getElementById("newPassword").value = "";
@@ -66,6 +70,7 @@ const ChangePasswordModal = () => {
                     </div>
                 </div>
             </div>
+            <LoaderAPI  showLoader={showLoader} />
         </>
     )
 }
