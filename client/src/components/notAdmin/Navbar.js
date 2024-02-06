@@ -83,7 +83,7 @@ const Navbar = (props) => {
                                     </div>
                                 </form>
 
-                                <div className="search-dropdown" id='searchdropdown'>
+                                <div className="search-dropdown shadow" id='searchdropdown'>
                                     {searchedOptions?.map(x => {
                                         return (
                                             <Link className="dropdown-item" to={"/" + x.url} key={x._id}>{x.title}</Link>

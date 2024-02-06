@@ -40,7 +40,7 @@ const BlogWrapperRight = (props) => {
                     </ul>
 
                     <h5 className={"post__title t-mt-10 t-mb-10 "+fontSM}>
-                        <Link  to={"/"+data?.url} className="t-link t-link--secondary">
+                        <Link  to={"/"+data?.url} state={{ url: data?.url }} className="t-link t-link--secondary">
                             {data.title}
                         </Link>
                     </h5>

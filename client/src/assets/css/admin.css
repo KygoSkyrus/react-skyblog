@@ -32,6 +32,12 @@
   border-color: #18c29c;
   width: 100%;
 }
+.toast .highlight{
+  background: #212121ba;
+  border-radius: 4px;
+  text-decoration: none;
+  padding: 0 6px;
+}
 /*   ------------------------     LOGIN     -----------------------------   */
 
 /*   ------------------------     DASHBOARD     -----------------------------   */
