@@ -21,7 +21,7 @@ const Login = () => {
     }).then(response => response.json())
       .then(data => {
         if (data.matched === true) {
-          Cookies.set('admin', username, { httpOnly: false, expires: 0.5 })
+          // Cookies.set('admin', username, { httpOnly: false, expires: 0.5 })
           navigate("/admin/dashboard")
         } else if (data.matched === false) {
           setError('Incorrect credentials')

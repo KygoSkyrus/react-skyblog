@@ -26,6 +26,7 @@ const Admin = (props) => {
   //if admin is not logged then redirects to login page
   async function redirectToLogin() {
     const adminVal = Cookies.get('admin')
+    console.log('adminVal', adminVal)
     if (!adminVal) {
       navigate('/admin/login')
     }

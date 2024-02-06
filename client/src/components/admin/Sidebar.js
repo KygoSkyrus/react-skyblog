@@ -24,6 +24,15 @@ const Sidebar = (props) => {
     }
 
     async function logout() {
+        // fetch("/admin/login", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({
+        //       username, password
+        //     }),
+        //   }).then(response => response.json())
+        //     .then(data => {
+        //       if (data.matched === true) {
         Cookies.remove('admin')
         window.location.reload();
     }
@@ -138,7 +147,7 @@ const Sidebar = (props) => {
                             {/* <span className="user-occupation">Admin</span> */}
                         </div>
                     </div>
-                    <span className="logout-btn" href="" onClick={e => logout(e)}>
+                    <span className="logout-btn cursor-pointer" href="" onClick={e => logout(e)}>
                         <i className="fas fa-sharp fa-regular fa-arrow-right-from-bracket"></i>
                     </span>
                 </div>
