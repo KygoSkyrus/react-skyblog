@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Cookies from 'js-cookie';
 
 import CategoryModal from './CategoryModal'
 import ChangePasswordModal from './ChangePasswordModal'
@@ -13,28 +12,29 @@ const Sidebar = (props) => {
 
     useEffect(() => {
         getSidebarWorking()
-        getAdminName()
+        // getAdminName()
         handleSelectedOption()
     }, [])
 
     //this will set the admin name in sidebar
     async function getAdminName() {
-        const adminVal = Cookies.get('admin')
-        setAdminName(adminVal)
+        // const adminVal = Cookies.get('admin')
+        // setAdminName(adminVal)
     }
 
     async function logout() {
-        // fetch("/admin/login", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({
-        //       username, password
-        //     }),
-        //   }).then(response => response.json())
-        //     .then(data => {
-        //       if (data.matched === true) {
-        Cookies.remove('admin')
-        window.location.reload();
+        fetch("/admin/logout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.isLoggedOut === true) {
+                    window.location.reload();
+                } else {
+                    alert(data.message)
+                }
+            })
     }
 
     function getSidebarWorking() {

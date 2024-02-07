@@ -1,6 +1,12 @@
 const express = require("express");
 const router = express("router");
 var session = require('express-session')
+const MongoStore = require('connect-mongo');
+const mongoose = require('mongoose');
+
+const dotenv = require('dotenv');
+dotenv.config({ path: './env/config.env' });
+
 var bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -13,30 +19,40 @@ const CATEGORY = require("./../schema/category")
 const USERBLOG = require("./../schema/userblog")
 
 router.use(session({
-    name: "keyboard cat",
+    // name: "keyboardcat",
     secret: 'of9578awo49y7rt9afyta',
     resave: false,
     saveUninitialized: true,
     cookie: {
-        maxAge: 3600000,
+        maxAge: 7200000,
         httpOnly: true,
         secure: false
-    }
+    },
+    store: MongoStore.create({
+        mongoUrl: process.env.dbURI,
+        // mongoOptions: advancedOptions // See below for details
+    })
 }))
 // add secure : true for prod
 
+// ExpressJS implements sessions using in-memory storage. Consequently, resetting your application will also reset the in-memory sessions. thats why mongodb is used as session storage
+
 // middleware to test if authenticated
 function isAuthenticated(req, res, next) {
-    if (req.session.isAuthenticated) next();
-    else
+    console.log('isAuthenticated----req.session.', req.session)
+    if (req.session.isAuthenticated) {
+        next();
+    } else {
         // res.redirect('/admin/login');
-    res.send({ matched: false });
-    //    next('route')
+        res.send({ matched: false });
+        //    next('route')
+    }
 }
 
 
 router.post("/admin/authenticate", isAuthenticated, async (req, res) => {
     console.log('admin authhdjkdjksda')
+    res.send({ matched: true });
 
 })
 
@@ -292,12 +308,15 @@ router.post("/deleteCategory", async (req, res) => {
 //------------------------------- ADMIN -------------------------------
 router.post("/admin/login", urlencodedParser, async (req, res) => {
     const credentials = req.body;
+    console.log('login api', credentials)
 
     try {
         const result = await ADMIN.findOne({ username: credentials.username, password: credentials.password })
         if (result) {
             if (credentials.username === result.username && credentials.password === result.password) {
-                req.session.isAuthenticated = true;
+                console.log('innn---', req.session)
+
+                req.session.isAuthenticated = credentials.username;
 
                 // req.session.regenerate(function (err) {
                 //     if (err) next(err)
@@ -345,8 +364,13 @@ router.post("/cpswrd", async (req, res) => {
 
 //ADMIN LOGOUT
 router.post("/admin/logout", async (req, res) => {
+
+    try{
+    console.log('logout')
     req.session.destroy();
-    req.session.isAuthenticated = false;
+    res.send({ message: "Logged out successfully!", isLoggedOut: true });
+
+    // req.session.isAuthenticated = false;
 
 
     // req.session.admin = null
@@ -364,7 +388,10 @@ router.post("/admin/logout", async (req, res) => {
     // })
 
     // res.clearCookie("admin");
-    res.send({ message: "loggedOut" });
+    } catch (err) {
+        console.log(err);
+        res.send({ message: "something went wrong", isLoggedOut: false });
+    }
 });
 
 

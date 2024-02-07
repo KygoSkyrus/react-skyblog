@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
 
 import "../assets/css/admin.css"
 import Login from './admin/Login';
@@ -14,7 +13,7 @@ import UserSubmittedBlogs from './admin/UserSubmittedBlogs';
 import EditBlog from './admin/EditBlog';
 import Test from './Test';
 import { showTime } from '../utils';
-import ProtectedRoute from './notAdmin/ProtectedRoute';
+import ProtectedRoute from './admin/ProtectedRoute';
 
 const Admin = (props) => {
 
@@ -47,42 +46,42 @@ const Admin = (props) => {
 
 
 
-    return (
-      <>
-        {/* moving login route out of the all admin things as it was showing sidebar on login */}
-        <Routes>
-          <Route path="/login" exact element={<Login />} />
-        </Routes>
+  return (
+    <>
+      {/* moving login route out of the all admin things as it was showing sidebar on login */}
+      <Routes>
+        <Route path="/login" exact element={<Login />} />
+      </Routes>
 
-        <div id='adminView'>
+      <div id='adminView'>
 
-            <Sidebar allCategory={allCategory} />
+        <Sidebar allCategory={allCategory} />
 
-            <div className='dynamicAdminContent'>
+        <div className='dynamicAdminContent'>
 
-              <main className="dashboard justify-content-between align-items-center">
-                <h1 className="title">Dashboard</h1>
-                <div id="MyClockDisplay" className="clock" ></div>
-              </main>
+          <main className="dashboard justify-content-between align-items-center">
+            <h1 className="title">Dashboard</h1>
+            <div id="MyClockDisplay" className="clock" ></div>
+          </main>
 
-              <Routes>
-                <Route path="/test" exact element={<ProtectedRoute><Test isAuthenticated={isAuthenticated} /></ProtectedRoute>} />
-                <Route path="/dashboard" exact element={<ProtectedRoute><Dashboard allCategory={allCategory} catAndCount={catAndCount} /></ProtectedRoute> } />
+          <Routes>
+            <Route path="/test" exact element={<ProtectedRoute><Test isAuthenticated={isAuthenticated} /></ProtectedRoute>} />
+            <Route path="/dashboard" exact element={<ProtectedRoute><Dashboard allCategory={allCategory} catAndCount={catAndCount} /></ProtectedRoute>} />
 
-                <Route path="/messages" exact element={<Messages />} />
+            <Route path="/messages" exact element={<ProtectedRoute isAuthenticated={isAuthenticated} route="messages"></ProtectedRoute>} />
 
-                <Route path="/blogs-management" exact element={<BlogsManagement allBlog={allBlog} allCategory={allCategory} storage={storage} />} />
+            <Route path="/blogs-management" exact element={<BlogsManagement allBlog={allBlog} allCategory={allCategory} storage={storage} />} />
 
-                <Route path="/user-submitted-blogs" exact element={<UserSubmittedBlogs />} />
+            <Route path="/user-submitted-blogs" exact element={<UserSubmittedBlogs />} />
 
-                <Route path="/edit-blog/:id" exact element={<EditBlog allBlog={allBlog} allCategory={allCategory} storage={storage} />} />
+            <Route path="/edit-blog/:id" exact element={<EditBlog allBlog={allBlog} allCategory={allCategory} storage={storage} />} />
 
-                <Route path="*" element={<Error />} />
-              </Routes>
-            </div>
+            <Route path="*" element={<Error />} />
+          </Routes>
         </div>
-      </>
-    )
+      </div>
+    </>
+  )
 }
 
 export default Admin

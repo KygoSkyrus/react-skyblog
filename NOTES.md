@@ -21,5 +21,7 @@
 - put the blogs in differnt route
 
 - admin panel / api routes not secure
+- admin name of sidebar is not working due to cookie 
+- add status code in every route
 
 - check why get requests are not working

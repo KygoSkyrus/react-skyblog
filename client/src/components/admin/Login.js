@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -18,18 +17,18 @@ const Login = () => {
       body: JSON.stringify({
         username, password
       }),
-    }).then(response => response.json())
+    })
+      .then(response => response.json())
       .then(data => {
+        console.log('login  ',data)
         if (data.matched === true) {
-          // Cookies.set('admin', username, { httpOnly: false, expires: 0.5 })
-          navigate("/admin/dashboard")
+          console.log('login  if---trueee')
+          navigate("/admin/messages")
         } else if (data.matched === false) {
           setError('Incorrect credentials')
         }
-      }
-      )
+      })
       .catch(err => console.log(err))
-
   }
 
   return (
