@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path")
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
@@ -11,8 +11,8 @@ app.use(require("./routes/route"));
 
 
 dotenv.config({ path: './env/config.env' });
-app.set("view engine", "ejs");//not needed
-app.use(cookieParser());
+// app.set("view engine", "ejs");//not needed
+// app.use(cookieParser());
 
 var bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.urlencoded({ extended: false });

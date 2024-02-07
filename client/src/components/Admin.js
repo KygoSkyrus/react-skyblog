@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react'
-import { Route, Routes, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 import "../assets/css/admin.css"
@@ -12,96 +12,77 @@ import Messages from './admin/Messages';
 import BlogsManagement from './admin/BlogsManagement';
 import UserSubmittedBlogs from './admin/UserSubmittedBlogs';
 import EditBlog from './admin/EditBlog';
+import Test from './Test';
+import { showTime } from '../utils';
+import ProtectedRoute from './notAdmin/ProtectedRoute';
 
 const Admin = (props) => {
 
   const { allBlog, allCategory, catAndCount, storage } = props
   let navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(null)
 
   useEffect(() => {
-    redirectToLogin();
+    authenticateUser()
     showTime()
-  }, [])
+  }, [isAuthenticated])
 
-  //if admin is not logged then redirects to login page
-  async function redirectToLogin() {
-    const adminVal = Cookies.get('admin')
-    console.log('adminVal', adminVal)
-    if (!adminVal) {
-      navigate('/admin/login')
-    }
+  async function authenticateUser() {
+    fetch("/admin/authenticate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    }).then(response => response.json())
+      .then(data => {
+        console.log('authenticateUser,', data)
+        if (data.matched === true) {
+          setIsAuthenticated(true)
+          // navigate("/admin/dashboard")
+        } else if (data.matched === false) {
+          setIsAuthenticated(false)
+          // navigate("/admin/login")
+        }
+      })
+      .catch(err => console.log(err))
   }
 
-  function showTime() {
-    var date = new Date();
-    var h = date.getHours(); // 0 - 23
-    var m = date.getMinutes(); // 0 - 59
-    var s = date.getSeconds(); // 0 - 59
-    var session = "AM";
 
-    if (h === 12) {
-      session = "PM";
-    }
 
-    if (h === 0) {
-      h = 12;
-    }
-    if (h > 12) {
-      h = h - 12;
-      session = "PM";
-    } else if (h < 12) {
-      session = "AM";
-    }
+    return (
+      <>
+        {/* moving login route out of the all admin things as it was showing sidebar on login */}
+        <Routes>
+          <Route path="/login" exact element={<Login />} />
+        </Routes>
 
-    h = (h < 10) ? "0" + h : h;
-    m = (m < 10) ? "0" + m : m;
-    s = (s < 10) ? "0" + s : s;
+        <div id='adminView'>
 
-    var time = h + ":" + m + ":" + s + " " + session;
+            <Sidebar allCategory={allCategory} />
 
-    if (document.getElementById("MyClockDisplay")) {
-      let MyClockDisplay = document.getElementById("MyClockDisplay")
-      MyClockDisplay.innerText = time;
-      MyClockDisplay.textContent = time;
-    }
-    setTimeout(showTime, 1000);
-  }
+            <div className='dynamicAdminContent'>
 
-  return (
-    <>
-      {/* moving login route out of the all admin things as it was showing sidebar on login */}
-      <Routes>
-        <Route path="/login" exact element={<Login />} />
-      </Routes>
+              <main className="dashboard justify-content-between align-items-center">
+                <h1 className="title">Dashboard</h1>
+                <div id="MyClockDisplay" className="clock" ></div>
+              </main>
 
-      <div id='adminView'>
+              <Routes>
+                <Route path="/test" exact element={<ProtectedRoute><Test isAuthenticated={isAuthenticated} /></ProtectedRoute>} />
+                <Route path="/dashboard" exact element={<ProtectedRoute><Dashboard allCategory={allCategory} catAndCount={catAndCount} /></ProtectedRoute> } />
 
-        <Sidebar allCategory={allCategory} />
+                <Route path="/messages" exact element={<Messages />} />
 
-        <div className='dynamicAdminContent'>
+                <Route path="/blogs-management" exact element={<BlogsManagement allBlog={allBlog} allCategory={allCategory} storage={storage} />} />
 
-          <main className="dashboard justify-content-between align-items-center">
-            <h1 className="title">Dashboard</h1>
-            <div id="MyClockDisplay" className="clock" ></div>
-          </main>
+                <Route path="/user-submitted-blogs" exact element={<UserSubmittedBlogs />} />
 
-          <Routes>
-            <Route path="/dashboard" exact element={<Dashboard allCategory={allCategory} catAndCount={catAndCount} />} />
+                <Route path="/edit-blog/:id" exact element={<EditBlog allBlog={allBlog} allCategory={allCategory} storage={storage} />} />
 
-            <Route path="/messages" exact element={<Messages />} />
-
-            <Route path="/blogs-management" exact element={<BlogsManagement allBlog={allBlog} allCategory={allCategory} storage={storage} />} />
-
-            <Route path="/user-submitted-blogs" exact element={<UserSubmittedBlogs />} />
-
-            <Route path="/edit-blog/:id" exact element={<EditBlog allBlog={allBlog} allCategory={allCategory} storage={storage} />} />
-
-            <Route path="*" element={<Error />} />
-          </Routes>
+                <Route path="*" element={<Error />} />
+              </Routes>
+            </div>
         </div>
-      </div>
-    </>
-  )
+      </>
+    )
 }
 
 export default Admin

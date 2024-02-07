@@ -13,22 +13,36 @@ const CATEGORY = require("./../schema/category")
 const USERBLOG = require("./../schema/userblog")
 
 router.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true
+    name: "keyboard cat",
+    secret: 'of9578awo49y7rt9afyta',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 3600000,
+        httpOnly: true,
+        secure: false
+    }
 }))
+// add secure : true for prod
 
 // middleware to test if authenticated
-function isAuthenticated (req, res, next) {
-    if (req.session.admin) next()
-    else next('route')
+function isAuthenticated(req, res, next) {
+    if (req.session.isAuthenticated) next();
+    else
+        // res.redirect('/admin/login');
+    res.send({ matched: false });
+    //    next('route')
 }
 
 
+router.post("/admin/authenticate", isAuthenticated, async (req, res) => {
+    console.log('admin authhdjkdjksda')
+
+})
 
 
 //blog data[creates a new blog from admin side]
-router.post("/blogdata", async (req, res) => {
+router.post("/blogdata", isAuthenticated, async (req, res) => {
     const details = req.body;
     var date = new Date().toLocaleDateString();
     try {
@@ -283,23 +297,24 @@ router.post("/admin/login", urlencodedParser, async (req, res) => {
         const result = await ADMIN.findOne({ username: credentials.username, password: credentials.password })
         if (result) {
             if (credentials.username === result.username && credentials.password === result.password) {
+                req.session.isAuthenticated = true;
 
-                req.session.regenerate(function (err) {
-                    if (err) next(err)
-                
-                    // store user information in session, typically a user id
-                    req.session.admin = result.username //req.body.admin
-                
-                    // save the session before redirection to ensure page
-                    // load does not happen before session is saved
-                    req.session.save(function (err) {
-                      if (err) return next(err)
+                // req.session.regenerate(function (err) {
+                //     if (err) next(err)
 
-                      res.send({ matched: true });
-                    })
-                })
+                //     // store user information in session, typically a user id
+                //     req.session.admin = credentials.username //req.body.admin
 
-                // res.send({ matched: true });
+                //     // save the session before redirection to ensure page
+                //     // load does not happen before session is saved
+                //     req.session.save(function (err) {
+                //         if (err) return next(err)
+
+                //         res.send({ matched: true });
+                //     })
+                // })
+
+                res.send({ matched: true });
             }
         } else {
             res.send({ matched: false });
@@ -330,17 +345,23 @@ router.post("/cpswrd", async (req, res) => {
 
 //ADMIN LOGOUT
 router.post("/admin/logout", async (req, res) => {
-    req.session.user = null
-    req.session.save(function (err) {
-      if (err) next(err)
-  
-      // regenerate the session, which is good practice to help
-      // guard against forms of session fixation
-      req.session.regenerate(function (err) {
-        if (err) next(err)
-        res.redirect('/')
-      })
-    })
+    req.session.destroy();
+    req.session.isAuthenticated = false;
+
+
+    // req.session.admin = null
+    // req.session.save(function (err) {
+    //     if (err) next(err)
+
+    //     res.redirect('/admin/login')
+
+    // regenerate the session, which is good practice to help
+    // guard against forms of session fixation
+    //   req.session.regenerate(function (err) {
+    //     if (err) next(err)
+    //     res.redirect('/')
+    //   })
+    // })
 
     // res.clearCookie("admin");
     res.send({ message: "loggedOut" });

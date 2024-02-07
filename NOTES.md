@@ -21,3 +21,5 @@
 - put the blogs in differnt route
 
 - admin panel / api routes not secure
+
+- check why get requests are not working
