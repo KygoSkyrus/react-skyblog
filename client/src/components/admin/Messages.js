@@ -30,15 +30,15 @@ const Messages = () => {
                 id,
             }),
         })
-        .then(res => res.json())
-        .then(data => {
-            if (data.deletedCount>0) {
-                setShowLoader(false)
-                window.location.reload()
-            }else{
-                setShowLoader(false)
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    setShowLoader(false)
+                    window.location.reload()
+                } else {
+                    setShowLoader(false)
+                }
+            })
     }
 
     return (

@@ -3,7 +3,7 @@ import React from 'react'
 function LoaderAPI(props) {
     const { showLoader } = props
     return (
-        <div className={`api-loader-container ${showLoader ? "" : "d-none"}`}>
+        <div className={`api-loader-container ${!showLoader ? "d-none" : ""}`}>
             <div className='overlay'>
                 <div className="loader">
                     <h1 className='letterHolder'>

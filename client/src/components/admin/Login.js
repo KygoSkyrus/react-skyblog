@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Login = () => {
+const Login = ({isAuthenticated}) => {
 
   const [error, setError] = useState()
   const navigate = useNavigate()
+
+  useEffect(()=>{
+    if (isAuthenticated) navigate('/admin/messages')
+  },[isAuthenticated])
+
 
   async function login(e) {
 
@@ -20,7 +25,7 @@ const Login = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('login  ',data)
+        console.log('login  ', data)
         if (data.matched === true) {
           console.log('login  if---trueee')
           navigate("/admin/messages")

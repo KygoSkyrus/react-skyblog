@@ -13,15 +13,21 @@
 - blogs forms are at 3 place, at blg-management, and on edit, and the userblog, all tgree of them are safe,,,a common componend can be used here
 
 # new
+- WHY sidebar and header needed to be inside route? bcz when user is not logged in and he tries to access a route than behind the loader the sidebar and header keep showing
+
+- the progress loader is not good enough, the animation takes time to start and till thne the process gets completed
 
 - show the content in user submitted blogs in admin not the html
 - cookie should be set at admin
 - format all the apis
 - create middleware for access right
 - put the blogs in differnt route
+- postablog compo need to be checked as js-cookie removed
+- on login, its not redirecting to dashboard route
+- add loader on every action
 
 - admin panel / api routes not secure
-- admin name of sidebar is not working due to cookie 
+- admin name of sidebar is not working due to cookie
 - add status code in every route
 
 - check why get requests are not working

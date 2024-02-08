@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useGoogleLogin } from '@react-oauth/google';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -135,7 +135,7 @@ const PostBlog = (props) => {
     });
 
     useEffect(() => {
-        let userId = Cookies.get('userid')
+        let userId = '';//Cookies.get('userid')
         if (userId) {
             setUser(true)
             if (document.getElementById('email'))
@@ -149,7 +149,7 @@ const PostBlog = (props) => {
             })
                 .then(response => response.json())
                 .then((res) => {
-                    Cookies.set('userid', res.email, { httpOnly: false, expires: 0.5 })
+                    // Cookies.set('userid', res.email, { httpOnly: false, expires: 0.5 })
                     document.getElementById('email').value = res.email
                 })
                 .catch((err) => console.log(err));

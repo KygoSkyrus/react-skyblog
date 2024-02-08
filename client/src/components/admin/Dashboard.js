@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 const Dashboard = (props) => {
 
     const { allCategory, catAndCount } = props
+    console.log('dashhh',allCategory, catAndCount )
 
     return (
         <>
