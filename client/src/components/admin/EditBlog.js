@@ -10,10 +10,12 @@ import draftToHtml from "draftjs-to-html";
 import htmlToDraft from 'html-to-draftjs';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderAPI from '../../LoaderAPI';
+import Sidebar from './Sidebar';
+import Header from './Header';
 
-const EditBlog = (props) => {
+const EditBlog = ({state}) => {
 
-  const { allBlog, allCategory, storage } = props
+  const { allBlog, allCategory, storage, isGuest } = state;
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
   const [editorContent, setEditorContent] = useState()
 
@@ -119,7 +121,7 @@ let theBlog;
     } else {
       imageUrl = theBlog?.image
     }
-    fetch("/blogeditsubmit", {
+    fetch("/admin/editblog", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -186,6 +188,10 @@ let theBlog;
 
   return (
     <>
+    <div id='adminView'>
+                <Sidebar allCategory={allCategory} />
+                <div className='dynamicAdminContent'>
+                    <Header isGuest={isGuest} />
       <div className="body-content">
         <div className="card mb-4">
           <div className="card-header">
@@ -329,6 +335,8 @@ let theBlog;
             </div>
           </div>
         </div>
+      </div>
+      </div>
       </div>
       <LoaderAPI  showLoader={showLoader} />
     </>

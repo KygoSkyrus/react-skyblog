@@ -63,7 +63,7 @@ const PostBlog = (props) => {
                 console.log(error)
             });
 
-        fetch("/userblog", {
+        fetch("/adduserblog", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

@@ -20,7 +20,7 @@ const Contact = (props) => {
 
                                         <div className="col-9 c12">
 
-                                            <form action="/message" method="post" className="st-comments__form">
+                                            <form action="/addmessage" method="post" className="st-comments__form">
                                                 <div className="row d-flex">
                                                     <div className="col-lg-6">
                                                         <input type="text" name="name" id="name" className="form-control t-mb-15 "

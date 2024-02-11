@@ -89,6 +89,12 @@ const Sidebar = (props) => {
 
     return (
         <>
+            {/* <!--change password Modal --> */}
+            <ChangePasswordModal />
+
+            {/* <!--  manage category Modal --> */}
+            <CategoryModal allCategory={allCategory} />
+
             <nav className="sidebar">
                 <div className="navbar-container">
 
@@ -152,12 +158,6 @@ const Sidebar = (props) => {
                     </span>
                 </div>
             </nav>
-
-            {/* <!--change password Modal --> */}
-            <ChangePasswordModal />
-
-            {/* <!--  manage category Modal --> */}
-            <CategoryModal allCategory={allCategory} />
         </>
     )
 }

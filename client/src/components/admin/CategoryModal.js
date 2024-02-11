@@ -10,7 +10,7 @@ const CategoryModal = (props) => {
         setShowLoader(true)
         var cat = document.getElementById("cat").value;
 
-        const res = await fetch("/addCategory", {
+        const res = await fetch("/admin/addCategory", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -30,7 +30,7 @@ const CategoryModal = (props) => {
 
     async function deleteCategory(id) {
         setShowLoader(true)
-        const res = await fetch("/deleteCategory", {
+        const res = await fetch("/admin/deleteCategory", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id }),

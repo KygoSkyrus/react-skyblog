@@ -10,7 +10,7 @@ const ChangePasswordModal = () => {
         const password = document.getElementById("password").value;
         const newPassword = document.getElementById("newPassword").value;
 
-        const res = await fetch("/cpswrd", {
+        const res = await fetch("/admin/changepassword", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
