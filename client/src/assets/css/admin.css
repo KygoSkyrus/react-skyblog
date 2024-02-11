@@ -1,13 +1,13 @@
 /*   ------------------------     ADMIN Component     -----------------------------   */
-.dynamicAdminContent{
-  width: 100%;
-  overflow: auto;
+.dynamicAdminContent {
+  /* width: 100%; */
+  /* overflow: auto; */
+  width: calc(100% - 4rem);
+}
+.sidebar.active + .dynamicAdminContent {
+  width: calc(100% - 20%);
 }
 /*   ------------------------     ADMIN Component     -----------------------------   */
-
- 
-
-
 
 /*   ------------------------     LOGIN     -----------------------------   */
 .form-container .panel {
@@ -32,7 +32,7 @@
   border-color: #18c29c;
   width: 100%;
 }
-.toast .highlight{
+.toast .highlight {
   background: #212121ba;
   border-radius: 4px;
   text-decoration: none;
@@ -43,8 +43,8 @@
 /*   ------------------------     DASHBOARD     -----------------------------   */
 
 /*modal*/
-.modal{
- background: #000000bd;
+.modal {
+  background: #000000bd;
 }
 .modal-backdrop {
   position: relative;
@@ -52,11 +52,11 @@
 }
 /*modal*/
 
-.card-header{
-padding: 20px 24px;
-    padding: 1.25rem 1.5rem;
-    background-color: #fff;
-    border-bottom: 1px solid #eff2f7;
+.card-header {
+  padding: 20px 24px;
+  padding: 1.25rem 1.5rem;
+  background-color: #fff;
+  border-bottom: 1px solid #eff2f7;
 }
 /* for categories in modal */
 .catinmodal {
@@ -195,12 +195,11 @@ input[type="radio"] {
 }
 /*   ------------------------     DASHBOARD     -----------------------------   */
 
-
-
-
 /*   ------------------------     MESSAGES     -----------------------------   */
-.body-content{
+.body-content {
   padding: 26px 24px;
+  height: calc(100% - 80px);
+  overflow: auto;
 }
 
 #tbody button {
@@ -216,13 +215,9 @@ input[type="radio"] {
 }
 /*   ------------------------     MESSAGES     -----------------------------   */
 
-
-
-
-
 /*   ------------------------     BLOGS_MANAGEMENT     -----------------------------   */
- /* for required image file input */
- .abcc {
+/* for required image file input */
+.abcc {
   border: 1px solid #dd0f0f !important;
 }
 
@@ -235,22 +230,22 @@ input[type="radio"] {
   color: red;
 }
 
-#go{
+#go {
   background-color: #28a745;
-                          border: none;
-                          outline: none;
-                          padding: 5px 20px;
-                          font-size: 14px;
-                          color: white;
-                          border-radius: 4px;
-                          box-shadow: 0 2px 6px 0 rgb(40 167 69 / 50%);
-                          cursor: pointer;
+  border: none;
+  outline: none;
+  padding: 5px 20px;
+  font-size: 14px;
+  color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px 0 rgb(40 167 69 / 50%);
+  cursor: pointer;
 }
-.switch{
+.switch {
   position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 26px;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
 }
 .switch input {
   opacity: 0;
@@ -271,8 +266,8 @@ input:checked + .slider {
   right: 0;
   bottom: 0;
   background-color: #000;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 .slider:before {
   position: absolute;
@@ -282,8 +277,8 @@ input:checked + .slider {
   left: 2px;
   bottom: 2px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 .slider.round:before {
   border-radius: 50%;
@@ -295,27 +290,20 @@ input:checked + .slider:before {
 }
 /*   ------------------------     BLOGS_MANAGEMENT     -----------------------------   */
 
-
-
-
-
-
 /********************************* RESPONSIVE ****************************************/
 
-@media (max-width:576px) {
-#MyClockDisplay{
-  display: none;
-}
+@media (max-width: 576px) {
+  #MyClockDisplay {
+    display: none;
+  }
 
-.title{
-  font-size: 1.5rem;
-}
+  .title {
+    font-size: 1.5rem;
+  }
 
-.body-content {
-  padding: 15px 12px;
+  .body-content {
+    padding: 15px 12px;
+  }
 }
-
-}
-
 
 /********************************* RESPONSIVE ****************************************/

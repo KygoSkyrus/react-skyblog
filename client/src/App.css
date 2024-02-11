@@ -780,6 +780,37 @@ input[type="radio"] {
 
 
 
+/********************************* TOAST **********************************/
+.toastContainer {
+  position: fixed;
+  bottom: 25px;
+  right: 30px;
+  background: #fff;
+  padding: 20px 35px 20px 25px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  border-left: 6px solid #4070f4;
+  overflow: hidden;
+  transform: translateX(calc(100% + 30px));
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+  display: flex;
+  justify-content: space-between;
+  min-width: 200px;
+  max-width: 350px;
+  z-index: 9999;
+}
+.toastContainer.active {
+  transform: translateX(0%);
+}
+.fa-circle-check {
+  color: var(--color-green);
+}
+.fa-triangle-exclamation {
+  color: var(--color-red);
+}
+/* .toastContainer i {
+  margin-left: 20px;
+} */
+/********************************* TOAST **********************************/
 
 
 
