@@ -5,9 +5,9 @@ const path = require("path")
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-//Router
+//Routes
 const publicRoutes = require('./routes/publicRoutes')
-app.use(require("./routes/route"));
+const adminRoutes = require('./routes/adminRoutes')
 
 
 dotenv.config({ path: './env/config.env' });
@@ -16,6 +16,28 @@ dotenv.config({ path: './env/config.env' });
 
 var bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+const session = require('express-session')
+const MongoStore = require('connect-mongo');
+
+app.use(session({
+  // name: "keyboardcat",
+  secret: 'of9578awo49y7rt9afyta',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+      maxAge: 7200000,
+      httpOnly: true,
+      secure: false
+  },
+  store: MongoStore.create({
+      mongoUrl: process.env.dbURI,
+      // mongoOptions: advancedOptions
+  })
+  // ExpressJS implements sessions using in-memory storage. Consequently, resetting your application will also reset the in-memory sessions. thats why mongodb is used as session storage
+}))
+// add secure : true for prod
+
 
 
 app.use(express.json({ limit: '50mb' }));
@@ -45,7 +67,8 @@ mongoose.connect(db, {
 //const upload = multer({});
 
 
-app.use(publicRoutes)
+app.use(publicRoutes);
+app.use('/admin', adminRoutes);
 
 
 //------------------------------- ADMIN -------------------------------

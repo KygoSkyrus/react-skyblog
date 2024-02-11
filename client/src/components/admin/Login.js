@@ -28,7 +28,7 @@ const Login = ({isAuthenticated}) => {
         console.log('login  ', data)
         if (data.matched === true) {
           console.log('login  if---trueee')
-          navigate("/admin/messages")
+          navigate("/admin/dashboard")
         } else if (data.matched === false) {
           setError('Incorrect credentials')
         }
@@ -92,12 +92,12 @@ const Login = ({isAuthenticated}) => {
           <div className="toast-body text-center text-light">
             Use <span className='highlight'>Guest Admin credentials</span> to explore admin panel
             <section>
-              <span className='highlight'>Email</span>:
-              <span className='cursor-pointer' onClick={e => navigator?.clipboard.writeText(e.target.innerText)}> guestuser@email.com</span>
+              <span className='highlight'>Email</span>:&nbsp;
+              <span className='cursor-pointer' onClick={e => navigator?.clipboard.writeText(e.target.innerText)}>guestuser@email.com</span>
             </section>
             <section>
-              <span className='highlight'>Password</span>:
-              <span className='cursor-pointer' onClick={e => navigator?.clipboard.writeText(e.target.innerText)}> guest#7</span>
+              <span className='highlight'>Password</span>:&nbsp;
+              <span className='cursor-pointer' onClick={e => navigator?.clipboard.writeText(e.target.innerText)}>guest#7</span>
             </section>
           </div>
         </div>

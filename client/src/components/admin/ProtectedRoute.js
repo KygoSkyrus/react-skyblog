@@ -8,20 +8,20 @@ import EditBlog from './EditBlog';
 import LoaderAPI from '../../LoaderAPI';
 
 
-const ProtectedRoute = ({ isAuthenticated, route }) => {
+const ProtectedRoute = (props) => {
 
-    console.log('ProtectedRoute')
+    const {isAuthenticated, route, state} = props;
+    console.log('ProtectedRoute',props)
     if (isAuthenticated === null) {
         // return "LOADER"
         return <LoaderAPI showLoader={true} />
-        // return <BagLoader /> // still loading
     }
     if (isAuthenticated) {
-        if (route === "dashboard") return <Dashboard />
-        if (route === "messages") return <Messages />
-        if (route === "edit-blog") return <EditBlog />
-        if (route === "blogs-management") return <BlogsManagement />
-        if (route === "user-submitted-blogs") return <UserSubmittedBlogs />
+        if (route === "dashboard") return <Dashboard state={state} />
+        if (route === "messages") return <Messages state={state} />
+        if (route === "edit-blog") return <EditBlog state={state} />
+        if (route === "blogs-management") return <BlogsManagement state={state} />
+        if (route === "user-submitted-blogs") return <UserSubmittedBlogs state={state} />
     } else {
         return <Navigate to={`/admin/login`} replace={true} />;
     }
