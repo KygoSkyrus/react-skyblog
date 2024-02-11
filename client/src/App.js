@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { initializeApp } from 'firebase/app';
@@ -9,12 +9,16 @@ import Admin from './components/Admin';
 import NotAdmin from './components/NotAdmin';
 import Loader from './Loader';
 import ScrollToTop from './ScrollToTop';//deals with the Link to restore scroll
+import Toast from './components/Toast';
 
+export const ToastContext = createContext()
 
 function App() {
   const [allBlog, setAllBlog] = useState();//remove this to show loader
   const [allCategory, setAllCategory] = useState();
   const [isLoaded, setIsLoaded] = useState(false)
+
+  const [toast, setToast] = useState({ toastVisibility: false, toastContent: "" })
 
   useEffect(() => {
     document.getElementById('root').classList.add('overflow')
@@ -51,7 +55,7 @@ function App() {
   }
 
   async function getAllCategory() {
-    const res = await fetch("/showCategory", {
+    const res = await fetch("/getallcategory", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
@@ -128,15 +132,20 @@ function App() {
   return (
     <>
       {allBlog ?
+          <ToastContext.Provider value={'{toast,setToast}'}>
         <BrowserRouter>
           <ScrollToTop />
-          <Routes>
-            <Route path="/*" exact element={<NotAdmin allBlog={filteredBlogs} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} />} />
+            <Routes>
+              <Route path="/*" exact element={<NotAdmin allBlog={filteredBlogs} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} />} />
 
-            <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} storage={storage} isLoaded={isLoaded} />} />
-          </Routes>
+              <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} storage={storage} isLoaded={isLoaded} />} />
+            </Routes>
         </BrowserRouter>
-        : <Loader isLoaded={isLoaded} />}
+          </ToastContext.Provider>
+        :
+        <Loader isLoaded={isLoaded} />}
+
+      <Toast />
     </>
   )
 }
