@@ -15,7 +15,7 @@ const Header = ({ isGuest }) => {
             <div className='d-flex' style={{ gap: "10px" }}>
 
                 {isGuest &&
-                    <section className='clock text-center' style={{ fontFamily: "unset", color: "#2a2a2a", fontWeight: "bold" }}>Guest Mode</section>}
+                    <section className='clock text-center' style={{ fontFamily: "unset", color: "#14213d", fontWeight: "bold" }}>Guest Mode</section>}
                 <div id="MyClockDisplay" className="clock" ></div>
             </div>
         </main>

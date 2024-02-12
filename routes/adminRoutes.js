@@ -30,7 +30,7 @@ function isAuthenticated(req, res, next) {
 function hasAccessRights(req, res, next) {
     console.log('hasAccessRights----req.session.', req.session, req.url)
     if (req.session.isAuthenticated === process.env.GUEST_ID && req.url !== "/getMessage" && req.url !== "/getUserSubmittedBlogs" && req.url !== "/logout") {
-        res.send({ matched: true, error: "Guest user doe not have access to perform this action", isGuest: true })
+        res.send({ matched: true, message: "Guest user does not have rights to perform this action", isGuest: true })
     } else {
         next();
         // res.send({ matched: false, error: "Session expired" });

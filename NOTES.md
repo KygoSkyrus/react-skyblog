@@ -19,6 +19,8 @@
 - side bar is not showing correct with for user subbmitted blogs
 - body-content should minus the expanded width if sidebar when expanded
 
+- compress sky img
+- put all the state in one object for homepage,
 - format all the apis
 - create middleware for access right
 - put the blogs in differnt route
@@ -34,9 +36,4 @@
 - check why get requests are not working
 - before pushing to prod ,, add secure true in session
 
-
 # done
-- cookie should be set at admin
-- error page is showing below login page
-
-- WHY sidebar and header needed to be inside route? bcz when user is not logged in and he tries to access a route than behind the loader the sidebar and header keep showing

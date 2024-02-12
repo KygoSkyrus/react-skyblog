@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import CategoryModal from './CategoryModal'
@@ -8,19 +8,11 @@ import "../../assets/css/sidebar.css"
 const Sidebar = (props) => {
 
     const { allCategory } = props
-    const [adminName, setAdminName] = useState()
 
     useEffect(() => {
         getSidebarWorking()
-        // getAdminName()
         handleSelectedOption()
     }, [])
-
-    //this will set the admin name in sidebar
-    async function getAdminName() {
-        // const adminVal = Cookies.get('admin')
-        // setAdminName(adminVal)
-    }
 
     async function logout() {
         fetch("/admin/logout", {
@@ -149,7 +141,7 @@ const Sidebar = (props) => {
                     <div className="user-info">
                         <i className="fas fa-solid fa-user-secret"></i>
                         <div className="user-details">
-                            <section className="user-name">{adminName}</section>
+                            <section className="user-name"></section>
                             {/* <span className="user-occupation">Admin</span> */}
                         </div>
                     </div>

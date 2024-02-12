@@ -2,15 +2,16 @@ import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Header from './Header';
-import { ToastContext } from '../../App';
+import { useToast } from '../ToastContext';
 
 const Dashboard = ({ state }) => {
 
     const { allCategory, allBlog, catAndCount, isGuest } = state;
     console.log('dashhh', state)
     const [showLoader, setShowLoader] = useState(false)
-    const toast = useContext(ToastContext);
-    console.log('toast---')
+    // const toast = useContext(ToastContext);
+    const { toast, showToast, hideToast } = useToast();
+    console.log('toast---', toast, showToast, hideToast)
 
 
     async function blogVisibility(id, e) {
@@ -36,7 +37,8 @@ const Dashboard = ({ state }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log('data setblog visibility',data)
+                console.log('data setblog visibility', data)
+                showToast(data.message)
                 if (data.isSet) {
 
                     setShowLoader(false)

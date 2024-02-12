@@ -1,60 +1,36 @@
-import React, { useRef } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { toastVisibility, setToastContent } from "./redux/toastSlice";
+import React, { useEffect, useRef } from "react";
+import { useToast } from "./ToastContext";
 
-const Toast = ({ toastVisibility, toastContent }) => {
-    let timer;
+const Toast = () => {
+
     const toastContainer = useRef();
-    //   const dispatch = useDispatch();
+    const { toast, hideToast } = useToast();
 
-    const hideToast = () => {
-        toastContainer.current.classList.remove("active");
-        clearTimeout(timer);
-    };
-
-    const showToast = () => {
-        toastContainer.current.classList.add("active");
-        timer = setTimeout(() => {
+    useEffect(() => {
+        console.log('ueeeee', toast?.toastVisibility)
+        if (toast?.toastVisibility) {
+            toastContainer.current.classList.add("active");
+        } else {
             toastContainer.current.classList.remove("active");
-            //   dispatch(toastVisibility({ toast: false })); //setting visibility to false
-            //   dispatch(setToastContent({ message: "" })); //and content empty
-        }, 3500);
-    };
-
-    const isSuccess = true;
-    //   const isToastVisible = useSelector((state) => state.toast.toast);
-    //   const isSuccess = useSelector((state) => state.toast.isSuccess);
-    //   const message = useSelector((state) => state.toast.toastContent);
-
-    if (toastVisibility) {
-        showToast();
-    }
+        }
+    }, [toast?.toastVisibility])
 
     return (
         <>
             <div
-                className="toastContainer shadow rounded-1"
+                className="toastContainer shadow rounded"
                 ref={toastContainer}
                 onClick={hideToast}
-                style={{
-                    borderLeft: isSuccess
-                        ? "6px solid var(--color-green)"
-                        : "6px solid var(--color-red)",
-                }}
+                style={{borderLeft: "8px solid #18c29c"}}
             >
-                {isSuccess ? (
-                    <span>
-                        <i className="fa-solid fa-circle-check me-3"></i>
-                    </span>
-                ) : (
-                    <span>
-                        <i className="fa-solid fa-triangle-exclamation me-3"></i>
-                    </span>
-                )}
 
-                <section className="toast-inner">{toastContent}</section>
-                <span onClick={hideToast}>
-                    <i className="fa-solid fa-xmark close ms-5"></i>
+                <span style={{ marginRight: "10px", color: "#18c29c", fontSize: "18px" }}>
+                    <i className="fa-solid fa-info-circle"></i>
+                </span>
+
+                <section className="toast-inner">{toast?.toastContent}</section>
+                <span onClick={hideToast} style={{ marginleft: "10px" }}>
+                    <i className="fa-solid fa-xmark close  cursor-pointer"></i>
                 </span>
             </div>
         </>

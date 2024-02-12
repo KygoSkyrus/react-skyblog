@@ -11,14 +11,13 @@ import Loader from './Loader';
 import ScrollToTop from './ScrollToTop';//deals with the Link to restore scroll
 import Toast from './components/Toast';
 
-export const ToastContext = createContext()
+import { ToastProvider } from './components/ToastContext';
 
 function App() {
   const [allBlog, setAllBlog] = useState();//remove this to show loader
   const [allCategory, setAllCategory] = useState();
   const [isLoaded, setIsLoaded] = useState(false)
 
-  const [toast, setToast] = useState({ toastVisibility: false, toastContent: "" })
 
   useEffect(() => {
     document.getElementById('root').classList.add('overflow')
@@ -132,20 +131,20 @@ function App() {
   return (
     <>
       {allBlog ?
-          <ToastContext.Provider value={'{toast,setToast}'}>
-        <BrowserRouter>
-          <ScrollToTop />
+        <ToastProvider>
+          <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               <Route path="/*" exact element={<NotAdmin allBlog={filteredBlogs} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} />} />
 
               <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} storage={storage} isLoaded={isLoaded} />} />
             </Routes>
-        </BrowserRouter>
-          </ToastContext.Provider>
+          </BrowserRouter>
+          <Toast />
+        </ToastProvider>
         :
         <Loader isLoaded={isLoaded} />}
 
-      <Toast />
     </>
   )
 }
