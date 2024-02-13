@@ -690,37 +690,37 @@ input[type="radio"] {
 
 .let1 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: 1.2s;
+  animation-delay: .1s;
 }
 
 .let2 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: 1.3s;
+  animation-delay: .2s;
 }
 
 .let3 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: 1.4s;
+  animation-delay: .3s;
 }
 
 .let4 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: 1.5s;
+  animation-delay: .4s;
 }
 
 .let5 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: 1.6s;
+  animation-delay: .5s;
 }
 
 .let6 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: 1.7s;
+  animation-delay: .6s;
 }
 
 .let7 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: 1.8s;
+  animation-delay: .7s;
 }
 
 @keyframes drop {
@@ -764,7 +764,7 @@ input[type="radio"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 300px;
+  width: 350px;
   min-width: 200px;
   max-width: 350px;
   z-index: 9999;

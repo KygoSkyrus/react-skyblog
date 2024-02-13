@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useGoogleLogin } from '@react-oauth/google';
 // import Cookies from 'js-cookie';
@@ -10,10 +10,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Banner from './Banner';
 import LoaderAPI from '../../LoaderAPI';
+import { BlogContext } from '../../App';
 
-const PostBlog = (props) => {
+const PostBlog = () => {
 
-    const { storage } = props
+    const { storage } = useContext(BlogContext);
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const [editorContent, setEditorContent] = useState()

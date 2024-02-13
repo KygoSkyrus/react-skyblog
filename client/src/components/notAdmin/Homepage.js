@@ -8,13 +8,12 @@ import CategoryList from './CategoryList';
 import BlogWrapperRight2 from './BlogWrapperRight2';
 import { BlogContext } from '../../App';
 
-const Homepage = (props) => {
+const Homepage = () => {
 
     const { allBlog, allCategory, techArray, sportsArray, politicsArray, todaysArray, featuredArray, trendingArray, popularArray } = useContext(BlogContext);
 
     return (
         <>
-
             {/* <!-- Hero  --> */}
             <div className="hero t-mt-30 t-pt-30">
                 <div className="container">

@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 
 const UserSubmittedBlogs = ({ state }) => {
 
-    const { allCategory, isGuest } = state;
+    const { isGuest } = state;
     const [userBlogs, setUserBlogs] = useState()
     const [showLoader, setShowLoader] = useState(false)
 
@@ -49,7 +49,7 @@ const UserSubmittedBlogs = ({ state }) => {
     return (
         <>
             <div id='adminView'>
-                <Sidebar allCategory={allCategory} />
+                <Sidebar />
                 <div className='dynamicAdminContent'>
                     <Header isGuest={isGuest} />
                     <div className='body-content'>

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 
 const BlogWrapperRight = (props) => {
 
-    const { data, displayCategory, displayRead, fontSM, tagSM } = props
+    const { data, displayCategory, displayRead, fontSM, tagSM } = props;
+    
     return (
         <div className="col-12 t-mt-30 t-mb-30" key={data._id}>
             <div className="post post--right">

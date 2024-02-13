@@ -6,7 +6,6 @@ export const ToastProvider = ({ children }) => {
     const [toast, setToast] = useState({ toastVisibility: false, toastContent: "" });
 
     const showToast = (message) => {
-        // console.log('showtoast', message)
         setToast({ toastVisibility: true, toastContent: message });
         setTimeout(() => hideToast(), 5000); 
     };

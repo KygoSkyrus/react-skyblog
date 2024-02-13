@@ -13,7 +13,6 @@ const ProtectedRoute = (props) => {
     const {isAuthenticated, route, state} = props;
     console.log('ProtectedRoute',props)
     if (isAuthenticated === null) {
-        // return "LOADER"
         return <LoaderAPI showLoader={true} />
     }
     if (isAuthenticated) {

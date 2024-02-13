@@ -1,7 +1,7 @@
 import React from 'react'
 import Banner from './Banner'
 
-const Contact = (props) => {
+const Contact = () => {
 
     return (
         <>
@@ -53,9 +53,6 @@ const Contact = (props) => {
                     </div>
                 </div>
             </div>
-
-
-
         </>
     )
 }

@@ -3,9 +3,9 @@ import LoaderAPI from '../../LoaderAPI'
 import Sidebar from './Sidebar'
 import Header from './Header'
 
-const Messages = ({state}) => {
+const Messages = ({ state }) => {
 
-    const {allCategory, isGuest}=state;
+    const { isGuest } = state;
     const [messages, setMessages] = useState()
     const [showLoader, setShowLoader] = useState(false)
 
@@ -47,7 +47,7 @@ const Messages = ({state}) => {
     return (
         <>
             <div id='adminView'>
-                <Sidebar allCategory={allCategory} />
+                <Sidebar />
                 <div className='dynamicAdminContent'>
                     <Header isGuest={isGuest} />
                     <div className="body-content">

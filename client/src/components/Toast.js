@@ -21,7 +21,7 @@ const Toast = () => {
                 className="toastContainer shadow rounded"
                 ref={toastContainer}
                 onClick={hideToast}
-                style={{borderLeft: "8px solid #18c29c"}}
+                style={{ borderLeft: "8px solid #18c29c" }}
             >
 
                 <span style={{ marginRight: "10px", color: "#18c29c", fontSize: "18px" }}>
@@ -29,8 +29,8 @@ const Toast = () => {
                 </span>
 
                 <section className="toast-inner">{toast?.toastContent}</section>
-                <span onClick={hideToast} style={{ marginleft: "10px" }}>
-                    <i className="fa-solid fa-xmark close  cursor-pointer"></i>
+                <span onClick={hideToast} style={{ marginLeft: "10px" }}>
+                    <i className="fa-solid fa-xmark close cursor-pointer"></i>
                 </span>
             </div>
         </>

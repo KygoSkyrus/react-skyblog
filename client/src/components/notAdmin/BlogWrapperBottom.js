@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const BlogWrapperBottom = (props) => {
 
-	const { data, displayRead, displayDesc, displayDetail } = props
+	const { data, displayRead, displayDesc, displayDetail } = props;
 
 	return (
 		<div className="post">

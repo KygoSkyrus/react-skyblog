@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,14 +10,18 @@ import draftToHtml from "draftjs-to-html";
 import LoaderAPI from '../../LoaderAPI';
 import Sidebar from './Sidebar';
 import Header from './Header';
+import { BlogContext } from '../../App';
+import { useToast } from '../ToastContext';
 
 const BlogsManagement = ({ state }) => {
 
-    const {allCategory, storage, isGuest } = state;
+    const { isGuest } = state;
+    const { allCategory, storage } = useContext(BlogContext);
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const [editorContent, setEditorContent] = useState()
-
     const [showLoader, setShowLoader] = useState(false)
+    const { showToast } = useToast();
+
 
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
@@ -92,15 +96,11 @@ const BlogsManagement = ({ state }) => {
             }),
         }).then(response => response.json())
             .then(data => {
-                if (data.blog_added) {
-                    setShowLoader(false)
-                    window.location.reload();
-                } else {
-                    //resetting the fields
-                    setShowLoader(false)
-                    document.getElementById("frm").reset();
-                    setDynamicLabel()
-                }
+                setShowLoader(false)
+                showToast(data.message)
+                //resetting the fields
+                document.getElementById("frm").reset();
+                setDynamicLabel()
             })
             .catch(err => console.log(err))
     }
@@ -141,7 +141,7 @@ const BlogsManagement = ({ state }) => {
     return (
         <>
             <div id='adminView'>
-                <Sidebar allCategory={allCategory} />
+                <Sidebar />
                 <div className='dynamicAdminContent'>
                     <Header isGuest={isGuest} />
                     <div className="body-content">

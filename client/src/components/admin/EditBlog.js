@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from 'react-router-dom'
 
@@ -12,10 +12,12 @@ import { v4 as uuidv4 } from 'uuid';
 import LoaderAPI from '../../LoaderAPI';
 import Sidebar from './Sidebar';
 import Header from './Header';
+import { BlogContext } from '../../App';
 
 const EditBlog = ({state}) => {
 
-  const { allBlog, allCategory, storage, isGuest } = state;
+  const { isGuest } = state;
+  const { allBlog, allCategory, storage } = useContext(BlogContext);
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
   const [editorContent, setEditorContent] = useState()
 
@@ -189,7 +191,7 @@ let theBlog;
   return (
     <>
     <div id='adminView'>
-                <Sidebar allCategory={allCategory} />
+                <Sidebar />
                 <div className='dynamicAdminContent'>
                     <Header isGuest={isGuest} />
       <div className="body-content">

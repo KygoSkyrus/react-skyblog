@@ -13,7 +13,7 @@
 - blogs forms are at 3 place, at blg-management, and on edit, and the userblog, all tgree of them are safe,,,a common componend can be used here
 
 # new
-
+- LOADERAPI compo is the loder, check if its anywhere present , remove and add it at the app and create a context for it too to get it activated from anywhere in thhe app
 - the progress loader is not good enough, the animation takes time to start and till thne the process gets completed
 
 - side bar is not showing correct with for user subbmitted blogs

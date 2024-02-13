@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 
 import OtherBlogsComp from './OtherBlogsComp';
@@ -7,10 +7,11 @@ import CategoryList from './CategoryList';
 import BlogWrapperRight2 from './BlogWrapperRight2';
 import Banner from './Banner';
 import Error from './Error';
+import { BlogContext } from '../../App';
 
-const SingleCategory = (props) => {
+const SingleCategory = () => {
 
-    const { allBlog, allCategory, catAndCount } = props
+    const { allBlog } = useContext(BlogContext);
     const [blogIncat, setBlogIncat] = useState()
 
     let { state } = useLocation();//this is the state send from Link react router causes the page to rerender as we were having the same props
@@ -51,9 +52,9 @@ const SingleCategory = (props) => {
                                 </div>
                                 <div className="col-lg-3">
                                     <div className="row">
-                                        <OtherBlogsComp allBlog={allBlog} />
+                                        <OtherBlogsComp />
                                         <div className='t-mt-30'>
-                                            <CategoryList catAndCount={catAndCount} allCategory={allCategory} />
+                                            <CategoryList />
                                         </div>
                                     </div>
                                 </div>

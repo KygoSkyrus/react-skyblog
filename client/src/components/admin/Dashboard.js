@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Header from './Header';
 import { useToast } from '../ToastContext';
+import { BlogContext } from '../../App';
+import LoaderAPI from '../../LoaderAPI';
 
 const Dashboard = ({ state }) => {
 
-    const { allCategory, allBlog, catAndCount, isGuest } = state;
+    const { isGuest } = state;
+    const { allCategory, allBlog, catAndCount } = useContext(BlogContext);
     console.log('dashhh', state)
     const [showLoader, setShowLoader] = useState(false)
     // const toast = useContext(ToastContext);
-    const { toast, showToast, hideToast } = useToast();
-    console.log('toast---', toast, showToast, hideToast)
+    const { showToast } = useToast();
 
 
     async function blogVisibility(id, e) {
@@ -37,15 +39,9 @@ const Dashboard = ({ state }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log('data setblog visibility', data)
+                setShowLoader(false)
                 showToast(data.message)
-                if (data.isSet) {
-
-                    setShowLoader(false)
-                }
             })
-
-
     }
 
     async function deleteBlog(id) {
@@ -59,10 +55,8 @@ const Dashboard = ({ state }) => {
         })
             .then(res => res.json())
             .then(data => {
-                if (data.isDeleted) {
-                    setShowLoader(false)
-                    window.location.reload()
-                }
+                setShowLoader(false)
+                showToast(data.message)
             })
     }
 
@@ -70,7 +64,7 @@ const Dashboard = ({ state }) => {
     return (
         <>
             <div id='adminView'>
-                <Sidebar allCategory={allCategory} />
+                <Sidebar />
                 <div className='dynamicAdminContent'>
                     <Header isGuest={isGuest} />
                     <div className="body-content">
@@ -168,6 +162,7 @@ const Dashboard = ({ state }) => {
                     </div>
                 </div>
             </div>
+            <LoaderAPI showLoader={showLoader} />
         </>
     )
 }

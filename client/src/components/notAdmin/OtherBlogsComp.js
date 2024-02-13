@@ -3,7 +3,7 @@ import BlogWrapperRight from './BlogWrapperRight'
 import { Link } from 'react-router-dom'
 import { BlogContext } from '../../App';
 
-const OtherBlogsComp = (props) => {
+const OtherBlogsComp = () => {
 
 	const { allBlog } = useContext(BlogContext);;
 

@@ -5,9 +5,7 @@ import CategoryModal from './CategoryModal'
 import ChangePasswordModal from './ChangePasswordModal'
 import "../../assets/css/sidebar.css"
 
-const Sidebar = (props) => {
-
-    const { allCategory } = props
+const Sidebar = () => {
 
     useEffect(() => {
         getSidebarWorking()
@@ -85,7 +83,7 @@ const Sidebar = (props) => {
             <ChangePasswordModal />
 
             {/* <!--  manage category Modal --> */}
-            <CategoryModal allCategory={allCategory} />
+            <CategoryModal />
 
             <nav className="sidebar">
                 <div className="navbar-container">

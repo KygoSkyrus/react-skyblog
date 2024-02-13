@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import "../../assets/css/navbar.css"
+import { BlogContext } from '../../App';
 
-const Navbar = (props) => {
+const Navbar = () => {
 
-    const { allBlog, finalArr } = props
+    const { allBlog, finalArr } = useContext(BlogContext);
     const [searchedOptions, setSearchedOptions] = useState()
 
     function handleMenu(e) {

@@ -5,7 +5,7 @@ const CONTACT = require("../schema/contact")
 const CATEGORY = require("../schema/category")
 const USERBLOG = require("../schema/userblog");
 
-const {dummyUserSubmittedBlogs, dummyMessages} = require("./../dummyData")
+const { dummyUserSubmittedBlogs, dummyMessages } = require("./../dummyData")
 
 const login = async (req, res) => {
     const credentials = req.body;
@@ -25,7 +25,7 @@ const login = async (req, res) => {
             res.send({ matched: false });
         }
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 
@@ -42,7 +42,7 @@ const changePassword = async (req, res) => {
             console.log("something went wrong");
         }
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 
@@ -79,15 +79,15 @@ const addBlog = async (req, res) => {
             status: "checked"
         })
         blog.save().then(response => {
-            res.send({ blog_added: true });
+            res.send({ blog_added: true, message:"Blog added successfully" });
         })
             .catch(err => {
                 console.log(err)
-                res.send({ blog_added: false });
+                res.send({ blog_added: false,  message: "Something went wrong, Try again" });
             })
 
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 
@@ -101,7 +101,7 @@ const editBlog = async (req, res) => {
             res.send({ isBlogEdited: false })
         }
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 
 }
@@ -112,11 +112,13 @@ const deleteBlog = async (req, res) => {
     try {
         let result = await BLOG.deleteOne({ _id: details.id })
         if (result.deletedCount > 0) {
-            res.send({ isDeleted: true });
+            res.send({ isDeleted: true, message:"Blog deleted successfully" });
             console.log('result', result)
+        } else {
+            res.send({ message: "Something went wrong, Try again" })
         }
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 
@@ -127,12 +129,12 @@ const blogsVisibility = async (req, res) => {
         //findByIdAndUpdate: is the alternatice to directly use id
         let result = await BLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
         if (result) {
-            res.send({ isSet: true })
+            res.send({ isSet: true, message: "" })
         } else {
-            res.send({ isSet: false })
+            res.send({ isSet: false, message: "Something went wrong, Try again" })
         }
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 
@@ -140,14 +142,14 @@ const blogsVisibility = async (req, res) => {
 
 const getMessages = async (req, res) => {
     try {
-        if(req.session.isAuthenticated === process.env.GUEST_ID){
+        if (req.session.isAuthenticated === process.env.GUEST_ID) {
             res.send(dummyMessages);
-        }else{
+        } else {
             let ret = await CONTACT.find({})
             res.send(ret)
         }
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 
@@ -158,7 +160,7 @@ const deleteMessage = async (req, res) => {
         let result = await CONTACT.deleteOne({ _id: details.id })
         res.send({ deletedCount: result.deletedCount });
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 
@@ -167,15 +169,15 @@ const deleteMessage = async (req, res) => {
 const getUserSubmittedBlogs = async (req, res) => {
     try {
         // console.log('req.ssjsjs',dummyUserSubmittedBlogs)
-        if(req.session.isAuthenticated === process.env.GUEST_ID){
+        if (req.session.isAuthenticated === process.env.GUEST_ID) {
             res.send(dummyUserSubmittedBlogs);
-        }else{
+        } else {
             let ret = await USERBLOG.find({})
             res.send(ret);
         }
-          
+
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 
@@ -186,7 +188,7 @@ const deleteUserSubmittedBlog = async (req, res) => {
         let resp = await USERBLOG.deleteOne({ _id: details.id })
         res.send({ deletedCount: resp.deletedCount })
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 
@@ -218,7 +220,7 @@ const addCategory = async (req, res) => {
             }
         }
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 
@@ -229,7 +231,7 @@ const deleteCategory = async (req, res) => {
         //console.log("Number of records deleted: " + resp.deletedCount);
         res.send({ affectedRows: resp.deletedCount, message: "deleted" });
     } catch (err) {
-        console.log(err);
+        res.send({ message: "Internal server error" });
     }
 }
 

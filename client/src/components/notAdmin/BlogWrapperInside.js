@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const BlogWrapperInside = (props) => {
 
-	const { data, height } = props
+	const { data, height } = props;
 
 	return (
 		<div className="col-12 t-mb-30">

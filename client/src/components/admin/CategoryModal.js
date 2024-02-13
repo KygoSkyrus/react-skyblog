@@ -1,9 +1,10 @@
-import React,{useState} from 'react'
+import React,{useContext, useState} from 'react'
 import LoaderAPI from '../../LoaderAPI';
+import { BlogContext } from '../../App';
 
-const CategoryModal = (props) => {
+const CategoryModal = () => {
 
-    const { allCategory } = props
+    const { allCategory } = useContext(BlogContext);
     const [showLoader, setShowLoader] = useState(false)
 
     async function addCategory() {

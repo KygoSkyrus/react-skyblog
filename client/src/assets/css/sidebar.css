@@ -247,6 +247,7 @@ li {
   background-color: #18c29c;
   padding: 10px 15px;
   border-radius: 9px;
+  border-bottom: 2px solid rgb(20, 33, 61);
 }
 
 .menu-item.selected {
