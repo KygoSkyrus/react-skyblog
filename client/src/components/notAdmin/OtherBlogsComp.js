@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import BlogWrapperRight from './BlogWrapperRight'
 import { Link } from 'react-router-dom'
+import { BlogContext } from '../../App';
 
 const OtherBlogsComp = (props) => {
 
-	const { allBlog } = props;
+	const { allBlog } = useContext(BlogContext);;
 
 	return (
 		<>

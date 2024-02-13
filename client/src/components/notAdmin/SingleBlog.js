@@ -1,15 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useLocation } from "react-router-dom"
 
 import OtherBlogsComp from './OtherBlogsComp'
 import BlogWrapperBottom from './BlogWrapperBottom'
 import CategoryList from './CategoryList'
 import Error from './Error'
+import { BlogContext } from '../../App'
 
-const SingleBlog = (props) => {
+const SingleBlog = () => {
 
-    const { allBlog, allCategory, catAndCount } = props
+    const { allBlog } = useContext(BlogContext);
     const [thePrev, setThePrev] = useState()
     const [theNext, setTheNext] = useState()
     const [theBlog, setTheBlog] = useState()
@@ -237,8 +238,8 @@ const SingleBlog = (props) => {
 
                             <div className="col-lg-3">
                                 <div className="row">
-                                    <OtherBlogsComp allBlog={allBlog} />
-                                    <CategoryList catAndCount={catAndCount} allCategory={allCategory} />
+                                    <OtherBlogsComp />
+                                    <CategoryList />
                                 </div>
                             </div>
                         </div>

@@ -13,6 +13,8 @@ import Toast from './components/Toast';
 
 import { ToastProvider } from './components/ToastContext';
 
+export const BlogContext = createContext()
+
 function App() {
   const [allBlog, setAllBlog] = useState();//remove this to show loader
   const [allCategory, setAllCategory] = useState();
@@ -131,17 +133,35 @@ function App() {
   return (
     <>
       {allBlog ?
-        <ToastProvider>
-          <BrowserRouter>
-            <ScrollToTop />
-            <Routes>
-              <Route path="/*" exact element={<NotAdmin allBlog={filteredBlogs} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} />} />
+        <BlogContext.Provider value={{
+          allBlog: filteredBlogs,
+          allCategory: allCategory,
+          featuredArray: featuredArray,
+          techArray: techArray,
+          sportsArray: sportsArray,
+          todaysArray: todaysArray,
+          catAndCount: catAndCount,
+          politicsArray: politicsArray,
+          finalArr: finalArr,
+          trendingArray: trendingArray,
+          popularArray: popularArray,
+          storage: storage,
+          isLoaded: isLoaded,
+        }}>
+          <ToastProvider>
+            <BrowserRouter>
+              <ScrollToTop />
+              <Routes>
+                <Route path="/*" exact element={<NotAdmin
+                // allBlog={filteredBlogs} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} 
+                />} />
 
-              <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} storage={storage} isLoaded={isLoaded} />} />
-            </Routes>
-          </BrowserRouter>
-          <Toast />
-        </ToastProvider>
+                <Route path="/admin/*" exact element={<Admin allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} storage={storage} isLoaded={isLoaded} />} />
+              </Routes>
+            </BrowserRouter>
+            <Toast />
+          </ToastProvider>
+        </BlogContext.Provider>
         :
         <Loader isLoaded={isLoaded} />}
 

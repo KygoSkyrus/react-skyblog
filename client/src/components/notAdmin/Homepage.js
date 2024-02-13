@@ -6,10 +6,11 @@ import BlogWrapperBottom from './BlogWrapperBottom';
 import OtherBlogsComp from './OtherBlogsComp';
 import CategoryList from './CategoryList';
 import BlogWrapperRight2 from './BlogWrapperRight2';
+import { BlogContext } from '../../App';
 
 const Homepage = (props) => {
 
-    const { allBlog, allCategory, catAndCount, techArray, sportsArray, politicsArray, todaysArray, featuredArray, trendingArray, popularArray } = props
+    const { allBlog, allCategory, techArray, sportsArray, politicsArray, todaysArray, featuredArray, trendingArray, popularArray } = useContext(BlogContext);
 
     return (
         <>
@@ -72,7 +73,7 @@ const Homepage = (props) => {
                         </div>
                         <div className="col-lg-3 marginTop pxIsZero">
                             <div className="row">
-                                <OtherBlogsComp allBlog={allBlog} />
+                                <OtherBlogsComp />
                             </div>
                         </div>
                     </div>
@@ -151,7 +152,7 @@ const Homepage = (props) => {
 
                                 <div className="t-mb-30">
                                     {allBlog && allCategory ?
-                                        <CategoryList catAndCount={catAndCount} allCategory={allCategory} />
+                                        <CategoryList />
                                         : ""}
                                 </div>
 
