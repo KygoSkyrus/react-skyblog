@@ -135,6 +135,7 @@ function App() {
       {allBlog ?
         <BlogContext.Provider value={{
           allBlog: filteredBlogs,
+          unFilteredBlogs: allBlog,
           allCategory: allCategory,
           featuredArray: featuredArray,
           techArray: techArray,

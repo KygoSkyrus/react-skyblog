@@ -1,8 +1,10 @@
 import React,{useState} from 'react'
 import LoaderAPI from '../../LoaderAPI';
+import { useToast } from '../ToastContext';
 
 const ChangePasswordModal = () => {
     const [showLoader, setShowLoader] = useState(false)
+    const { showToast } = useToast();
 
     async function cpswrd() {
         setShowLoader(true)
@@ -23,9 +25,9 @@ const ChangePasswordModal = () => {
         });
 
         const data = await res.json();
-        if (data.message === "changed") {
-            setShowLoader(false)
-            alert("Password changed successfully!");
+        setShowLoader(false)
+        showToast(data.message)
+        if (data.isChanged) {
             document.getElementById("password").value = "";
             document.getElementById("newPassword").value = "";
             document.getElementById("close").click();

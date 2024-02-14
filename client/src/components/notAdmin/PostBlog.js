@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useGoogleLogin } from '@react-oauth/google';
-// import Cookies from 'js-cookie';
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -11,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Banner from './Banner';
 import LoaderAPI from '../../LoaderAPI';
 import { BlogContext } from '../../App';
+import { useToast } from '../ToastContext';
 
 const PostBlog = () => {
 
@@ -20,6 +20,8 @@ const PostBlog = () => {
     const [editorContent, setEditorContent] = useState()
     const [showLoader, setShowLoader] = useState(false)
     const [user, setUser] = useState();
+    const { showToast } = useToast();
+
 
     async function sendData(e) {
         setShowLoader(true)
@@ -83,16 +85,11 @@ const PostBlog = () => {
             }),
         }).then(response => response.json())
             .then(data => {
-                if (data.blog_received) {
-                    setShowLoader(false)
-                    window.location.reload();
-                } else {
-                    setShowLoader(false)
-                    //resetting the fields
-                    document.getElementById("frm").reset();
-                    setDynamicLabel()
-                    alert('something went wrong, please try again!!!')
-                }
+                setShowLoader(false)
+                showToast(data.message)
+                // resetting fields
+                document.getElementById("frm").reset();
+                setDynamicLabel()
             })
             .catch(err => console.log(err))
     }
@@ -104,14 +101,16 @@ const PostBlog = () => {
     }
 
     function setDynamicLabel(e) {
+        let dynamicLabel = document.getElementById("dynamicLabel")
+        let displayImg = document.getElementById('displayimg')
         if (document.getElementById("image")?.files[0]?.name) {
-            document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
+            dynamicLabel.innerHTML = document.getElementById("image")?.files[0]?.name;
             const [file] = document.getElementById("image").files;
-            let displayImg = document.getElementById('displayimg')
             displayImg.style.backgroundImage = `url('${URL.createObjectURL(file)}')`
             displayImg.style.display = "block"
         } else {
-            document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
+            dynamicLabel.innerHTML = "Choose a file…";
+            displayImg.style.display = "none";
         }
     }
 

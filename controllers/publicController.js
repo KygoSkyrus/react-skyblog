@@ -60,14 +60,15 @@ const userSubmittedBlog = async (req, res) => {
         })
         blog.save().
             then(response => {
-                res.send({ blog_received: true });
+                res.send({ blog_received: true, message:"Blog submitted for review successfully" });
             })
             .catch(err => {
                 console.log(err)
-                res.send({ blog_received: false });
+                res.send({ blog_received: false, message:"Something went worng" });
             })
     } catch (err) {
         console.log(err);
+        res.send({ message:"Internal server error" });
     }
 }
 

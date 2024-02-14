@@ -9,8 +9,8 @@ import LoaderAPI from '../../LoaderAPI';
 const Dashboard = ({ state }) => {
 
     const { isGuest } = state;
-    const { allCategory, allBlog, catAndCount } = useContext(BlogContext);
-    console.log('dashhh', state)
+    const { unFilteredBlogs, allCategory, catAndCount } = useContext(BlogContext);
+    console.log('dashhhboard', state,unFilteredBlogs)
     const [showLoader, setShowLoader] = useState(false)
     // const toast = useContext(ToastContext);
     const { showToast } = useToast();
@@ -138,7 +138,7 @@ const Dashboard = ({ state }) => {
                                         </thead>
                                         <tbody id="tbody">
 
-                                            {allBlog?.map((x, index) => {
+                                            {unFilteredBlogs?.map((x, index) => {
 
                                                 return (
                                                     <tr key={x._id}>

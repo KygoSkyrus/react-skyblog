@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Editor } from "react-draft-wysiwyg";
@@ -25,84 +24,89 @@ const BlogsManagement = ({ state }) => {
 
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
-        setShowLoader(true)//start showing loader
+        if (!isGuest) {
+            setShowLoader(true)//start showing loader
 
-        let image = document.getElementById("image")?.files[0];
-        let title = document.getElementById("title")?.value;
-        let url = document.getElementById("url")?.value;
-        let category = document.getElementById("category")?.value;
-        let select
-        if (document.querySelector("input[type=radio][name=select]:checked")) {
-            select = document.querySelector("input[type=radio][name=select]:checked")?.value;
+            let image = document.getElementById("image")?.files[0];
+            let title = document.getElementById("title")?.value;
+            let url = document.getElementById("url")?.value;
+            let category = document.getElementById("category")?.value;
+            let select
+            if (document.querySelector("input[type=radio][name=select]:checked")) {
+                select = document.querySelector("input[type=radio][name=select]:checked")?.value;
+            } else {
+                select = ''
+            }
+            let shortdesc = document.getElementById("shortdesc")?.value;
+            let author = document.getElementById("author")?.value;
+            let metatitle = document.getElementById("metatitle")?.value;
+            let metakeyword = document.getElementById("metakeyword")?.value;
+            let metadesc = document.getElementById("metadesc")?.value;
+            //let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
+            let detail = editorContent
+
+            /*
+            let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
+            //check sthe size of the images inside the summernote
+            let totalsize = 0;
+            for (let i = 0; i < allimg.length; i++) {
+                let base64String = allimg[i].getAttribute("src");//base64 data
+                let stringLength = base64String.length - 'data:image/png;base64,'.length;
+                let sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
+                let sizeInKb = sizeInBytes / 1000000;
+                totalsize += sizeInKb;
+            }
+            */
+
+            let imageUrl;
+            const imageRef = ref(storage, "skyblog/" + uuidv4());
+            //uploading image to firebase storage
+            await uploadBytes(imageRef, image)
+                .then(snapshot => {
+                    return snapshot.metadata.fullPath;
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+
+            //getting the image url
+            await getDownloadURL(imageRef)
+                .then(url => {
+                    imageUrl = url;
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+
+            fetch("/admin/addBlog", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    imageUrl,
+                    title,
+                    url,
+                    category,
+                    select,
+                    shortdesc,
+                    author,
+                    metatitle,
+                    metakeyword,
+                    metadesc,
+                    detail
+                }),
+            }).then(response => response.json())
+                .then(data => {
+                    setShowLoader(false)
+                    showToast(data.message)
+                    window.location.reload();// in order to show added blog in dashboard
+                })
+                .catch(err => console.log(err))
         } else {
-            select = ''
+            showToast('Guest user does not have rights to perform this action')
+            //resetting the fields
+            document.getElementById("frm").reset();
+            setDynamicLabel()
         }
-        let shortdesc = document.getElementById("shortdesc")?.value;
-        let author = document.getElementById("author")?.value;
-        let metatitle = document.getElementById("metatitle")?.value;
-        let metakeyword = document.getElementById("metakeyword")?.value;
-        let metadesc = document.getElementById("metadesc")?.value;
-        //let detail = document.querySelectorAll(".note-editable")[0]?.innerHTML; //summernote
-        let detail = editorContent
-
-        /*
-        let allimg = document.querySelectorAll(".note-editable")[0]?.getElementsByTagName('img');
-        //check sthe size of the images inside the summernote
-        let totalsize = 0;
-        for (let i = 0; i < allimg.length; i++) {
-            let base64String = allimg[i].getAttribute("src");//base64 data
-            let stringLength = base64String.length - 'data:image/png;base64,'.length;
-            let sizeInBytes = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812;
-            let sizeInKb = sizeInBytes / 1000000;
-            totalsize += sizeInKb;
-        }
-        */
-
-        let imageUrl;
-        const imageRef = ref(storage, "skyblog/" + uuidv4());
-        //uploading image to firebase storage
-        await uploadBytes(imageRef, image)
-            .then(snapshot => {
-                return snapshot.metadata.fullPath;
-            })
-            .catch(error => {
-                console.log(error)
-            });
-
-        //getting the image url
-        await getDownloadURL(imageRef)
-            .then(url => {
-                imageUrl = url;
-            })
-            .catch(error => {
-                console.log(error)
-            });
-
-        fetch("/admin/addBlog", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                imageUrl,
-                title,
-                url,
-                category,
-                select,
-                shortdesc,
-                author,
-                metatitle,
-                metakeyword,
-                metadesc,
-                detail
-            }),
-        }).then(response => response.json())
-            .then(data => {
-                setShowLoader(false)
-                showToast(data.message)
-                //resetting the fields
-                document.getElementById("frm").reset();
-                setDynamicLabel()
-            })
-            .catch(err => console.log(err))
     }
 
     const onEditorStateChange = function (editorState) {
@@ -127,14 +131,16 @@ const BlogsManagement = ({ state }) => {
     }
 
     function setDynamicLabel(e) {
+        let dynamicLabel=  document.getElementById("dynamicLabel")
+        let displayImg = document.getElementById('displayimg')
         if (document.getElementById("image")?.files[0]?.name) {
-            document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
+            dynamicLabel.innerHTML = document.getElementById("image")?.files[0]?.name;
             const [file] = document.getElementById("image").files;
-            let displayImg = document.getElementById('displayimg')
             displayImg.style.backgroundImage = `url('${URL.createObjectURL(file)}')`
             displayImg.style.display = "block"
         } else {
-            document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
+            dynamicLabel.innerHTML = "Choose a file…"
+            displayImg.style.display = "none"
         }
     }
 
@@ -253,7 +259,7 @@ const BlogsManagement = ({ state }) => {
                                                     id="starRed">*</span></label>
                                                 <input type="file" name="image" id="image" className="custom-input-file border-0"
                                                     data-multiple-caption="{count} files selected" accept="image/*" multiple
-                                                    required onChange={e => setDynamicLabel(e)} />
+                                                    required onChange={() => setDynamicLabel()} />
                                                 <label htmlFor="image" id="borderRed" className='customLabel' >
                                                     <i className="fa fa-upload"></i>
                                                     <span id='dynamicLabel'>Choose a file…</span>

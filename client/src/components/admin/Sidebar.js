@@ -85,7 +85,7 @@ const Sidebar = () => {
             {/* <!--  manage category Modal --> */}
             <CategoryModal />
 
-            <nav className="sidebar">
+            <nav className="sidebar shadow">
                 <div className="navbar-container">
 
                     <div className="navbar-logo-div">
@@ -96,37 +96,37 @@ const Sidebar = () => {
                     </div>
 
                     <ul className="menu-list" id='handleSelected' onClick={e => handleSelectedOption(e)}>
-                        <li className="menu-item" data-link="dashboard" >
+                        <li className="menu-item" data-link="dashboard" title='Blogs / category dashboard' >
                             <Link className="menu-link" to="/admin/dashboard">
                                 <i className="fas fa-solid fa-table"></i>
                                 <span className="menu-link-text">Dashboard</span>
                             </Link>
                         </li>
-                        <li className="menu-item" data-link="management" >
+                        <li className="menu-item" data-link="management" title='Create a blog' >
                             <Link className="menu-link" to="/admin/blogs-management">
                                 <i className="fas fa-solid fa-blog"></i>
                                 <span className="menu-link-text">Blogs</span>
                             </Link>
                         </li>
-                        <li className="menu-item" data-link="messages">
+                        <li className="menu-item" data-link="messages" title='User messages'>
                             <Link className="menu-link" to="/admin/messages">
                                 <i className="fas fa-solid fa-comments"></i>
                                 <span className="menu-link-text">Message</span>
                             </Link>
                         </li>
-                        <li className="menu-item" data-link="submitted">
+                        <li className="menu-item" data-link="submitted" title='User submitted blogs'>
                             <Link className="menu-link" to="/admin/user-submitted-blogs">
                                 <i className="fas fa-inbox"></i>
                                 <span className="menu-link-text">Submitted Blogs</span>
                             </Link>
                         </li>
-                        <li className="menu-item" data-toggle="modal" data-target="#manageCat">
+                        <li className="menu-item" data-toggle="modal" data-target="#manageCat" title='Manage category'>
                             <span className="menu-link" href="">
                                 <i className="fas fa-th-list"></i>
                                 <span className="menu-link-text">Category</span>
                             </span>
                         </li>
-                        <li className="menu-item" data-toggle="modal" data-target="#change">
+                        <li className="menu-item" data-toggle="modal" data-target="#change" title='Change password'>
                             <span className="menu-link" href="">
                                 <i className="fas fa-duotone fa-key"></i>
                                 <span className="menu-link-text">Change Password</span>

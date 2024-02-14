@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Allison&family=Dancing+Script:wght@400..700&family=Qwitcher+Grypen&display=swap");
 /*css variables*/
 :root {
   --body-bg-color: #dce4e3;
@@ -231,9 +231,22 @@ li {
   /* margin-left: 4rem; */
   background: white;
   padding: 10px 18px;
+  position: relative;
+  z-index: 1;
 }
 .dashboard .title {
   margin: 0;
+}
+.dashboard span small {
+  font-size: 12px !important;
+  font-family: "Dancing Script", cursive;
+}
+.dashboard span {
+  font-family: "Dancing Script", cursive;
+  font-size: 16px;
+  position: absolute;
+  right: 0;
+  bottom: -15px;
 }
 
 .sidebar.active + .dashboard {

@@ -36,10 +36,9 @@ const changePassword = async (req, res) => {
         let result = await ADMIN.findOneAndUpdate({ username: details.uname, password: details.password }, { password: details.newPassword }, { new: true })
         // If `new` isn't true, `findOneAndUpdate()` will return the document as it was _before_ it was updated.
         if (result) {
-            console.log("password changed!!!");
-            res.send({ message: "changed" });
+            res.send({ isChanged: true, message: "Password changed successfully" });
         } else {
-            console.log("something went wrong");
+            res.send({ isChanged: false,  message: "Incorrect username/password, Try again" });
         }
     } catch (err) {
         res.send({ message: "Internal server error" });
@@ -53,7 +52,7 @@ const logout = async (req, res) => {
         res.send({ message: "Logged out successfully!", isLoggedOut: true });
     } catch (err) {
         console.log(err);
-        res.send({ message: "something went wrong", isLoggedOut: false });
+        res.send({ message: "Something went wrong", isLoggedOut: false });
     }
 }
 
@@ -96,9 +95,9 @@ const editBlog = async (req, res) => {
     try {
         const result = await BLOG.findOneAndUpdate({ _id: details.blogid }, { title: details.title, url: details.url, category: details.category, type: details.select, detail: details.detail, shortdescription: details.shortdesc, image: details.imageUrl, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc }, { new: true })
         if (result) {
-            res.send({ isBlogEdited: true })
+            res.send({ isBlogEdited: true, message:"Blog edited successfully" })
         } else {
-            res.send({ isBlogEdited: false })
+            res.send({ isBlogEdited: false, message:"Something went wrong" })
         }
     } catch (err) {
         res.send({ message: "Internal server error" });
@@ -158,7 +157,7 @@ const deleteMessage = async (req, res) => {
 
     try {
         let result = await CONTACT.deleteOne({ _id: details.id })
-        res.send({ deletedCount: result.deletedCount });
+        res.send({ deletedCount: result.deletedCount , message:"Message deleted successfully" });
     } catch (err) {
         res.send({ message: "Internal server error" });
     }

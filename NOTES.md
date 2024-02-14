@@ -13,17 +13,7 @@
 - blogs forms are at 3 place, at blg-management, and on edit, and the userblog, all tgree of them are safe,,,a common componend can be used here
 
 # new
-- LOADERAPI compo is the loder, check if its anywhere present , remove and add it at the app and create a context for it too to get it activated from anywhere in thhe app
-- the progress loader is not good enough, the animation takes time to start and till thne the process gets completed
-
-- side bar is not showing correct with for user subbmitted blogs
-- body-content should minus the expanded width if sidebar when expanded
-
-- compress sky img
-- put all the state in one object for homepage,
 - format all the apis
-- create middleware for access right
-- put the blogs in differnt route
 - postablog compo need to be checked as js-cookie removed
 - on login, its not redirecting to dashboard route
 - add loader on every action
@@ -40,6 +30,7 @@
 # done
 
 # could be better?
+
 - isntead of reloading the page on admin action, just re-fetch the api to show updated data
 - instead of fetching all the data at once at top level, fetch whereever necessary only
 - setup redux

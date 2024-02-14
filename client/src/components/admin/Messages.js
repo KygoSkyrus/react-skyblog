@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import LoaderAPI from '../../LoaderAPI'
 import Sidebar from './Sidebar'
 import Header from './Header'
+import { useToast } from '../ToastContext'
 
 const Messages = ({ state }) => {
 
     const { isGuest } = state;
     const [messages, setMessages] = useState()
     const [showLoader, setShowLoader] = useState(false)
+    const { showToast } = useToast();
 
     useEffect(() => {
         getMessages();
@@ -35,11 +37,10 @@ const Messages = ({ state }) => {
         })
             .then(res => res.json())
             .then(data => {
+                setShowLoader(false)
+                showToast(data.message)
                 if (data.deletedCount > 0) {
-                    setShowLoader(false)
                     window.location.reload()
-                } else {
-                    setShowLoader(false)
                 }
             })
     }
