@@ -35,5 +35,11 @@
 - show guest/admin name next to logout btn
 - check why get requests are not working
 - before pushing to prod ,, add secure true in session
+- few blogs are deleted. add them back
 
 # done
+
+# could be better?
+- isntead of reloading the page on admin action, just re-fetch the api to show updated data
+- instead of fetching all the data at once at top level, fetch whereever necessary only
+- setup redux

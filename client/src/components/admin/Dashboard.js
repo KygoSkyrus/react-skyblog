@@ -57,6 +57,9 @@ const Dashboard = ({ state }) => {
             .then(data => {
                 setShowLoader(false)
                 showToast(data.message)
+                if(data.isDeleted){
+                    window.location.reload();
+                }
             })
     }
 

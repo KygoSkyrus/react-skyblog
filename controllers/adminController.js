@@ -115,7 +115,7 @@ const deleteBlog = async (req, res) => {
             res.send({ isDeleted: true, message:"Blog deleted successfully" });
             console.log('result', result)
         } else {
-            res.send({ message: "Something went wrong, Try again" })
+            res.send({ isDeleted: false, message: "Something went wrong, Try again" })
         }
     } catch (err) {
         res.send({ message: "Internal server error" });
@@ -129,7 +129,7 @@ const blogsVisibility = async (req, res) => {
         //findByIdAndUpdate: is the alternatice to directly use id
         let result = await BLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
         if (result) {
-            res.send({ isSet: true, message: "" })
+            res.send({ isSet: true, message: `Blog visibility has been turned ${details.val==='checked'? 'On':'Off'}` });
         } else {
             res.send({ isSet: false, message: "Something went wrong, Try again" })
         }
@@ -202,13 +202,13 @@ const addCategory = async (req, res) => {
         if (result.length === 0) {
             let category = new CATEGORY({ category: details.cat.toLowerCase() })
             category.save()//saving category in db
-            res.send({ message: "categoryAdded" });
+            res.send({ isAdded:true, message: "Category added successfully" });
         } else {
             let answer = "";
             for (var i = 0; i < result.length; i++) {
                 if (result[i].category == details.cat.toLowerCase()) {
                     answer += "exist";
-                    res.send({ message: "alreadyExists" }); //putting this will give error that cannoit set header after they are snet ,this might be bcz of the loop,,so whne the it loops for the first time and and its not the same ,,they are counting it asthe first time that res.send has apppear
+                    res.send({ isAdded:false, message: "Category already exists" }); //putting this will give error that cannot set header after they are sent ,this might be bcz of the loop,,so whne the it loops for the first time and and its not the same ,,they are counting it asthe first time that res.send has apppear
                     break; //so that it stop right there instead of looping till the end
                 }
             }
@@ -216,7 +216,7 @@ const addCategory = async (req, res) => {
             if (answer !== "exist") {
                 let category = new CATEGORY({ category: details.cat.toLowerCase() })
                 category.save()//saving category in db
-                res.send({ message: "categoryAdded" });
+                res.send({ isAdded:true, message: "Category added successfully" });
             }
         }
     } catch (err) {
@@ -228,8 +228,11 @@ const deleteCategory = async (req, res) => {
     const details = req.body;
     try {
         let resp = await CATEGORY.deleteOne({ _id: details.id })
-        //console.log("Number of records deleted: " + resp.deletedCount);
-        res.send({ affectedRows: resp.deletedCount, message: "deleted" });
+        if(resp.deletedCount>=0){
+            res.send({ isDeleted: true, message: "Category deleted successfully" });
+        }else{
+            res.send({ isDeleted: false, message: "Something went wrong, Try again" });
+        }
     } catch (err) {
         res.send({ message: "Internal server error" });
     }

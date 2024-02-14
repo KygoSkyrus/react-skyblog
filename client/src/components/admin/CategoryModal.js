@@ -1,11 +1,13 @@
 import React,{useContext, useState} from 'react'
 import LoaderAPI from '../../LoaderAPI';
 import { BlogContext } from '../../App';
+import { useToast } from '../ToastContext';
 
 const CategoryModal = () => {
 
     const { allCategory } = useContext(BlogContext);
     const [showLoader, setShowLoader] = useState(false)
+    const { showToast } = useToast();
 
     async function addCategory() {
         setShowLoader(true)
@@ -20,12 +22,13 @@ const CategoryModal = () => {
         });
 
         const data = await res.json();
-        if (data.message === "alreadyExists") {
-            setShowLoader(false)
-            alert("category already exists");
-        } else if (data.message === "categoryAdded") {
-            setShowLoader(false)
+
+        setShowLoader(false)
+        showToast(data.message)
+        document.getElementById("cat").value="";
+        if (data.isAdded) {
             window.location.reload();
+            // document.getElementById("closeCategory").click();
         }
     }
 
@@ -38,11 +41,12 @@ const CategoryModal = () => {
         });
 
         const data = await res.json();
-        if (data.message === "deleted") {
-            setShowLoader(false)
+        setShowLoader(false)
+        setShowLoader(false)
+        showToast(data.message)
+        if (data.isDeleted) {
             window.location.reload();
-        }else{
-            setShowLoader(false)
+             // document.getElementById("closeCategory").click();
         }
     }
 
@@ -53,7 +57,7 @@ const CategoryModal = () => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLabel">Categories</h5>
-                            <i className="fa fa-window-close fa-2x" type="button" id="close" data-dismiss="modal" aria-label="Close"></i>
+                            <i className="fa fa-window-close fa-2x" type="button" id="closeCategory" data-dismiss="modal" aria-label="Close"></i>
                         </div>
                         <div className="modal-body">
                             <div className="d-flex align-items-center justify-content-center text-center">
@@ -63,7 +67,7 @@ const CategoryModal = () => {
                                             <form className="register-form">
                                                 <div className="form-group">
                                                     <input type="text" className="form-control" id="cat"
-                                                        placeholder="add category" />
+                                                        placeholder="add category"/>
                                                 </div>
                                                 <section className="btn btn-success btn-block" onClick={e => addCategory(e)}>
                                                     Add category
