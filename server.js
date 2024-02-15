@@ -28,7 +28,7 @@ app.use(session({
   cookie: {
       maxAge: 7200000,
       httpOnly: true,
-      secure: false
+      secure: process.env.NODE_ENV === 'production' ? true : false,
   },
   store: MongoStore.create({
       mongoUrl: process.env.dbURI,
@@ -36,7 +36,6 @@ app.use(session({
   })
   // ExpressJS implements sessions using in-memory storage. Consequently, resetting your application will also reset the in-memory sessions. thats why mongodb is used as session storage
 }))
-// add secure : true for prod
 
 
 

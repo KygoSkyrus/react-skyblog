@@ -40,9 +40,9 @@ const BlogWrapperBottom = (props) => {
 					</Link>
 				</h3>
 				<p className={"mb-0 " + displayDesc}>
-					{data?.shortdescription}
+					<u>{data?.shortdescription}</u>
 				</p>
-				<div className={'detailContent ' + displayDetail} dangerouslySetInnerHTML={{ __html: data?.detail }}></div>
+				<div className={'detailContent mt-4 ' + displayDetail} dangerouslySetInnerHTML={{ __html: data?.detail }}></div>
 
 			</div>
 		</div>

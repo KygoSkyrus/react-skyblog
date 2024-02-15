@@ -5,7 +5,7 @@ import CategoryModal from './CategoryModal'
 import ChangePasswordModal from './ChangePasswordModal'
 import "../../assets/css/sidebar.css"
 
-const Sidebar = () => {
+const Sidebar = ({isGuest}) => {
 
     useEffect(() => {
         getSidebarWorking()
@@ -139,11 +139,11 @@ const Sidebar = () => {
                     <div className="user-info">
                         <i className="fas fa-solid fa-user-secret"></i>
                         <div className="user-details">
-                            <section className="user-name"></section>
+                            <section className="user-name">{isGuest  ? "Guest admin" : "Admin"}</section>
                             {/* <span className="user-occupation">Admin</span> */}
                         </div>
                     </div>
-                    <span className="logout-btn cursor-pointer" href="" onClick={e => logout(e)}>
+                    <span className="logout-btn cursor-pointer" href="" onClick={e => logout(e)} title='Logout'>
                         <i className="fas fa-sharp fa-regular fa-arrow-right-from-bracket"></i>
                     </span>
                 </div>

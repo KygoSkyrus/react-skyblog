@@ -14,6 +14,7 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import { BlogContext } from '../../App';
 import { useToast } from '../ToastContext';
+import AdminTemplate from './withAdminTemplate';
 
 const EditBlog = ({ state }) => {
 
@@ -200,156 +201,152 @@ const EditBlog = ({ state }) => {
 
   return (
     <>
-      <div id='adminView'>
-        <Sidebar />
-        <div className='dynamicAdminContent'>
-          <Header isGuest={isGuest} />
-          <div className="body-content">
-            <div className="card mb-4">
-              <div className="card-header">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h6 className="fs-17 font-weight-600 mb-0">Update Blog</h6>
-                  </div>
-                  <div className="text-right">
-                    <div className="actions">
-                      <a href="/" className="action-item" onClick={(e) => window.location.reload()}><i
-                        className="fas fa-refresh fa-sm"></i></a>
-                    </div>
+      <AdminTemplate isGuest={isGuest} >
+        <div className="body-content">
+          <div className="card mb-4">
+            <div className="card-header">
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 className="fs-17 font-weight-600 mb-0">Update Blog</h6>
+                </div>
+                <div className="text-right">
+                  <div className="actions">
+                    <a href="/" className="action-item" onClick={(e) => window.location.reload()}><i
+                      className="fas fa-refresh fa-sm"></i></a>
                   </div>
                 </div>
               </div>
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-xs-12 col-sm-12 col-md-12 p-l-30 p-r-30">
-                    <form id="frm" onSubmit={e => sendData(e)}>
-                      <input type="text" className="form-control" name="blogid" id="blogid" placeholder=""
-                        style={{ visibility: "hidden", position: "absolute" }} />
-                      <div className="form-group">
-                        <label htmlFor="title" className="font-weight-600">Title</label>
-                        <input type="text" className="form-control" name="title" id="title" placeholder="Enter Title"
-                          onChange={e => settingUrl(e)} required />
+            </div>
+            <div className="card-body">
+              <div className="row">
+                <div className="col-xs-12 col-sm-12 col-md-12 p-l-30 p-r-30">
+                  <form id="frm" onSubmit={e => sendData(e)}>
+                    <input type="text" className="form-control" name="blogid" id="blogid" placeholder=""
+                      style={{ visibility: "hidden", position: "absolute" }} />
+                    <div className="form-group">
+                      <label htmlFor="title" className="font-weight-600">Title</label>
+                      <input type="text" className="form-control" name="title" id="title" placeholder="Enter Title"
+                        onChange={e => settingUrl(e)} required />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="url" className="font-weight-600">Blog Url</label>
+                      <input type="text" className="form-control" name="url" id="url" placeholder="Blog URL" required />
+                    </div>
+                    <div className="form-group ">
+                      <label htmlFor="category" className="font-weight-600">Category</label>
+                      <div className="">
+                        <select className="form-control basic-single" name="category" id="category">
+                          <optgroup label="Select Category" id="optgroup">
+                            {allCategory?.map(x => {
+                              return (<option value={x.category} key={x._id} >{x.category}</option>)
+                            })}
+                          </optgroup>
+                        </select>
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="url" className="font-weight-600">Blog Url</label>
-                        <input type="text" className="form-control" name="url" id="url" placeholder="Blog URL" required />
-                      </div>
-                      <div className="form-group ">
-                        <label htmlFor="category" className="font-weight-600">Category</label>
-                        <div className="">
-                          <select className="form-control basic-single" name="category" id="category">
-                            <optgroup label="Select Category" id="optgroup">
-                              {allCategory?.map(x => {
-                                return (<option value={x.category} key={x._id} >{x.category}</option>)
-                              })}
-                            </optgroup>
-                          </select>
-                        </div>
-                      </div>
+                    </div>
 
-                      <label htmlFor="select" className="font-weight-600">Select</label>
-                      <div className="form-group wrapper11">
-                        <input type="radio" name="select" id="option-1" value="featured blogs" />
-                        <input type="radio" name="select" id="option-2" value="trending blogs" />
-                        <input type="radio" name="select" id="option-3" value="popular blogs" />
-                        <input type="radio" name="select" id="option-4" value="todays blogs" />
-                        <input type="radio" name="select" id="option-5" value="none" />
+                    <label htmlFor="select" className="font-weight-600">Select</label>
+                    <div className="form-group wrapper11">
+                      <input type="radio" name="select" id="option-1" value="featured blogs" />
+                      <input type="radio" name="select" id="option-2" value="trending blogs" />
+                      <input type="radio" name="select" id="option-3" value="popular blogs" />
+                      <input type="radio" name="select" id="option-4" value="todays blogs" />
+                      <input type="radio" name="select" id="option-5" value="none" />
 
-                        <label htmlFor="option-1" className="option option-1">
-                          <div className="dot"></div>
-                          <span>&nbsp;Featured Blogs</span>
-                        </label>
-                        <label htmlFor="option-2" className="option option-2">
-                          <div className="dot"></div>
-                          <span>&nbsp;Trending Blogs</span>
-                        </label>
-                        <label htmlFor="option-3" className="option option-3">
-                          <div className="dot"></div>
-                          <span>&nbsp;Popular Blogs</span>
-                        </label>
-                        <label htmlFor="option-4" className="option option-4">
-                          <div className="dot"></div>
-                          <span>&nbsp;Todays Blogs</span>
-                        </label>
-                        <label htmlFor="option-5" className="option option-5">
-                          <div className="dot"></div>
-                          <span>&nbsp;None</span>
-                        </label>
-                      </div>
+                      <label htmlFor="option-1" className="option option-1">
+                        <div className="dot"></div>
+                        <span>&nbsp;Featured Blogs</span>
+                      </label>
+                      <label htmlFor="option-2" className="option option-2">
+                        <div className="dot"></div>
+                        <span>&nbsp;Trending Blogs</span>
+                      </label>
+                      <label htmlFor="option-3" className="option option-3">
+                        <div className="dot"></div>
+                        <span>&nbsp;Popular Blogs</span>
+                      </label>
+                      <label htmlFor="option-4" className="option option-4">
+                        <div className="dot"></div>
+                        <span>&nbsp;Todays Blogs</span>
+                      </label>
+                      <label htmlFor="option-5" className="option option-5">
+                        <div className="dot"></div>
+                        <span>&nbsp;None</span>
+                      </label>
+                    </div>
 
-                      <div className="form-group">
-                        <label htmlFor="summernote" className="font-weight-600">Blog Content</label>
-                        <Editor
-                          editorState={editorState}
-                          toolbarClassName="toolbarClassName"
-                          wrapperClassName="wrapperClassName"
-                          editorClassName="editorClassName"
-                          onEditorStateChange={onEditorStateChange}
-                          mention={{
-                            separator: " ",
-                            trigger: "@",
-                            suggestions: [
-                              { text: "APPLE", value: "apple" },
-                              { text: "BANANA", value: "banana", url: "banana" },
-                              { text: "CHERRY", value: "cherry", url: "cherry" },
-                              { text: "DURIAN", value: "durian", url: "durian" },
-                              { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
-                              { text: "FIG", value: "fig", url: "fig" },
-                              { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
-                              { text: "HONEYDEW", value: "honeydew", url: "honeydew" }
-                            ]
-                          }}
-                        />
-                      </div>
+                    <div className="form-group">
+                      <label htmlFor="summernote" className="font-weight-600">Blog Content</label>
+                      <Editor
+                        editorState={editorState}
+                        toolbarClassName="toolbarClassName"
+                        wrapperClassName="wrapperClassName"
+                        editorClassName="editorClassName"
+                        onEditorStateChange={onEditorStateChange}
+                        mention={{
+                          separator: " ",
+                          trigger: "@",
+                          suggestions: [
+                            { text: "APPLE", value: "apple" },
+                            { text: "BANANA", value: "banana", url: "banana" },
+                            { text: "CHERRY", value: "cherry", url: "cherry" },
+                            { text: "DURIAN", value: "durian", url: "durian" },
+                            { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
+                            { text: "FIG", value: "fig", url: "fig" },
+                            { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
+                            { text: "HONEYDEW", value: "honeydew", url: "honeydew" }
+                          ]
+                        }}
+                      />
+                    </div>
 
-                      <div className="form-group">
-                        <label htmlFor="shortdesc" className="font-weight-600">Short Description</label>
-                        <textarea name="shortdesc" placeholder="" className="form-control" id="shortdesc" rows="3" required></textarea>
-                      </div>
+                    <div className="form-group">
+                      <label htmlFor="shortdesc" className="font-weight-600">Short Description</label>
+                      <textarea name="shortdesc" placeholder="" className="form-control" id="shortdesc" rows="3" required></textarea>
+                    </div>
 
-                      <div className="form-group d-flex flex-column">
-                        <label htmlFor="image" className="font-weight-600">File</label>
-                        <input type="file" name="image" id="image" className="custom-input-file border-0"
-                          data-multiple-caption="{count} files selected" accept="image/*" multiple onChange={() => setDynamicLabel()} />
-                        <label htmlFor="image" className='customLabel'>
-                          <i className="fa fa-upload"></i>
-                          <span id='dynamicLabel'>Choose a file…</span>
-                        </label>
-                        <div id="displayimg"></div>
-                      </div>
+                    <div className="form-group d-flex flex-column">
+                      <label htmlFor="image" className="font-weight-600">File</label>
+                      <input type="file" name="image" id="image" className="custom-input-file border-0"
+                        data-multiple-caption="{count} files selected" accept="image/*" multiple onChange={() => setDynamicLabel()} />
+                      <label htmlFor="image" className='customLabel'>
+                        <i className="fa fa-upload"></i>
+                        <span id='dynamicLabel'>Choose a file…</span>
+                      </label>
+                      <div id="displayimg"></div>
+                    </div>
 
-                      <div className="form-group">
-                        <label htmlFor="author" className="font-weight-600">Author Name</label>
-                        <input type="text" className="form-control" name="author" id="author" placeholder="Author Name" required />
-                      </div>
+                    <div className="form-group">
+                      <label htmlFor="author" className="font-weight-600">Author Name</label>
+                      <input type="text" className="form-control" name="author" id="author" placeholder="Author Name" required />
+                    </div>
 
-                      <div className="form-group">
-                        <label htmlFor="metatitle" className="font-weight-600">Meta Title</label>
-                        <input type="text" className="form-control" name="metatitle" id="metatitle"
-                          placeholder="Meta Title" />
-                      </div>
+                    <div className="form-group">
+                      <label htmlFor="metatitle" className="font-weight-600">Meta Title</label>
+                      <input type="text" className="form-control" name="metatitle" id="metatitle"
+                        placeholder="Meta Title" />
+                    </div>
 
-                      <div className="form-group">
-                        <label htmlFor="metakeyword" className="font-weight-600">Meta Keyword</label>
-                        <input type="text" className="form-control" name="metakeyword" id="metakeyword"
-                          placeholder="Meta Keyword" />
-                      </div>
+                    <div className="form-group">
+                      <label htmlFor="metakeyword" className="font-weight-600">Meta Keyword</label>
+                      <input type="text" className="form-control" name="metakeyword" id="metakeyword"
+                        placeholder="Meta Keyword" />
+                    </div>
 
-                      <div className="form-group">
-                        <label htmlFor="metadesc" className="font-weight-600">Meta Description</label>
-                        <input type="text" className="form-control" name="metadesc" id="metadesc"
-                          placeholder="Meta Description" />
-                      </div>
-                      <button id="go" type='submit' className='my-2 mb-3' >UPDATE</button>
-                    </form>
-                  </div>
-                  <div className="col-xs-12 col-sm-12 col-md-6 p-l-30 p-r-30"></div>
+                    <div className="form-group">
+                      <label htmlFor="metadesc" className="font-weight-600">Meta Description</label>
+                      <input type="text" className="form-control" name="metadesc" id="metadesc"
+                        placeholder="Meta Description" />
+                    </div>
+                    <button id="go" type='submit' className='my-2 mb-3' >UPDATE</button>
+                  </form>
                 </div>
+                <div className="col-xs-12 col-sm-12 col-md-6 p-l-30 p-r-30"></div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </AdminTemplate>
       <LoaderAPI showLoader={showLoader} />
     </>
   )

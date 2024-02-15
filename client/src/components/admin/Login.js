@@ -7,7 +7,7 @@ const Login = ({isAuthenticated}) => {
   const navigate = useNavigate()
 
   useEffect(()=>{
-    if (isAuthenticated) navigate('/admin/messages')
+    if (isAuthenticated) navigate('/admin/dashboard')
   },[isAuthenticated])
 
 
@@ -25,10 +25,9 @@ const Login = ({isAuthenticated}) => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('login  ', data)
         if (data.matched === true) {
-          console.log('login  if---trueee')
           navigate("/admin/dashboard")
+          window.location.reload()
         } else if (data.matched === false) {
           setError('Incorrect credentials')
         }

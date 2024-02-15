@@ -119,6 +119,16 @@ a:hover .tag__skew-reverse {
 .post {
   position: relative;
 }
+.post a{
+  display: inline-block;
+  overflow: hidden;
+}
+.post a img{
+  transition: all 0.3s ease-in-out;
+}
+.post a:hover img{
+  transform: scale(1.1);
+}
 .post--right {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useGoogleLogin } from '@react-oauth/google';
+import Cookies from 'js-cookie';
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -130,12 +131,18 @@ const PostBlog = () => {
     };
 
     const login = useGoogleLogin({
-        onSuccess: (codeResponse) => setUser(codeResponse),
-        onError: (error) => console.log('Login Failed:', error)
+        onSuccess: (codeResponse) => {
+            showToast("Logged in successfully")
+            setUser(codeResponse);
+        },
+        onError: (error) => {
+            showToast("Something went wrong")
+            console.log('Login Failed:', error)
+        },
     });
 
     useEffect(() => {
-        let userId = '';//Cookies.get('userid')
+        let userId = Cookies.get('userid');
         if (userId) {
             setUser(true)
             if (document.getElementById('email'))
@@ -149,7 +156,7 @@ const PostBlog = () => {
             })
                 .then(response => response.json())
                 .then((res) => {
-                    // Cookies.set('userid', res.email, { httpOnly: false, expires: 0.5 })
+                    Cookies.set('userid', res.email, { httpOnly: false, expires: 0.5 })
                     document.getElementById('email').value = res.email
                 })
                 .catch((err) => console.log(err));
