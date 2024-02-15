@@ -7,7 +7,6 @@ const Toast = () => {
     const { toast, hideToast } = useToast();
 
     useEffect(() => {
-        console.log('ueeeee', toast?.toastVisibility)
         if (toast?.toastVisibility) {
             toastContainer.current.classList.add("active");
         } else {
@@ -18,10 +17,10 @@ const Toast = () => {
     return (
         <>
             <div
-                className="toastContainer shadow rounded"
                 ref={toastContainer}
-                onClick={hideToast}
+                className="toastContainer shadow rounded"
                 style={{ borderLeft: "8px solid #18c29c" }}
+                onClick={hideToast}
             >
 
                 <span style={{ marginRight: "10px", color: "#18c29c", fontSize: "18px" }}>

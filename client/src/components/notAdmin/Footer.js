@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { BlogContext } from '../../App';
 
 const Footer = (props) => {
 
-	const { finalArr } = props;
+	const { finalArr } = useContext(BlogContext);
 
 	return (
 		<>

@@ -123,10 +123,10 @@ a:hover .tag__skew-reverse {
   display: inline-block;
   overflow: hidden;
 }
-.post a img{
+.post img{
   transition: all 0.3s ease-in-out;
 }
-.post a:hover img{
+.post:hover img{
   transform: scale(1.1);
 }
 .post--right {
@@ -313,16 +313,13 @@ a:hover .tag__skew-reverse {
   padding-top: 30px;
 }
 
-.post {
-  position: relative;
-}
 .post--in {
   overflow: hidden;
 }
 .post--in > img {
-  -webkit-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .post__overlay {
@@ -792,6 +789,19 @@ input[type="radio"] {
   margin-left: 20px;
 } */
 /********************************* TOAST **********************************/
+
+/* share diaglog */
+::backdrop {
+  background-image: linear-gradient(
+    45deg,
+    magenta,
+    rebeccapurple,
+    dodgerblue,
+    green
+  );
+  opacity: 0.75;
+}
+/* share diaglog */
 
 /********************************* RESPONSIVE ****************************************/
 

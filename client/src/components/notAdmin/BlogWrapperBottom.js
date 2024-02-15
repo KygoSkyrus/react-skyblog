@@ -1,13 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { WhatsappShareButton } from "react-share"
 
 const BlogWrapperBottom = (props) => {
 
 	const { data, displayRead, displayDesc, displayDetail } = props;
 
+	const handleModal = (val) => {
+		const dialog = document.querySelector("dialog");
+		val === "show" ? dialog.showModal() : dialog.close()
+	}
+
+	function handleClick(event) {
+		const dialog = document.querySelector("dialog");
+		if (event.target === dialog) {
+			dialog.close();
+		}
+	}
+
 	return (
 		<div className="post">
-			<Link to={"/" + data?.url}>
+			<Link to={"/" + data?.url} state={{ url: data?.url }}>
 				<img src={data?.image} alt="blog" className="img-fluid w-100" />
 			</Link>
 
@@ -27,15 +40,28 @@ const BlogWrapperBottom = (props) => {
 							{data?.date}
 						</span>
 					</li>
-					<li>
+					<li className="t-mr-16">
 						<span className={"t-link t-link--secondary ex-sm-text text-capitalize " + displayRead} >
-							<span className="las la-clock sm-text"></span>
-							10 min read
+							<span className="fa fa-clock sm-text"></span>&nbsp;10 min read
+						</span>
+					</li>
+					<li>
+						<span className={"t-link t-link--secondary ex-sm-text text-capitalize cursor-pointer " + displayRead} >
+							<WhatsappShareButton url={window.location.href} size={32} quote={'Dummy text!'} hashtag="#skyblog" >
+								<span className="fa fa-share sm-text"></span>&nbsp;share
+							</WhatsappShareButton>
+
+
+							<button onClick={() => handleModal("show")}>Show the dialog</button>
+							<dialog onClick={(e) => handleClick(e)}>
+								<button autofocus onClick={() => handleModal("hide")}>Close</button>
+								<p>DIAGLOg</p>
+							</dialog>
 						</span>
 					</li>
 				</ul>
 				<h3 className="post__title t-mt-10">
-					<Link to={"/" + data?.url} className="t-link t-link--secondary">
+					<Link to={"/" + data?.url} state={{ url: data?.url }} className="t-link t-link--secondary">
 						{data?.title}
 					</Link>
 				</h3>

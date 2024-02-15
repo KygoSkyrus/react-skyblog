@@ -18,13 +18,12 @@ const SingleBlog = () => {
     let { state } = useLocation();
 
     useEffect(() => {
-        console.log('ur')
         const link = document.baseURI;
         var blogurl = link.substring(
             link.lastIndexOf("/") + 1,
             link.length
         );
-        for (let i = 0; i < allBlog.length-1; i++) {
+        for (let i = 0; i < allBlog.length; i++) {
             //setting the prev blog
             let thePrev = allBlog[i - 1];
             setThePrev(thePrev)

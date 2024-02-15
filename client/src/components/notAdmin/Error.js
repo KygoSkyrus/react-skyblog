@@ -18,7 +18,7 @@ const Error = () => {
                                 <h3 className="h2 font-weight-bold text-monospace">OOPS... Page not pound.</h3>
                                 <p>The server encountered something unexpected that didn't allow it to complete the request.<br />
                                 </p>
-                                <Link to={"/"} className="btn btn-outline-success mt-3">HOME</Link>
+                                <Link to={"/"} className="btn btn-outline-success mt-3">Go to Homepage</Link>
                             </div>
                         </div>
                     </div>

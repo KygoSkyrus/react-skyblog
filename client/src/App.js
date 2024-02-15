@@ -83,42 +83,45 @@ function App() {
   //looping over the array of blogs [only loop here]
   allBlog?.forEach(blog => {
 
-    if (blog.status !== '1') filteredBlogs.push(blog);//collecting blogs that are marked visible only
+    //collecting blogs that are marked visible only
+    if (blog.status !== '1') {
+      filteredBlogs.push(blog);
 
-    //calculating all category and their count
-    if (catAndCount[blog.category]) {
-      catAndCount[blog.category] = ++catAndCount[blog.category]
-    } else {
-      catAndCount[blog.category] = 1
-    }
+      //calculating all category and their count
+      if (catAndCount[blog.category]) {
+        catAndCount[blog.category] = ++catAndCount[blog.category]
+      } else {
+        catAndCount[blog.category] = 1
+      }
 
-    //category to show in  navbar
-    if (!arrAllCatForNav.includes(blog.category)) arrAllCatForNav.push(blog.category);
+      //category to show in  navbar
+      if (!arrAllCatForNav.includes(blog.category)) arrAllCatForNav.push(blog.category);
 
-    //for setting blogs by their type
-    switch (blog.type) {
-      case "featured blogs": featuredArray.push(blog)
-        break;
-      case "popular blogs": popularArray.push(blog)
-        break;
-      case "trending blogs": trendingArray.push(blog)
-        break;
-      case "todays blogs": todaysArray.push(blog)
-        break;
-      default:
-        break;
-    }
+      //for setting blogs by their type
+      switch (blog.type) {
+        case "featured blogs": featuredArray.push(blog)
+          break;
+        case "popular blogs": popularArray.push(blog)
+          break;
+        case "trending blogs": trendingArray.push(blog)
+          break;
+        case "todays blogs": todaysArray.push(blog)
+          break;
+        default:
+          break;
+      }
 
-    //for setting blogs by category
-    switch (blog.category) {
-      case "tech": techArray.push(blog)
-        break;
-      case "sports": sportsArray.push(blog)
-        break;
-      case "politics": politicsArray.push(blog)
-        break;
-      default:
-        break;
+      //for setting blogs by category
+      switch (blog.category) {
+        case "tech": techArray.push(blog)
+          break;
+        case "sports": sportsArray.push(blog)
+          break;
+        case "politics": politicsArray.push(blog)
+          break;
+        default:
+          break;
+      }
     }
   });
 
@@ -153,13 +156,8 @@ function App() {
             <BrowserRouter>
               <ScrollToTop />
               <Routes>
-                <Route path="/*" exact element={<NotAdmin
-                // allBlog={filteredBlogs} allCategory={allCategory} featuredArray={featuredArray} techArray={techArray} sportsArray={sportsArray} todaysArray={todaysArray} catAndCount={catAndCount} politicsArray={politicsArray} finalArr={finalArr} trendingArray={trendingArray} popularArray={popularArray} storage={storage} 
-                />} />
-
-                <Route path="/admin/*" exact element={<Admin 
-                // allBlog={allBlog} allCategory={allCategory} catAndCount={catAndCount} storage={storage} isLoaded={isLoaded} 
-                />} />
+                <Route path="/*" exact element={<NotAdmin />} />
+                <Route path="/admin/*" exact element={<Admin />} />
               </Routes>
             </BrowserRouter>
             <Toast />
