@@ -791,6 +791,20 @@ input[type="radio"] {
 /********************************* TOAST **********************************/
 
 /* share diaglog */
+dialog{
+  margin: auto;
+  border: none;
+  border-radius: 10px;
+}
+dialog div{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+dialog div button:focus{
+  outline: none !important;
+}
 ::backdrop {
   background-image: linear-gradient(
     45deg,
@@ -799,6 +813,7 @@ input[type="radio"] {
     dodgerblue,
     green
   );
+  background: #000000bd;
   opacity: 0.75;
 }
 /* share diaglog */

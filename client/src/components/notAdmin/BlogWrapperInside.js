@@ -24,7 +24,7 @@ const BlogWrapperInside = (props) => {
 								</li>
 								<li className="t-mr-16">
 									<span className="t-link t-link--light ex-sm-text">
-										<span className="las la-calendar-alt sm-text"></span>
+										<span className="fa fa-calendar-alt sm-text"></span>&nbsp;
 										{data?.date}
 									</span>
 								</li>

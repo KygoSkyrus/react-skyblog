@@ -48,6 +48,34 @@ const UserSubmittedBlogs = ({ state }) => {
 
     }
 
+    async function publishBlog(id, e) {
+        setShowLoader(true)
+        //checked attribute means its on and 1 or data="false" means its off
+        let val;
+
+        if (e.target.hasAttribute('checked')) {
+            document.getElementById(`checkbox` + id).removeAttribute('checked')
+            val = '1';//final value of the checkbox
+        } else if (e.target.getAttribute('data-status') === "1") {
+            document.getElementById(`checkbox` + id).removeAttribute('1')
+            document.getElementById(`checkbox` + id).setAttribute('checked', 'checked')
+            val = 'checked';//final value of the checkbox
+        }
+
+        fetch("/admin/publishBlog", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                id, val
+            }),
+        })
+            .then(res => res.json())
+            .then(data => {
+                setShowLoader(false)
+                showToast(data.message)
+            })
+    }
+
     return (
         <>
             <AdminTemplate isGuest={isGuest} >
@@ -80,6 +108,7 @@ const UserSubmittedBlogs = ({ state }) => {
                                             <th>Content</th>
                                             <th>Author</th>
                                             <th>Date</th>
+                                            <th>Publish</th>
                                             <th>Delete</th>
                                             {/* <th>Visibility</th>
                                         <th>Edit/Delete</th> */}
@@ -102,10 +131,11 @@ const UserSubmittedBlogs = ({ state }) => {
                                                     </td>
                                                     <td>{x.authorname}</td>
                                                     <td>{x.date}</td>
-                                                    {/* <td><label className="switch"><input onClick="blogVisibility('${data[i]._id}',event)" id="checkbox${data[i]._id}" type="checkbox" checked={x.status} /><span className="slider round"></span></label>
-                                                </td>
-                                                <td style={{display: "flex",border: "none",justifyContent: "center"}}><a href="/admin/blog-edit/${data[i].url
-                    }" target="blank" ><button style={{background: "#09660c"}}><i className="fa fa-pen"></i></button></a><button onClick='deleteBlog("${data[i]._id}")' style={{background: "#d50606"}}><i className="fa fa-trash" ></i></button></td> */}
+
+
+                                                    <td><label className="switch"><input onClick={e => publishBlog(x._id, e)} id={"checkbox" + x._id} type="checkbox" defaultChecked={x.status === "checked" ? "defaultChecked" : false} data-status={x.status} /><span className="slider round"></span></label>
+                                                    </td>
+                                                    
                                                     <td style={{ display: "flex", border: "none", justifyContent: "center" }}><button onClick={e => deleteBlog(x._id, e)} style={{ background: "#d50606" }}><i className="fa fa-trash" ></i></button></td>
                                                 </tr>
                                             )

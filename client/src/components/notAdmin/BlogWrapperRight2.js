@@ -32,7 +32,7 @@ const BlogWrapperRight2 = (props) => {
               </li>
               <li>
                 <span className="t-link t-link--secondary ex-sm-text text-capitalize">
-                  <span className="las la-calendar-alt ex-sm-text"></span>
+                  <span className="fa fa-calendar-alt ex-sm-text"></span>
                   {data?.date}
                 </span>
               </li>

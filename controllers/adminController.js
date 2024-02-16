@@ -180,6 +180,60 @@ const getUserSubmittedBlogs = async (req, res) => {
     }
 }
 
+
+const publistUserSubmittedBlogs = async (req, res) => {
+    try {
+        console.log('req.ssjsjs',req.body)
+        const details = req.body;
+
+        try {
+            let result = await USERBLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
+            if (result) {
+      
+            // add the is blog to blogs collection with status 1\
+            if(result){
+
+                // delete result['email'];
+                // console.log('query res',result)
+                // await  BLOG.create(result)
+            }
+
+            var newData=new BLOG({
+                _id:details._id,
+                title: result.title,
+                url: result.url,
+                category: result.category,
+                type: result.type,
+                shortdescription: result.shortdescription,
+                authorname: result.authorname,
+                image: result.image,
+                metatitle: result.metatitle,
+                metakeywords: result.metakeywords,
+                metadescription: result.metadescription,
+                detail: result.detail,
+                date: result.date,
+                status: "1"
+            });
+            newData.save()
+
+
+                res.send({ isSet: true, message: `Blog has been ${details?.val==='checked'? 'published':'unpublished'}` });
+            } else {
+                res.send({ isSet: false, message: "Something went wrong, Try again" })
+            }
+        } catch (err) {
+            console.log('err',err)
+            res.send({ message: "Internal server error" });
+        }
+
+
+    } catch (err) {
+        res.send({ message: "Internal server error" });
+    }
+}
+
+
+
 const deleteUserSubmittedBlog = async (req, res) => {
     const details = req.body;
 
@@ -238,4 +292,4 @@ const deleteCategory = async (req, res) => {
 }
 
 
-module.exports = { addBlog, deleteBlog, editBlog, blogsVisibility, deleteMessage, getUserSubmittedBlogs, deleteUserSubmittedBlog, addCategory, deleteCategory, login, changePassword, logout, getMessages };
+module.exports = { addBlog, deleteBlog, editBlog, blogsVisibility, deleteMessage, getUserSubmittedBlogs, publistUserSubmittedBlogs, deleteUserSubmittedBlog, addCategory, deleteCategory, login, changePassword, logout, getMessages };

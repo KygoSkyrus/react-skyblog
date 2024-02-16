@@ -1,17 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { WhatsappShareButton } from "react-share"
+import { EmailShareButton, FacebookIcon, FacebookMessengerIcon, FacebookShareButton, FacebookShareCount, InstapaperShareButton, LineShareButton, PinterestShareButton, RedditShareButton, TelegramShareButton, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from "react-share"
+import { SocialIcon } from 'react-social-icons'
+
 
 const BlogWrapperBottom = (props) => {
 
 	const { data, displayRead, displayDesc, displayDetail } = props;
 
 	const handleModal = (val) => {
+		console.log('handlemodal', val)
 		const dialog = document.querySelector("dialog");
 		val === "show" ? dialog.showModal() : dialog.close()
 	}
 
 	function handleClick(event) {
+		console.log('handleclick', event.target)
 		const dialog = document.querySelector("dialog");
 		if (event.target === dialog) {
 			dialog.close();
@@ -25,7 +29,7 @@ const BlogWrapperBottom = (props) => {
 			</Link>
 
 			<div className="post--right-content t-flex-100 t-pt-15">
-				<ul className="list d-flex align-items-center">
+				<ul className="list d-flex align-items-center text-center">
 					<li className="t-mr-16">
 						<Link to={"/category/" + data?.category} state={{ category: data?.category }}
 							className="t-link t-link--light tag tag--skew tag-beta text-uppercase">
@@ -36,7 +40,7 @@ const BlogWrapperBottom = (props) => {
 					</li>
 					<li className="t-mr-16">
 						<span className="t-link t-link--secondary ex-sm-text text-capitalize">
-							<span className="las la-calendar-alt sm-text"></span>
+							<span className="fa fa-calendar-alt sm-text"></span>&nbsp;
 							{data?.date}
 						</span>
 					</li>
@@ -46,18 +50,50 @@ const BlogWrapperBottom = (props) => {
 						</span>
 					</li>
 					<li>
-						<span className={"t-link t-link--secondary ex-sm-text text-capitalize cursor-pointer " + displayRead} >
-							<WhatsappShareButton url={window.location.href} size={32} quote={'Dummy text!'} hashtag="#skyblog" >
-								<span className="fa fa-share sm-text"></span>&nbsp;share
-							</WhatsappShareButton>
-
-
-							<button onClick={() => handleModal("show")}>Show the dialog</button>
-							<dialog onClick={(e) => handleClick(e)}>
-								<button autofocus onClick={() => handleModal("hide")}>Close</button>
-								<p>DIAGLOg</p>
-							</dialog>
+						<span className={"t-link t-link--secondary ex-sm-text text-capitalize cursor-pointer " + displayRead} onClick={() => handleModal("show")} >
+							<span className="fa fa-share sm-text"></span>&nbsp;share
 						</span>
+						<dialog onClick={(e) => handleClick(e)}>
+							{/* <button autoFocus onClick={() => handleModal("hide")}>Close</button> */}
+							<div className='p-3'>
+								<WhatsappShareButton url={window.location.href}>
+									<SocialIcon network='whatsapp' />
+								</WhatsappShareButton>
+
+								<FacebookShareButton url={window.location.href}>
+									<SocialIcon network='facebook' />
+								</FacebookShareButton>
+
+								<TelegramShareButton url={window.location.href} >
+									<SocialIcon network='telegram' />
+								</TelegramShareButton>
+
+								<EmailShareButton url={window.location.href}>
+									<SocialIcon network='email' />
+								</EmailShareButton>
+
+								<LineShareButton url={window.location.href}>
+									<SocialIcon network='linkedin' />
+								</LineShareButton>
+
+								<PinterestShareButton url={window.location.href}>
+									<SocialIcon network='pinterest' />
+								</PinterestShareButton>
+
+								<TwitterShareButton url={window.location.href}>
+									<SocialIcon network='x' />
+								</TwitterShareButton>
+
+								<TwitterShareButton url={window.location.href}>
+									<SocialIcon network='twitch' />
+								</TwitterShareButton>
+
+								<RedditShareButton url={window.location.href}>
+									<SocialIcon network='reddit' />
+								</RedditShareButton>
+
+							</div>
+						</dialog>
 					</li>
 				</ul>
 				<h3 className="post__title t-mt-10">

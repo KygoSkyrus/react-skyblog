@@ -7,7 +7,7 @@ const router = express("router");
 const dotenv = require('dotenv');
 dotenv.config({ path: './env/config.env' });
 
-const { addBlog, deleteBlog, blogsVisibility, editBlog, deleteMessage, getUserSubmittedBlogs, deleteUserSubmittedBlog, addCategory, deleteCategory, login, changePassword, logout, getMessages } = require("../controllers/adminController");
+const { addBlog, deleteBlog, blogsVisibility, editBlog, deleteMessage, getUserSubmittedBlogs, publistUserSubmittedBlogs, deleteUserSubmittedBlog, addCategory, deleteCategory, login, changePassword, logout, getMessages } = require("../controllers/adminController");
 
 
 
@@ -84,6 +84,9 @@ router.post("/getMessage", getMessages);
 
 //gets all the blogs submitted by users [chnage name to getusersubmittedblogs]
 router.post("/getUserSubmittedBlogs", getUserSubmittedBlogs)
+
+//publish the user submitted blog
+router.post("/publishBlog", publistUserSubmittedBlogs)
 
 //deletes the user submitted blogs
 router.post("/deleteUserSubmittedBlog", deleteUserSubmittedBlog);

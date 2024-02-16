@@ -57,6 +57,7 @@ const userSubmittedBlog = async (req, res) => {
             metadescription: details.metadesc,
             detail: details.detail,
             date: date,
+            status: "1",
         })
         blog.save().
             then(response => {
