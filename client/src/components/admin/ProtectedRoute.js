@@ -1,17 +1,16 @@
 import { Navigate } from 'react-router-dom'
 
-import Messages from './Messages';
 import Dashboard from './Dashboard';
+import EditBlog from './EditBlog';
+import Messages from './Messages';
 import BlogsManagement from './BlogsManagement';
 import UserSubmittedBlogs from './UserSubmittedBlogs';
-import EditBlog from './EditBlog';
 import LoaderAPI from '../../LoaderAPI';
 
 
 const ProtectedRoute = (props) => {
 
     const {isAuthenticated, route, state} = props;
-    console.log('ProtectedRoute',props)
     if (isAuthenticated === null) {
         return <LoaderAPI showLoader={true} />
     }

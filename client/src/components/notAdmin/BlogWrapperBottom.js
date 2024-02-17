@@ -1,25 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { EmailShareButton, FacebookIcon, FacebookMessengerIcon, FacebookShareButton, FacebookShareCount, InstapaperShareButton, LineShareButton, PinterestShareButton, RedditShareButton, TelegramShareButton, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from "react-share"
-import { SocialIcon } from 'react-social-icons'
-
+import BlogShareDiaglog from './BlogShareDiaglog';
 
 const BlogWrapperBottom = (props) => {
 
 	const { data, displayRead, displayDesc, displayDetail } = props;
 
 	const handleModal = (val) => {
-		console.log('handlemodal', val)
 		const dialog = document.querySelector("dialog");
 		val === "show" ? dialog.showModal() : dialog.close()
-	}
-
-	function handleClick(event) {
-		console.log('handleclick', event.target)
-		const dialog = document.querySelector("dialog");
-		if (event.target === dialog) {
-			dialog.close();
-		}
 	}
 
 	return (
@@ -53,47 +42,7 @@ const BlogWrapperBottom = (props) => {
 						<span className={"t-link t-link--secondary ex-sm-text text-capitalize cursor-pointer " + displayRead} onClick={() => handleModal("show")} >
 							<span className="fa fa-share sm-text"></span>&nbsp;share
 						</span>
-						<dialog onClick={(e) => handleClick(e)}>
-							{/* <button autoFocus onClick={() => handleModal("hide")}>Close</button> */}
-							<div className='p-3'>
-								<WhatsappShareButton url={window.location.href}>
-									<SocialIcon network='whatsapp' />
-								</WhatsappShareButton>
-
-								<FacebookShareButton url={window.location.href}>
-									<SocialIcon network='facebook' />
-								</FacebookShareButton>
-
-								<TelegramShareButton url={window.location.href} >
-									<SocialIcon network='telegram' />
-								</TelegramShareButton>
-
-								<EmailShareButton url={window.location.href}>
-									<SocialIcon network='email' />
-								</EmailShareButton>
-
-								<LineShareButton url={window.location.href}>
-									<SocialIcon network='linkedin' />
-								</LineShareButton>
-
-								<PinterestShareButton url={window.location.href}>
-									<SocialIcon network='pinterest' />
-								</PinterestShareButton>
-
-								<TwitterShareButton url={window.location.href}>
-									<SocialIcon network='x' />
-								</TwitterShareButton>
-
-								<TwitterShareButton url={window.location.href}>
-									<SocialIcon network='twitch' />
-								</TwitterShareButton>
-
-								<RedditShareButton url={window.location.href}>
-									<SocialIcon network='reddit' />
-								</RedditShareButton>
-
-							</div>
-						</dialog>
+						<BlogShareDiaglog />
 					</li>
 				</ul>
 				<h3 className="post__title t-mt-10">
