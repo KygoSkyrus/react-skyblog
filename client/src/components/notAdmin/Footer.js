@@ -54,6 +54,11 @@ const Footer = (props) => {
 											post a blog
 										</Link>
 									</li>
+									<li className="t-mb-10">
+										<Link to="/admin/dashboard" className="t-link text-capitalize t-link--light sm-text">
+											Admin
+										</Link>
+									</li>
 								</ul>
 							</div>
 							<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
@@ -178,7 +183,7 @@ const Footer = (props) => {
 						<div className="row">
 							<div className="col-12 text-center">
 								<p className="mb-0 t-blue sm-text">
-									<i className="fa-sharp fa-regular fa-copyright"></i> 2023, SKYBLOG. Designed by
+									<i className="fa-sharp fa-regular fa-copyright"></i> 2024, SKYBLOG by
 									<span className="t-link t-link--primary text-light">&nbsp;DHEERAJ GUPTA&nbsp;</span>
 									. All Rights Reserved.
 								</p>

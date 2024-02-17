@@ -2,11 +2,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useLocation } from "react-router-dom"
 
-import OtherBlogsComp from './OtherBlogsComp'
+import { BlogContext } from '../../App'
 import BlogWrapperBottom from './BlogWrapperBottom'
+import OtherBlogsComp from './OtherBlogsComp'
 import CategoryList from './CategoryList'
 import Error from './Error'
-import { BlogContext } from '../../App'
 
 const SingleBlog = () => {
 
@@ -244,7 +244,9 @@ const SingleBlog = () => {
                         </div>
                     </div>
                 </div>
-                : <Error />}
+                :
+                <Error />
+            }
         </>
     )
 

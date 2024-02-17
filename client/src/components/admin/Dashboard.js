@@ -1,7 +1,5 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Sidebar from './Sidebar'
-import Header from './Header';
 import { useToast } from '../ToastContext';
 import { BlogContext } from '../../App';
 import LoaderAPI from '../../LoaderAPI';
@@ -10,12 +8,9 @@ import AdminTemplate from './withAdminTemplate';
 const Dashboard = ({ state }) => {
 
     const { isGuest } = state;
-    const { unFilteredBlogs, allCategory, catAndCount } = useContext(BlogContext);
-    console.log('dashhhboard', state, unFilteredBlogs)
-    const [showLoader, setShowLoader] = useState(false)
-    // const toast = useContext(ToastContext);
     const { showToast } = useToast();
-
+    const { unFilteredBlogs, allCategory, catAndCount } = useContext(BlogContext);
+    const [showLoader, setShowLoader] = useState(false)
 
     async function blogVisibility(id, e) {
         setShowLoader(true)
@@ -24,11 +19,11 @@ const Dashboard = ({ state }) => {
 
         if (e.target.hasAttribute('checked')) {
             document.getElementById(`checkbox` + id).removeAttribute('checked')
-            val = '1';//final value of the checkbox
+            val = '1';
         } else if (e.target.getAttribute('data-status') === "1") {
             document.getElementById(`checkbox` + id).removeAttribute('1')
             document.getElementById(`checkbox` + id).setAttribute('checked', 'checked')
-            val = 'checked';//final value of the checkbox
+            val = 'checked';
         }
 
         fetch("/admin/setBlogVisibility", {
@@ -42,6 +37,9 @@ const Dashboard = ({ state }) => {
             .then(data => {
                 setShowLoader(false)
                 showToast(data.message)
+                if (data.isSet) {
+                    window.location.reload();
+                }
             })
     }
 

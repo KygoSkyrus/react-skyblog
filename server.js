@@ -1,40 +1,32 @@
 const express = require("express");
 const app = express();
 const path = require("path")
-// const cookieParser = require("cookie-parser");
 const mongoose = require('mongoose');
+const session = require('express-session')
+const MongoStore = require('connect-mongo');
 const dotenv = require('dotenv');
 
 //Routes
 const publicRoutes = require('./routes/publicRoutes')
 const adminRoutes = require('./routes/adminRoutes')
 
-
 dotenv.config({ path: './env/config.env' });
-// app.set("view engine", "ejs");//not needed
-// app.use(cookieParser());
 
-var bodyParser = require("body-parser");
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-const session = require('express-session')
-const MongoStore = require('connect-mongo');
 
 app.use(session({
-  // name: "keyboardcat",
-  secret: 'of9578awo49y7rt9afyta',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
-      maxAge: 7200000,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production' ? true : false,
+    maxAge: 7200000,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production' ? true : false,
   },
   store: MongoStore.create({
-      mongoUrl: process.env.dbURI,
-      // mongoOptions: advancedOptions
+    mongoUrl: process.env.dbURI,
+    // mongoOptions: advancedOptions
   })
-  // ExpressJS implements sessions using in-memory storage. Consequently, resetting your application will also reset the in-memory sessions. thats why mongodb is used as session storage
+  // ExpressJS implements sessions using in-memory storage. Consequently, resetting your application will also reset the in-memory sessions. that's why mongodb is used as session storage
 }))
 
 
@@ -69,8 +61,6 @@ mongoose.connect(db, {
 app.use(publicRoutes);
 app.use('/admin', adminRoutes);
 
-
-//------------------------------- ADMIN -------------------------------
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

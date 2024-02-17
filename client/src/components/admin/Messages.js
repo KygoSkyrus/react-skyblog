@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
+
 import LoaderAPI from '../../LoaderAPI'
-import Sidebar from './Sidebar'
-import Header from './Header'
 import { useToast } from '../ToastContext'
 import AdminTemplate from './withAdminTemplate'
 

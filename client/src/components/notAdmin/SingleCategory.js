@@ -14,7 +14,7 @@ const SingleCategory = () => {
     const { allBlog } = useContext(BlogContext);
     const [blogIncat, setBlogIncat] = useState()
 
-    let { state } = useLocation();//this is the state send from Link react router causes the page to rerender as we were having the same props
+    let { state } = useLocation();//this is the state passed while redirecting with "Link" react router (causes the page to rerender as we were having the same props)
 
     let category;
     useEffect(() => {

@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import LoaderAPI from '../../LoaderAPI';
-import Header from './Header';
-import Sidebar from './Sidebar';
+
 import { useToast } from '../ToastContext';
 import AdminTemplate from './withAdminTemplate';
+import LoaderAPI from '../../LoaderAPI';
 
 const UserSubmittedBlogs = ({ state }) => {
 
     const { isGuest } = state;
+    const { showToast } = useToast();
     const [userBlogs, setUserBlogs] = useState()
     const [showLoader, setShowLoader] = useState(false)
-    const { showToast } = useToast();
-
 
     useEffect(() => {
         getUserBlogs();
@@ -50,18 +48,17 @@ const UserSubmittedBlogs = ({ state }) => {
 
     async function publishBlog(id, e) {
         setShowLoader(true)
-        //checked attribute means its on and 1 or data="false" means its off
         let val;
 
         if (e.target.hasAttribute('checked')) {
             document.getElementById(`checkbox` + id).removeAttribute('checked')
-            val = '1';//final value of the checkbox
+            val = '1';
         } else if (e.target.getAttribute('data-status') === "1") {
             document.getElementById(`checkbox` + id).removeAttribute('1')
             document.getElementById(`checkbox` + id).setAttribute('checked', 'checked')
-            val = 'checked';//final value of the checkbox
+            val = 'checked';
         }
-
+        
         fetch("/admin/publishBlog", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -73,6 +70,9 @@ const UserSubmittedBlogs = ({ state }) => {
             .then(data => {
                 setShowLoader(false)
                 showToast(data.message)
+                if(data.isSet){
+                    window.location.reload();
+                }
             })
     }
 
@@ -110,8 +110,6 @@ const UserSubmittedBlogs = ({ state }) => {
                                             <th>Date</th>
                                             <th>Publish</th>
                                             <th>Delete</th>
-                                            {/* <th>Visibility</th>
-                                        <th>Edit/Delete</th> */}
                                         </tr>
                                     </thead>
                                     <tbody id="tbody">
@@ -131,7 +129,6 @@ const UserSubmittedBlogs = ({ state }) => {
                                                     </td>
                                                     <td>{x.authorname}</td>
                                                     <td>{x.date}</td>
-
 
                                                     <td><label className="switch"><input onClick={e => publishBlog(x._id, e)} id={"checkbox" + x._id} type="checkbox" defaultChecked={x.status === "checked" ? "defaultChecked" : false} data-status={x.status} /><span className="slider round"></span></label>
                                                     </td>

@@ -10,9 +10,7 @@ const Login = ({isAuthenticated}) => {
     if (isAuthenticated) navigate('/admin/dashboard')
   },[isAuthenticated])
 
-
   async function login(e) {
-
     let username = document.getElementById('username').value
     let password = document.getElementById('passWord').value
 
@@ -45,7 +43,6 @@ const Login = ({isAuthenticated}) => {
               <section style={{ letterSpacing: "6px", lineHeight: "10px", fontSize: "12px", color: "#a7a7a7" }}>Admin</section>
             </div>
 
-
             <div className="panel">
               <div className="register-form p-4"  >
                 <div className="form-group">
@@ -73,10 +70,6 @@ const Login = ({isAuthenticated}) => {
               </div>
             </div>
             <p style={{ padding: "20px 0", color: "red" }}>{error}</p>
-            {/* <!-- <div className="bottom-text text-center my-3">
-                        Don't have an account? <a href="register.html" className="font-weight-500">Sign Up</a><br>
-                        Remind <a href="forget_password.html" className="font-weight-500">Password</a>
-                    </div> --> */}
           </div>
         </div>
 

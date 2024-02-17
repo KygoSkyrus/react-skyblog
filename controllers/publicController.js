@@ -61,11 +61,11 @@ const userSubmittedBlog = async (req, res) => {
         })
         blog.save().
             then(response => {
-                res.send({ blog_received: true, message:"Blog submitted for review successfully" });
+                res.send({ isSubmitted: true, message:"Blog submitted for review successfully" });
             })
             .catch(err => {
                 console.log(err)
-                res.send({ blog_received: false, message:"Something went worng" });
+                res.send({ isSubmitted: false, message:"Something went worng" });
             })
     } catch (err) {
         console.log(err);

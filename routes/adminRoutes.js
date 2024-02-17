@@ -1,39 +1,39 @@
 const express = require("express");
 const router = express("router");
-// const session = require('express-session')
-// const MongoStore = require('connect-mongo');
-// const bodyParser = require("body-parser");
-// const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const dotenv = require('dotenv');
 dotenv.config({ path: './env/config.env' });
 
-const { addBlog, deleteBlog, blogsVisibility, editBlog, deleteMessage, getUserSubmittedBlogs, publistUserSubmittedBlogs, deleteUserSubmittedBlog, addCategory, deleteCategory, login, changePassword, logout, getMessages } = require("../controllers/adminController");
-
-
-
-
+const { addBlog,
+    deleteBlog,
+    blogsVisibility,
+    editBlog, deleteMessage,
+    getUserSubmittedBlogs,
+    publistUserSubmittedBlogs,
+    deleteUserSubmittedBlog,
+    addCategory,
+    deleteCategory,
+    login,
+    changePassword,
+    logout,
+    getMessages
+} = require("../controllers/adminController");
 
 
 // session middleware
 function isAuthenticated(req, res, next) {
-    console.log('isAuthenticated----req.session.', req.session)
     if (req.session.isAuthenticated) {
         next();
     } else {
-        // res.redirect('/admin/login');
         res.send({ matched: false, error: "Session expired" });
-        // next('route')
     }
 }
 
-//not working for messages and user blogs 
+// access rights middleware (for guest admin)
 function hasAccessRights(req, res, next) {
-    console.log('hasAccessRights----req.session.', req.session, req.url)
     if (req.session.isAuthenticated === process.env.GUEST_ID && req.url !== "/getMessage" && req.url !== "/getUserSubmittedBlogs" && req.url !== "/logout") {
         res.send({ matched: true, message: "Guest user does not have rights to perform this action", isGuest: true })
     } else {
         next();
-        // res.send({ matched: false, error: "Session expired" });
     }
 }
 
@@ -41,74 +41,38 @@ function hasAccessRights(req, res, next) {
 router.use(isAuthenticated);
 router.use(hasAccessRights);
 
-//add to check if the guest is making change,
-// NOTE: usersubmittedblog and message should be dummy
 
 router.post("/authenticate", async (req, res) => {
-    console.log('admin authhdjkdjksda')
-    let isGuest= req.session.isAuthenticated===process.env.GUEST_ID ? true : false;
+    let isGuest = req.session.isAuthenticated === process.env.GUEST_ID ? true : false;
     res.send({ matched: true, isGuest });
 })
 
 
-//blog data[creates a new blog from admin side]
+// ----------- Admin rights ----------------
 router.post("/addBlog", addBlog);
-
-//edited blog submission [this is the admin blog][updates the changes in the blog]
 router.post("/editblog", editBlog);
-
 router.post("/deleteblog", deleteBlog);
-
 router.post("/setBlogVisibility", blogsVisibility);
 
 
-
-
-
-
-
-
-//----------------------------- USER MESSAGES-----------------------------------------------
-//deleting messages records (contact form)
+//----------- User Feedback ----------------
+// (recieved via contact form)
 router.post("/deleteMessage", deleteMessage);
-
-//for showing database messages records
-router.post("/getMessage", getMessages);
-//the api endpoint(route) for deleting these msgs is in server.js
-//----------------------------- USER MESSAGES-----------------------------------------------
+router.post("/getMessage", getMessages); // gets all messages
 
 
-
-
-//------------------------USERBLOG-----------------------------
-
-//gets all the blogs submitted by users [chnage name to getusersubmittedblogs]
+//----------- User submitted Blogs ----------------
 router.post("/getUserSubmittedBlogs", getUserSubmittedBlogs)
-
-//publish the user submitted blog
-router.post("/publishBlog", publistUserSubmittedBlogs)
-
-//deletes the user submitted blogs
+router.post("/publishBlog", publistUserSubmittedBlogs); // publish the user submitted blog [admin only]
 router.post("/deleteUserSubmittedBlog", deleteUserSubmittedBlog);
-//------------------------USERBLOG-----------------------------
 
 
-
-//------------------------CATEGORY-----------------------------
+//----------- Category ----------------
 router.post("/addCategory", addCategory);
-
 router.post("/deleteCategory", deleteCategory);
-//------------------------CATEGORY-----------------------------
 
 
-
-
-//------------------------------- ADMIN -------------------------------
-// router.post("/login", urlencodedParser, login);
-
-//needs to be attended, return on both if and else
 router.post("/changepassword", changePassword);
-
 router.post("/logout", logout);
 
 

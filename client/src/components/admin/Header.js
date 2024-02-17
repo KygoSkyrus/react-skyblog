@@ -3,8 +3,6 @@ import { showTime } from './../../utils';
 
 const Header = ({ isGuest }) => {
 
-    console.log('isgiesy', isGuest)
-
     useEffect(() => {
         showTime()
     }, [])

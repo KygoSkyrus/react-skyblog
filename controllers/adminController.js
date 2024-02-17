@@ -1,3 +1,6 @@
+const mongoose = require("mongoose")
+const { dummyUserSubmittedBlogs, dummyMessages } = require("./../dummyData")
+
 //Document Schema
 const ADMIN = require("../schema/admin")
 const BLOG = require("../schema/blog")
@@ -5,20 +8,15 @@ const CONTACT = require("../schema/contact")
 const CATEGORY = require("../schema/category")
 const USERBLOG = require("../schema/userblog");
 
-const { dummyUserSubmittedBlogs, dummyMessages } = require("./../dummyData")
 
 const login = async (req, res) => {
     const credentials = req.body;
-    console.log('login api', credentials)
 
     try {
         const result = await ADMIN.findOne({ username: credentials.username, password: credentials.password })
         if (result) {
             if (credentials.username === result.username && credentials.password === result.password) {
-                console.log('innn---', req.session)
-
                 req.session.isAuthenticated = credentials.username;
-
                 res.send({ matched: true });
             }
         } else {
@@ -38,7 +36,7 @@ const changePassword = async (req, res) => {
         if (result) {
             res.send({ isChanged: true, message: "Password changed successfully" });
         } else {
-            res.send({ isChanged: false,  message: "Incorrect username/password, Try again" });
+            res.send({ isChanged: false, message: "Incorrect username/password, Try again" });
         }
     } catch (err) {
         res.send({ message: "Internal server error" });
@@ -47,7 +45,6 @@ const changePassword = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
-        console.log('logout')
         req.session.destroy();
         res.send({ message: "Logged out successfully!", isLoggedOut: true });
     } catch (err) {
@@ -63,6 +60,7 @@ const addBlog = async (req, res) => {
     var date = new Date().toLocaleDateString();
     try {
         let blog = new BLOG({
+            _id: new mongoose.Types.ObjectId(),
             title: details.title,
             url: details.url,
             category: details.category,
@@ -78,11 +76,11 @@ const addBlog = async (req, res) => {
             status: "checked"
         })
         blog.save().then(response => {
-            res.send({ blog_added: true, message:"Blog added successfully" });
+            res.send({ isSubmitted: true, message: "Blog added successfully" });
         })
             .catch(err => {
                 console.log(err)
-                res.send({ blog_added: false,  message: "Something went wrong, Try again" });
+                res.send({ isSubmitted: false, message: "Something went wrong, Try again" });
             })
 
     } catch (err) {
@@ -95,14 +93,13 @@ const editBlog = async (req, res) => {
     try {
         const result = await BLOG.findOneAndUpdate({ _id: details.blogid }, { title: details.title, url: details.url, category: details.category, type: details.select, detail: details.detail, shortdescription: details.shortdesc, image: details.imageUrl, authorname: details.author, metatitle: details.metatitle, metakeywords: details.metakeyword, metadescription: details.metadesc }, { new: true })
         if (result) {
-            res.send({ isBlogEdited: true, message:"Blog edited successfully" })
+            res.send({ isSubmitted: true, message: "Blog edited successfully" })
         } else {
-            res.send({ isBlogEdited: false, message:"Something went wrong" })
+            res.send({ isSubmitted: false, message: "Something went wrong" })
         }
     } catch (err) {
         res.send({ message: "Internal server error" });
     }
-
 }
 
 const deleteBlog = async (req, res) => {
@@ -111,8 +108,9 @@ const deleteBlog = async (req, res) => {
     try {
         let result = await BLOG.deleteOne({ _id: details.id })
         if (result.deletedCount > 0) {
-            res.send({ isDeleted: true, message:"Blog deleted successfully" });
-            console.log('result', result)
+            //if the blog is a user submitted blog then unpublish that
+            await USERBLOG.findOneAndUpdate({ _id: details.id }, { status: "1" }, { new: true })
+            res.send({ isDeleted: true, message: "Blog deleted successfully" });
         } else {
             res.send({ isDeleted: false, message: "Something went wrong, Try again" })
         }
@@ -128,7 +126,7 @@ const blogsVisibility = async (req, res) => {
         //findByIdAndUpdate: is the alternatice to directly use id
         let result = await BLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
         if (result) {
-            res.send({ isSet: true, message: `Blog visibility has been turned ${details.val==='checked'? 'On':'Off'}` });
+            res.send({ isSet: true, message: `Blog visibility has been turned ${details.val === 'checked' ? 'On' : 'Off'}` });
         } else {
             res.send({ isSet: false, message: "Something went wrong, Try again" })
         }
@@ -157,7 +155,7 @@ const deleteMessage = async (req, res) => {
 
     try {
         let result = await CONTACT.deleteOne({ _id: details.id })
-        res.send({ deletedCount: result.deletedCount , message:"Message deleted successfully" });
+        res.send({ deletedCount: result.deletedCount, message: "Message deleted successfully" });
     } catch (err) {
         res.send({ message: "Internal server error" });
     }
@@ -167,7 +165,6 @@ const deleteMessage = async (req, res) => {
 
 const getUserSubmittedBlogs = async (req, res) => {
     try {
-        // console.log('req.ssjsjs',dummyUserSubmittedBlogs)
         if (req.session.isAuthenticated === process.env.GUEST_ID) {
             res.send(dummyUserSubmittedBlogs);
         } else {
@@ -180,59 +177,52 @@ const getUserSubmittedBlogs = async (req, res) => {
     }
 }
 
-
 const publistUserSubmittedBlogs = async (req, res) => {
     try {
-        console.log('req.ssjsjs',req.body)
         const details = req.body;
 
         try {
             let result = await USERBLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
             if (result) {
-      
-            // add the is blog to blogs collection with status 1\
-            if(result){
 
-                // delete result['email'];
-                // console.log('query res',result)
-                // await  BLOG.create(result)
-            }
+                if (details.val === "checked") {
+                    // add the is blog to blogs collection with status 1\
+                    let newData = new BLOG({
+                        _id: new mongoose.Types.ObjectId(details.id),
+                        title: result.title,
+                        url: result.url,
+                        category: result.category,
+                        type: result.type,
+                        shortdescription: result.shortdescription,
+                        authorname: result.authorname,
+                        image: result.image,
+                        metatitle: result.metatitle,
+                        metakeywords: result.metakeywords,
+                        metadescription: result.metadescription,
+                        detail: result.detail,
+                        date: result.date,
+                        status: "1"
+                    });
+                    newData.save()
+                } else {
+                    await BLOG.deleteOne({ _id: details.id })
+                }
 
-            var newData=new BLOG({
-                _id:details._id,
-                title: result.title,
-                url: result.url,
-                category: result.category,
-                type: result.type,
-                shortdescription: result.shortdescription,
-                authorname: result.authorname,
-                image: result.image,
-                metatitle: result.metatitle,
-                metakeywords: result.metakeywords,
-                metadescription: result.metadescription,
-                detail: result.detail,
-                date: result.date,
-                status: "1"
-            });
-            newData.save()
-
-
-                res.send({ isSet: true, message: `Blog has been ${details?.val==='checked'? 'published':'unpublished'}` });
+                res.send({ isSet: true, message: `Blog has been ${details?.val === 'checked' ? 'published' : 'unpublished'}` });
             } else {
                 res.send({ isSet: false, message: "Something went wrong, Try again" })
             }
         } catch (err) {
-            console.log('err',err)
+            console.log('err', err)
             res.send({ message: "Internal server error" });
         }
 
 
     } catch (err) {
+        console.log('err', err)
         res.send({ message: "Internal server error" });
     }
 }
-
-
 
 const deleteUserSubmittedBlog = async (req, res) => {
     const details = req.body;
@@ -254,22 +244,22 @@ const addCategory = async (req, res) => {
         let result = await CATEGORY.find({})
         if (result.length === 0) {
             let category = new CATEGORY({ category: details.cat.toLowerCase() })
-            category.save()//saving category in db
-            res.send({ isAdded:true, message: "Category added successfully" });
+            category.save();
+            res.send({ isAdded: true, message: "Category added successfully" });
         } else {
             let answer = "";
             for (var i = 0; i < result.length; i++) {
                 if (result[i].category == details.cat.toLowerCase()) {
                     answer += "exist";
-                    res.send({ isAdded:false, message: "Category already exists" }); //putting this will give error that cannot set header after they are sent ,this might be bcz of the loop,,so whne the it loops for the first time and and its not the same ,,they are counting it asthe first time that res.send has apppear
+                    res.send({ isAdded: false, message: "Category already exists" });
                     break; //so that it stop right there instead of looping till the end
                 }
             }
 
             if (answer !== "exist") {
                 let category = new CATEGORY({ category: details.cat.toLowerCase() })
-                category.save()//saving category in db
-                res.send({ isAdded:true, message: "Category added successfully" });
+                category.save();
+                res.send({ isAdded: true, message: "Category added successfully" });
             }
         }
     } catch (err) {
@@ -281,9 +271,9 @@ const deleteCategory = async (req, res) => {
     const details = req.body;
     try {
         let resp = await CATEGORY.deleteOne({ _id: details.id })
-        if(resp.deletedCount>=0){
+        if (resp.deletedCount >= 0) {
             res.send({ isDeleted: true, message: "Category deleted successfully" });
-        }else{
+        } else {
             res.send({ isDeleted: false, message: "Something went wrong, Try again" });
         }
     } catch (err) {

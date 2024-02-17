@@ -4,7 +4,12 @@ const bodyParser = require("body-parser");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const { login } = require("../controllers/adminController");
-const { getTheBlog, userSubmittedBlog, getAllCategory, getAllBlogs, addMessage } = require("../controllers/publicController");
+const { getTheBlog,
+    userSubmittedBlog,
+    getAllCategory,
+    getAllBlogs,
+    addMessage
+} = require("../controllers/publicController");
 
 
 //each and every blogs
@@ -16,7 +21,7 @@ router.post("/gettheblog", getTheBlog);
 // add a message
 router.post("/addmessage", urlencodedParser, addMessage);
 
-//usersblog form data[this adds the new blog from user]
+//user's blog
 router.post("/adduserblog", userSubmittedBlog);
 
 //for showing category records

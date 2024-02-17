@@ -8,10 +8,11 @@ import './App.css';
 import Admin from './components/Admin';
 import NotAdmin from './components/NotAdmin';
 import Loader from './Loader';
-import ScrollToTop from './ScrollToTop';//deals with the Link to restore scroll
+import ScrollToTop from './ScrollToTop'; // restores scroll height
 import Toast from './components/Toast';
 
 import { ToastProvider } from './components/ToastContext';
+import { firebaseConfig } from './firebaseConfig';
 
 export const BlogContext = createContext()
 
@@ -29,15 +30,6 @@ function App() {
   }, [])
 
   //-------------------- FIREBASE INITIALIZE -----------------------
-  const firebaseConfig = {
-    apiKey: process.env.apiKey,
-    authDomain: "shopp-itt.firebaseapp.com",
-    projectId: "shopp-itt",
-    storageBucket: "shopp-itt.appspot.com",
-    messagingSenderId: process.env.messagingSenderId,
-    appId: process.env.appId,
-    measurementId: process.env.measurementId
-  };
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
   //-------------------- FIREBASE INITIALIZE -----------------------
@@ -131,8 +123,6 @@ function App() {
     return !catinnav.includes(item);
   });
 
-  //NOTE :: Remeber to reverse the arrays to show latest blog first
-
   return (
     <>
       {allBlog ?
@@ -165,7 +155,6 @@ function App() {
         </BlogContext.Provider>
         :
         <Loader isLoaded={isLoaded} />}
-
     </>
   )
 }

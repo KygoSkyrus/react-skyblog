@@ -7,6 +7,10 @@
 .sidebar.active + .dynamicAdminContent {
   width: calc(100% - 20%);
 }
+.fix{
+  height: 100vh;
+  overflow: hidden;
+}
 /*   ------------------------     ADMIN Component     -----------------------------   */
 
 /*   ------------------------     LOGIN     -----------------------------   */
