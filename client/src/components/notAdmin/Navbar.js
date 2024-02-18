@@ -26,14 +26,27 @@ const Navbar = () => {
     }
 
     function hideSearched(e) {
-        e.target.value = ""; //clearing the input on focus out
-        document.getElementById('searchdropdown').classList.toggle('hide')//hiding the dropdown
+        document.getElementById('searchInput').value = "";
+        document.getElementById('searchdropdown').classList.toggle('hide'); // hiding the dropdown
+    }
+
+    function handleOverlay(val) {
+        const root = document.getElementById("root");
+        const overlay = document.getElementById('overlay');
+        if (val) {
+            root.classList.add('fix')
+            overlay.classList.remove('d-none')
+        } else {
+            hideSearched();
+            root.classList.remove('fix')
+            overlay.classList.add('d-none')
+        }
     }
 
     return (
         <>
             <div className="page-wrapper">
-                <div className="nav-wrapper">
+                <div className="nav-wrapper shadow-sm">
                     <div className="grad-bar"></div>
                     <nav className="navbar px-5">
                         <Link to="/" ><section className='theLogo'>SKYBLOG</section></Link>
@@ -71,7 +84,7 @@ const Navbar = () => {
 
                             <div className="searchContainer">
                                 <form action="" className="search">
-                                    <input className="search__input" type="search" placeholder="Search" id="searchInput" onChange={e => getSearchedBlog(e)} onBlur={e => hideSearched(e)} />
+                                    <input className="search__input" type="search" placeholder="Search" id="searchInput" onChange={e => getSearchedBlog(e)} onClick={() => handleOverlay(true)} />
 
                                     <div className="search__icon-container">
                                         <label htmlFor="searchInput" className="search__label" aria-label="Search">
@@ -87,7 +100,7 @@ const Navbar = () => {
                                 <div className="search-dropdown shadow" id='searchdropdown'>
                                     {searchedOptions?.map(x => {
                                         return (
-                                            <Link className="dropdown-item" to={"/" + x.url} key={x._id}>{x.title}</Link>
+                                            <Link className="dropdown-item" to={"/" + x.url} key={x._id} state={{ url: x?.url }} onClick={() => handleOverlay(false)} >{x.title}</Link>
                                         )
                                     })}
                                 </div>
@@ -97,6 +110,7 @@ const Navbar = () => {
                     </nav>
                 </div>
             </div>
+            <div id='overlay' className='d-none' onClick={() => handleOverlay(false)}></div>
         </>
     )
 }

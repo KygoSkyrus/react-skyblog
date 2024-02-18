@@ -63,7 +63,7 @@ const SingleBlog = () => {
                                                     <div>
                                                         <h5 className="mt-0">
                                                             <Link to={"/" + thePrev?.url} state={{ url: thePrev?.url }} id="prev-blog" className="t-link t-link--secondary">
-                                                                {thePrev?.url}
+                                                                {thePrev?.title}
                                                             </Link>
                                                         </h5>
                                                         <Link to={"/" + thePrev?.url} state={{ url: thePrev?.url }} id="prev-link" className="t-link t-link--secondary text-capitalize">
@@ -78,7 +78,7 @@ const SingleBlog = () => {
                                                     <div>
                                                         <h5 className="mt-0">
                                                             <Link to={"/" + theNext?.url} state={{ url: theNext?.url }} id="next-blog" className="t-link t-link--secondary">
-                                                                {theNext?.url}
+                                                                {theNext?.title}
                                                             </Link>
                                                         </h5>
                                                         <Link to={"/" + theNext?.url} state={{ url: theNext?.url }} id="next-link" className="t-link t-link--secondary text-capitalize">

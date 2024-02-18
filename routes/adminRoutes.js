@@ -12,7 +12,6 @@ const { addBlog,
     deleteUserSubmittedBlog,
     addCategory,
     deleteCategory,
-    login,
     changePassword,
     logout,
     getMessages
@@ -21,6 +20,7 @@ const { addBlog,
 
 // session middleware
 function isAuthenticated(req, res, next) {
+    console.log("session",req.session)
     if (req.session.isAuthenticated) {
         next();
     } else {

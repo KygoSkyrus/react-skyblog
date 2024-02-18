@@ -287,23 +287,23 @@ const BlogForm = (props) => {
 
                             <label htmlFor="option-1" className="option option-1">
                                 <div className="dot"></div>
-                                <span>&nbsp;Featured Blogs</span>
+                                <span className="text-center">&nbsp;Featured Blogs</span>
                             </label>
                             <label htmlFor="option-2" className="option option-2">
                                 <div className="dot"></div>
-                                <span>&nbsp;Trending Blogs</span>
+                                <span className="text-center">&nbsp;Trending Blogs</span>
                             </label>
                             <label htmlFor="option-3" className="option option-3">
                                 <div className="dot"></div>
-                                <span>&nbsp;Popular Blogs</span>
+                                <span className="text-center">&nbsp;Popular Blogs</span>
                             </label>
                             <label htmlFor="option-4" className="option option-4">
                                 <div className="dot"></div>
-                                <span>&nbsp;Todays Blogs</span>
+                                <span className="text-center">&nbsp;Todays Blogs</span>
                             </label>
                             <label htmlFor="option-5" className="option option-5">
                                 <div className="dot"></div>
-                                <span>&nbsp;None</span>
+                                <span className="text-center">&nbsp;None</span>
                             </label>
                         </div>
 

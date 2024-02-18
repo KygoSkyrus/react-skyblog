@@ -17,12 +17,14 @@ const login = async (req, res) => {
         if (result) {
             if (credentials.username === result.username && credentials.password === result.password) {
                 req.session.isAuthenticated = credentials.username;
+                console.log('setting session',req.session)
                 res.send({ matched: true });
             }
         } else {
             res.send({ matched: false });
         }
     } catch (err) {
+        console.log(err);
         res.send({ message: "Internal server error" });
     }
 }

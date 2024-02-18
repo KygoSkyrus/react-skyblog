@@ -230,7 +230,7 @@ const Homepage = () => {
                                         <div id="tech">
                                             {techArray?.slice(techArray.length - 3, techArray.length).map(x => {
                                                 return (
-                                                    <BlogWrapperRight data={x} key={x._id} />
+                                                    <BlogWrapperRight data={x} key={x._id} displayRead='d-none' fontSM="fontSM" />
                                                 )
                                             })}
                                         </div>
@@ -250,7 +250,7 @@ const Homepage = () => {
                                         <div id="politics">
                                             {politicsArray?.slice(politicsArray.length - 3, politicsArray.length).map(x => {
                                                 return (
-                                                    <BlogWrapperRight data={x} key={x._id} />
+                                                    <BlogWrapperRight data={x} key={x._id} displayRead='d-none' fontSM="fontSM" />
                                                 )
                                             })}
                                         </div>
@@ -271,7 +271,7 @@ const Homepage = () => {
                                         <div id="sports">
                                             {sportsArray?.slice(sportsArray.length - 3, sportsArray.length).map(x => {
                                                 return (
-                                                    <BlogWrapperRight data={x} key={x._id} />
+                                                    <BlogWrapperRight data={x} key={x._id} fontSM="fontSM" displayRead='d-none' />
                                                 )
                                             })}
                                         </div>

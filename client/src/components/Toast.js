@@ -22,12 +22,12 @@ const Toast = () => {
                 style={{ borderLeft: "8px solid #18c29c" }}
                 onClick={hideToast}
             >
-
-                <span style={{ marginRight: "10px", color: "#18c29c", fontSize: "18px" }}>
-                    <i className="fa-solid fa-info-circle"></i>
-                </span>
-
-                <section className="toast-inner">{toast?.toastContent}</section>
+                <div className="d-flex align-items-center">
+                    <span style={{ marginRight: "10px", color: "#18c29c", fontSize: "18px" }}>
+                        <i className="fa-solid fa-info-circle"></i>
+                    </span>
+                    <section className="toast-inner">{toast?.toastContent}</section>
+                </div>
                 <span onClick={hideToast} style={{ marginLeft: "10px" }}>
                     <i className="fa-solid fa-xmark close cursor-pointer"></i>
                 </span>

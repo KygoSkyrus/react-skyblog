@@ -55,7 +55,7 @@ const Footer = (props) => {
 										</Link>
 									</li>
 									<li className="t-mb-10">
-										<Link to="/admin/dashboard" className="t-link text-capitalize t-link--light sm-text">
+										<Link to="/admin/dashboard" target='_blank' className="t-link text-capitalize t-link--light sm-text">
 											Admin
 										</Link>
 									</li>

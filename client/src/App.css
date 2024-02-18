@@ -39,7 +39,7 @@ a:hover .tag__skew-reverse {
   height: 500px;
 }
 .fontSM {
-  font-size: 12px;
+  font-size: 12px !important;
 }
 .tagSM {
   background: none !important;
@@ -72,6 +72,7 @@ a:hover .tag__skew-reverse {
 .threeCat .t-link,
 #trending .t-link {
   font-size: 16px;
+  font-size: 14px;
 }
 .whiteTLink .t-link {
   color: #fff;
@@ -80,6 +81,14 @@ a:hover .tag__skew-reverse {
 .pLeftRight15 {
   padding-left: 15px;
   padding-right: 15px;
+}
+#overlay {
+  width: 100dvw;
+  height: 100dvh;
+  background: #00000099;
+  position: absolute;
+  z-index: 1;
+  top: 0;
 }
 /*--------------------------------- basics-----------------------------*/
 
@@ -119,14 +128,14 @@ a:hover .tag__skew-reverse {
 .post {
   position: relative;
 }
-.post a{
+.post a {
   display: inline-block;
   overflow: hidden;
 }
-.post img{
+.post img {
   transition: all 0.3s ease-in-out;
 }
-.post:hover img{
+.post:hover img {
   transform: scale(1.1);
 }
 .post--right {
@@ -697,37 +706,37 @@ input[type="radio"] {
 
 .let1 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: .1s;
+  animation-delay: 0.1s;
 }
 
 .let2 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: .2s;
+  animation-delay: 0.2s;
 }
 
 .let3 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: .3s;
+  animation-delay: 0.3s;
 }
 
 .let4 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: .4s;
+  animation-delay: 0.4s;
 }
 
 .let5 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: .5s;
+  animation-delay: 0.5s;
 }
 
 .let6 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: .6s;
+  animation-delay: 0.6s;
 }
 
 .let7 {
   animation: drop 1.2s ease-in-out infinite;
-  animation-delay: .7s;
+  animation-delay: 0.7s;
 }
 
 @keyframes drop {
@@ -791,18 +800,18 @@ input[type="radio"] {
 /********************************* TOAST **********************************/
 
 /* share diaglog */
-dialog{
+dialog {
   margin: auto;
   border: none;
   border-radius: 10px;
 }
-dialog div{
+dialog div {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
 }
-dialog div button:focus{
+dialog div button:focus {
   outline: none !important;
 }
 ::backdrop {

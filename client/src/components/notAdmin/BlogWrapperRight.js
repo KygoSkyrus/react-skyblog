@@ -31,11 +31,10 @@ const BlogWrapperRight = (props) => {
                                 </span>
                             </span>
                         </li> */}
-                        <li className={"d-none d-md-flex " + fontSM}>
+                        <li className={"d-none " + fontSM}>
                             <span
                                 className="t-link text-capitalize">
-                                <span className="fa fa-calendar-alt m-text"></span>
-                                {data.date}
+                                <span className="fa fa-calendar-alt m-text"></span> {data.date}
                             </span>
                         </li>
                     </ul>
@@ -46,10 +45,11 @@ const BlogWrapperRight = (props) => {
                         </Link>
                     </h5>
                     <ul className="list d-none d-md-flex align-items-center">
-                        <li className={displayRead}>
+                        <li>
                             <span
-                                className="t-link t-link--secondary ex-sm-text text-capitalize">
-                                <span className="fa fa-clock sm-text"></span>&nbsp;10 min read
+                                className={"t-link t-link--secondary ex-sm-text text-capitalize " + fontSM}>
+                                <span className="fa fa-calendar-alt m-text"></span>&nbsp;{data.date}
+                                {/* <span className="fa fa-clock sm-text"></span>&nbsp;10 min read */}
                             </span>
                         </li>
                     </ul>
