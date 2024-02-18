@@ -20,10 +20,12 @@ app.use(session({
   cookie: {
     maxAge: 7200000,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production' ? true : false,
+    // secure: process.env.NODE_ENV === 'production' ? true : false,
   },
   store: MongoStore.create({
     mongoUrl: process.env.dbURI,
+    autoRemove: 'interval',
+    autoRemoveInterval: 60 // In minutes. Default
     // mongoOptions: advancedOptions
   })
   // ExpressJS implements sessions using in-memory storage. Consequently, resetting your application will also reset the in-memory sessions. that's why mongodb is used as session storage

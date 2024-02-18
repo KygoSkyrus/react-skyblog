@@ -20,7 +20,7 @@ const { addBlog,
 
 // session middleware
 function isAuthenticated(req, res, next) {
-    console.log("session",req.session)
+    console.log("session-",req.session)
     if (req.session.isAuthenticated) {
         next();
     } else {
