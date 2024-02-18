@@ -21,11 +21,11 @@ const BlogForm = (props) => {
     const { componentName, isGuest, setShowLoader, apiEndpoint } = props;
     const { unFilteredBlogs, allCategory, storage } = useContext(BlogContext);
 
+    const [theBlog, setTheBlog] = useState();
     const [editorContent, setEditorContent] = useState()
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
 
-    let theBlog;
     useEffect(() => {
         if (componentName === "edit") {
             const link = document.baseURI;
@@ -33,11 +33,12 @@ const BlogForm = (props) => {
                 link.lastIndexOf("/") + 1,
                 link.length
             );
-            theBlog = unFilteredBlogs.find(x => x.url === blogurl)
-            if (!theBlog) {
+            let blog = unFilteredBlogs.find(x => x.url === blogurl)
+            if (!blog) {
                 navigate('/admin/error')
             } else {
-                settingFieldsInitially(theBlog)
+                setTheBlog(blog)
+                settingFieldsInitially(blog)
             }
         }
     }, [])
@@ -190,9 +191,6 @@ const BlogForm = (props) => {
                 .catch(err => console.log(err))
         } else {
             showToast('Guest user does not have rights to perform this action')
-            //resetting fields
-            document.getElementById("frm").reset();
-            setDynamicLabel()
         }
 
     }

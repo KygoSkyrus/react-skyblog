@@ -58,7 +58,7 @@ const UserSubmittedBlogs = ({ state }) => {
             document.getElementById(`checkbox` + id).setAttribute('checked', 'checked')
             val = 'checked';
         }
-        
+
         fetch("/admin/publishBlog", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -70,7 +70,7 @@ const UserSubmittedBlogs = ({ state }) => {
             .then(data => {
                 setShowLoader(false)
                 showToast(data.message)
-                if(data.isSet){
+                if (data.isSet) {
                     window.location.reload();
                 }
             })
@@ -127,12 +127,15 @@ const UserSubmittedBlogs = ({ state }) => {
                                                     <td>
                                                         <div style={{ height: "150px", overflow: "auto" }} dangerouslySetInnerHTML={{ __html: x?.detail }}></div>
                                                     </td>
-                                                    <td>{x.authorname}</td>
+                                                    <td title={x?.email}>{x.authorname}<br />
+                                                    {!isGuest &&
+                                                    <span className='fontSM'>{x?.email}</span>}
+                                                    </td>
                                                     <td>{x.date}</td>
 
                                                     <td><label className="switch"><input onClick={e => publishBlog(x._id, e)} id={"checkbox" + x._id} type="checkbox" defaultChecked={x.status === "checked" ? "defaultChecked" : false} data-status={x.status} /><span className="slider round"></span></label>
                                                     </td>
-                                                    
+
                                                     <td style={{ display: "flex", border: "none", justifyContent: "center" }}><button onClick={e => deleteBlog(x._id, e)} style={{ background: "#d50606" }}><i className="fa fa-trash" ></i></button></td>
                                                 </tr>
                                             )

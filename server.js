@@ -20,7 +20,7 @@ app.use(session({
   cookie: {
     maxAge: 7200000,
     httpOnly: true,
-    // secure: process.env.NODE_ENV === 'production' ? true : false,
+    // secure: process.env.NODE_ENV === 'production' ? true : false, // breaking the session
   },
   store: MongoStore.create({
     mongoUrl: process.env.dbURI,

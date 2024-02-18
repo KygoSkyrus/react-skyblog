@@ -61,7 +61,7 @@ const userSubmittedBlog = async (req, res) => {
         })
         blog.save().
             then(response => {
-                res.send({ isSubmitted: true, message:"Blog submitted for review successfully" });
+                res.send({ isSubmitted: true, message:"Blog submitted for review" });
             })
             .catch(err => {
                 console.log(err)
