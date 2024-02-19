@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Login = ({isAuthenticated}) => {
+const Login = ({ isAuthenticated }) => {
 
   const [error, setError] = useState()
   const navigate = useNavigate()
 
-  useEffect(()=>{
+  useEffect(() => {
     if (isAuthenticated) navigate('/admin/dashboard')
-  },[isAuthenticated])
+  }, [isAuthenticated])
 
   async function login(e) {
     let username = document.getElementById('username').value
@@ -74,12 +74,12 @@ const Login = ({isAuthenticated}) => {
         </div>
 
         <div className="toast bg-dark show mt-4 shadow-sm position-absolute" role="alert" aria-live="assertive" aria-atomic="true" style={{ right: "12px", bottom: "12px" }}>
-          <div className="toast-header">
+          <div className="toast-header justify-content-between">
             {/* <img src={theBagLogo} className="rounded me-2" width="20px" alt="" /> */}
             <strong className="me-auto">Skyblog</strong>
-            {/* <button type="button" class="ml-2 mb-1 close" data-bs-dismiss="toast" aria-label="Close">
+            <span class="close cursor-pointer" onClick={() => document.querySelector('.toast')?.classList.remove('show')}>
               <span aria-hidden="true">&times;</span>
-            </button> */}
+            </span>
           </div>
           <div className="toast-body text-center text-light">
             Use <span className='highlight'>Guest Admin credentials</span> to explore admin panel

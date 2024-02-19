@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { showTime } from './../../utils';
+import { is } from 'immutable';
 
 const Header = ({ isGuest }) => {
 
@@ -9,7 +10,7 @@ const Header = ({ isGuest }) => {
 
     return (
         <main className="dashboard justify-content-between align-items-center shadow-sm">
-            <div className='position-relative'>
+            <div className={`position-relative ${!isGuest&& "mb-2"}`}>
                 <h1 className="title theLogo">Admin panel</h1>
                 <span className='mx-2'><small>by</small> skyblog</span>
             </div>

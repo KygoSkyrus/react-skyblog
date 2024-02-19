@@ -97,7 +97,7 @@ const Homepage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="row whiteAnchor">
+                    <div className="row whiteAnchor of-h">
                         <div className="col-lg-6 mb-lg-0 px-0">
                             <BlogWrapperInside data={popularArray[popularArray.length - 1]} height="height500" />
                         </div>
@@ -192,7 +192,7 @@ const Homepage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-12 t-mt-30 whiteAnchor px-0">
+                        <div className="col-12 t-mt-30 whiteAnchor of-h px-0">
                             <div className="row" id="trending">
                                 {trendingArray?.slice(trendingArray.length - 3, trendingArray.length).map(x => {
                                     return (

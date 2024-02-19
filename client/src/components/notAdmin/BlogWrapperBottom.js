@@ -17,7 +17,7 @@ const BlogWrapperBottom = (props) => {
 				<img src={data?.image} alt="blog" className="img-fluid w-100" />
 			</Link>
 
-			<div className="post--right-content t-flex-100 t-pt-15">
+			<div className="post--right-content bwb t-flex-100 t-pt-15">
 				<ul className="list d-flex align-items-center text-center">
 					<li className="t-mr-16">
 						<Link to={"/category/" + data?.category} state={{ category: data?.category }}

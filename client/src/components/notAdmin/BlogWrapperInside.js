@@ -13,7 +13,7 @@ const BlogWrapperInside = (props) => {
 						<img src={data?.image} alt="blog" className={"img-fluid w-100 " + height} />
 						<Link to={"/" + data?.url} state={{ url: data?.url }} className="post__overlay t-link"></Link>
 						<div className="post--in-content post--in-content-gap">
-							<ul className="list d-flex align-items-center">
+							<ul className="list d-flex">
 								<li className="t-mr-16">
 									<Link to={"category/" + data?.category} state={{ category: data?.category }}
 										className="t-link t-link--light tag tag--skew tag-delta text-uppercase">

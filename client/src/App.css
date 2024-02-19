@@ -830,6 +830,10 @@ dialog div button:focus {
 /********************************* RESPONSIVE ****************************************/
 
 @media (max-width: 768px) {
+  .bwb span.ex-sm-text {
+    font-size: 12px;
+  }
+
   .follow {
     justify-content: flex-start;
   }
@@ -866,6 +870,12 @@ dialog div button:focus {
   .height500 {
     height: unset;
   }
+
+  .toast {
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
 }
 @media only screen and (max-width: 991px) and (min-width: 768px) {
   .skyVidBG {
@@ -888,6 +898,15 @@ dialog div button:focus {
   .theSection {
     margin-right: 15px;
     margin-left: 15px;
+  }
+  .whiteAnchor.of-h {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 400px) {
+  #singleBlog span.ex-sm-text {
+    font-size: 12px;
   }
 }
 
