@@ -6,22 +6,25 @@
 
 ### Description
 
-SKYBLOG is a fullstack application built with *MERN* stack that allows users to post their blogs. The app follows a review and approval process where submitted blogs are sent to the admin for review before being published. Additionally, SKYBLOG includes a comprehensive admin panel with various features for managing the application effectively.
+SKYBLOG is a fullstack application built with *MERN* stack that allows users to post their blogs. The app follows a review and approval process where submitted blogs are sent to the admin for review before being published. Additionally, SKYBLOG includes a comprehensive admin panel with various [features](#features) for managing the application effectively.
 
 [comment]: add_badges,_screenshots_gifs_details_about_app__THINGS_THAT_CAN_BEIMPLEMENTED_WRITE_THE_IN_CONTRIBUTE_LIKE_COMMENT_FEATURE
 
-### Features
+### <a name="features"></a> Features
 
 - **User Blog Submission**: Users can submit their blogs through the app.
-- **Admin Review and Publish**: Admins can review submitted blogs and choose to publish them.
+- **User's Feedback**: Users can also submit thier feedback/suggestions to us via contact form.
+- **Admin Review and Publish**: Admin can review submitted blogs and choose to publish them.
 - **Admin Panel**: The admin panel provides facilities for:
-
-  - Creating and deleting categories.
   - Managing blogs, including editing and deleting.
+  - Creating and deleting categories.
   - Handling user feedback.
-  - Exploring the admin panel in guest mode.
+  - Review user submitted blogs, edit them or publish them to the app.
 
-- Component reusability
+  - **Guest mode**: 
+    - Guest mode is introduced to let users explore the admin panel.
+    - *NOTE*:  Guest user has `view only` permission in admin panel that's why user won't be able to perform any of the above mentioned action.
+
 
 ### Installation
 
@@ -67,6 +70,13 @@ Give a ⭐ if this project helped you!
 
 - SKYBLOG utilizes the MERN stack and various open-source libraries. See the package.json files for details.
 
+
+### License
+[MIT License](https://github.com/KygoSkyrus/react-skyblog/blob/master/LICENSE) © Skyblog
+
+
 ### Demo
+
+![Preview](https://github.com/KygoSkyrus/react-skyblog/blob/master/skyblog-preview.gif)
 
 > Live at [SKYBLOG by Dheeraj Gupta](https://skyblog-dg.onrender.com)
